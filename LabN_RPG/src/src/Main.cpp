@@ -1,21 +1,16 @@
 #include <iostream>
-#include "SFML/Graphics.hpp"
+#include "Window/Window.h"
+#include "Locator.h"
+#include "Game.h"
 int main() 
 {
-	sf::RenderWindow window{ sf::VideoMode{640, 360}, "Hello world!" };
-	while (window.isOpen())
-	{
-		sf::Event event{};
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				window.close();
-			}
-		}
+	vg::Locator::Window_t::emplace<vg::Window>();
+	vg::Window& window = vg::Locator::Window_t::value();
 
-		window.clear();
-		window.display();
+	vg::Game game{};
+	while(window.Update())
+	{
+		game.Update();
 	}
 	return 0;
 }
