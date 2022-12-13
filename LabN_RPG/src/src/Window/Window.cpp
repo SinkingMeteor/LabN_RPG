@@ -8,8 +8,6 @@ namespace vg
 		m_window.setFramerateLimit(60);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setKeyRepeatEnabled(false);
-
-		InitializeServices();
 	}
 
 	bool Window::Update()
@@ -20,11 +18,6 @@ namespace vg
 			return true;
 		}
 		return false;
-	}
-
-	void Window::InitializeServices()
-	{
-		Locator::Window_t::emplace(m_window);
 	}
 
 	void Window::ProcessEvents()

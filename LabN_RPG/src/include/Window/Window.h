@@ -12,7 +12,6 @@ namespace vg
 	private:
 		sf::RenderWindow m_window;
 
-		void InitializeServices();
 		void ProcessEvents();
 	};
 }

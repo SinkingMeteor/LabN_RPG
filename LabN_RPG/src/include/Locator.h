@@ -3,9 +3,11 @@
 #include "Window/Window.h"
 namespace vg
 {
+	class Window;
+
 	namespace Locator 
 	{
-		using ECS_t = entt::locator<entt::registry>;
-		using Window_t = entt::locator<Window>;
+		using ECS = entt::locator<entt::registry>;
+		using GameWindow = entt::locator<Window>;
 	}
 }

@@ -1,12 +1,11 @@
 #include <iostream>
 #include "Window/Window.h"
+#include "entt/locator/locator.hpp"
 #include "Locator.h"
 #include "Game.h"
 int main() 
 {
-	vg::Locator::Window_t::emplace<vg::Window>();
-	vg::Window& window = vg::Locator::Window_t::value();
-
+	vg::Window& window = vg::Locator::GameWindow::emplace<vg::Window>();
 	vg::Game game{};
 	while(window.Update())
 	{

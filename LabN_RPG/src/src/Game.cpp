@@ -17,7 +17,7 @@ namespace vg
 	}
 	void Game::Render()
 	{
-		Window& window = Locator::Window_t::value();
+		Window& window = Locator::GameWindow::value();
 		window.GetWindow().clear(sf::Color::Black);
 
 		window.GetWindow().display();
