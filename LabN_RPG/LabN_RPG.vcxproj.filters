@@ -25,6 +25,24 @@
     <Filter Include="Source Files\Window">
       <UniqueIdentifier>{2f20de53-13f5-4c95-bc4e-c53355889174}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{b36f0884-47b1-4ac6-aad5-de433b447bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{6cf01b17-1110-4033-b3cb-8139cfd9074b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems">
+      <UniqueIdentifier>{f28beef9-6dac-4304-b7bb-4ab17153856d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{d9ddabd2-0f2d-44cf-b5da-bd2e63154aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Prefabs">
+      <UniqueIdentifier>{aa1bed5d-62eb-49e3-ad91-3eacf4dd6c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Prefabs">
+      <UniqueIdentifier>{618a07f7-1c3a-419c-8582-ed238c299535}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -39,6 +57,15 @@
     <ClCompile Include="src\src\Window\Window.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\src\World\GameWorld.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp">
+      <Filter>Source Files\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp">
+      <Filter>Header Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Game.h">
@@ -52,6 +79,24 @@
     </ClInclude>
     <ClInclude Include="src\include\Window\Window.h">
       <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\World\GameWorld.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Prefabs\ActorPrefab.h">
+      <Filter>Header Files\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\SpriteComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\ISystem.h">
+      <Filter>Source Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\SpriteRenderSystem.h">
+      <Filter>Source Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

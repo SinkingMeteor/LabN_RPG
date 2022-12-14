@@ -5,7 +5,9 @@ namespace vg
 	Game::Game() :
 		m_clock(),
 		m_currentWorld(nullptr)
-	{}
+	{
+		Start();
+	}
 
 	void Game::Update()
 	{
@@ -24,6 +26,12 @@ namespace vg
 		Render();
 	}
 
+	void Game::Start()
+	{
+		m_currentWorld = std::make_unique<GameWorld>();
+		m_currentWorld->Initialize();
+	}
+
 	void Game::Tick(sf::Time deltaTime)
 	{
 		m_currentWorld->Tick(deltaTime);
@@ -32,10 +40,6 @@ namespace vg
 	void Game::Render()
 	{
 		m_currentWorld->Render();
-
-		//Window& window = Locator::GameWindow::value();
-		//window.GetWindow().clear(sf::Color::Black);
-		//window.GetWindow().display();
 	}
 }
 

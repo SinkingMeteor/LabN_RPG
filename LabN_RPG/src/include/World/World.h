@@ -5,10 +5,9 @@ namespace vg
 	class World 
 	{
 	public:
-		World() {};
 		virtual ~World() {};
-
-		virtual void Tick(sf::Time deltaTime) {};
-		virtual void Render() {};
+		virtual void Initialize() = 0;
+		virtual void Tick(sf::Time deltaTime) = 0;
+		virtual void Render() = 0;
 	};
 }

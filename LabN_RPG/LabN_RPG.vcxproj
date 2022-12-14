@@ -21,13 +21,22 @@
   <ItemGroup>
     <ClCompile Include="src\src\Game.cpp" />
     <ClCompile Include="src\src\Main.cpp" />
+    <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp" />
+    <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Window\Window.cpp" />
+    <ClCompile Include="src\src\World\GameWorld.cpp" />
     <ClCompile Include="src\src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Components\SpriteComponent.h" />
+    <ClInclude Include="src\include\Components\TransformComponent.h" />
     <ClInclude Include="src\include\Game.h" />
     <ClInclude Include="src\include\Locator.h" />
+    <ClInclude Include="src\include\Prefabs\ActorPrefab.h" />
+    <ClInclude Include="src\include\Systems\ISystem.h" />
+    <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="src\include\Window\Window.h" />
+    <ClInclude Include="src\include\World\GameWorld.h" />
     <ClInclude Include="src\include\World\World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -54,7 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
