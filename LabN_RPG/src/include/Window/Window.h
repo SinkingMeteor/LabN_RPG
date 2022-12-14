@@ -3,10 +3,11 @@
 #include "Locator.h"
 namespace vg 
 {
-	class Window 
+	class Window
 	{
 	public:
 		Window();
+		void InitializeServices() const;
 		bool Update();
 		sf::RenderWindow& GetWindow() { return m_window; }
 	private:

@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Prefabs">
       <UniqueIdentifier>{618a07f7-1c3a-419c-8582-ed238c299535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{d4f2fe81-b389-4ce7-987f-42c30888cc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{5f15ca51-c9b0-4ea3-b8c9-7fe052bc897e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -65,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp">
       <Filter>Header Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Input\Keyboard.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Input\Mouse.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Input\PCInputDevice.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +112,18 @@
     </ClInclude>
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h">
       <Filter>Source Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Input\Keyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Input\Mouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Input\IInputDevice.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Input\PCInputDevice.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

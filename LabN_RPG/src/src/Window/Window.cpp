@@ -8,6 +8,14 @@ namespace vg
 		m_window.setFramerateLimit(60);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setKeyRepeatEnabled(false);
+
+		InitializeServices();
+	}
+
+	void Window::InitializeServices() const
+	{
+		Locator::Keyboard::emplace();
+		Locator::Mouse::emplace();
 	}
 
 	bool Window::Update()
@@ -23,6 +31,10 @@ namespace vg
 	void Window::ProcessEvents()
 	{
 		sf::Event event{};
+
+		Mouse& mouse = Locator::Mouse::value();
+		Keyboard& keyboard = Locator::Keyboard::value();
+
 		while (m_window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
