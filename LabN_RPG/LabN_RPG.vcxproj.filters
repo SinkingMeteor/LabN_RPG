@@ -69,9 +69,6 @@
     <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp">
       <Filter>Source Files\Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp">
-      <Filter>Header Files\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\src\Input\Keyboard.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -80,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="src\src\Input\PCInputDevice.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,12 +110,6 @@
     <ClInclude Include="src\include\Components\SpriteComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Systems\ISystem.h">
-      <Filter>Source Files\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\Systems\SpriteRenderSystem.h">
-      <Filter>Source Files\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\Input\Keyboard.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
@@ -124,6 +121,18 @@
     </ClInclude>
     <ClInclude Include="src\include\Input\PCInputDevice.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\ISystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\SpriteRenderSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\ActorMovementSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\MovementComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

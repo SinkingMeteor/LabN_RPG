@@ -37,9 +37,51 @@ namespace vg
 
 		while (m_window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
 			{
+			case sf::Event::MouseMoved:
+				mouse.OnMouseMove(event.mouseMove.x, event.mouseMove.y);
+				break;
+
+			case sf::Event::MouseButtonPressed:
+			{
+				if (event.mouseButton.button == sf::Mouse::Left)
+					mouse.OnLeftPressed();
+				else
+					mouse.OnRightPressed();
+			}
+				break;
+			case sf::Event::MouseButtonReleased: 
+			{
+				if (event.mouseButton.button == sf::Mouse::Left)
+					mouse.OnLeftReleased();
+				else
+					mouse.OnRightReleased();
+			}
+				break;
+			case sf::Event::MouseWheelScrolled:
+				if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+					mouse.OnWheel(event.mouseWheelScroll.delta);
+				break;
+			case sf::Event::MouseLeft:
+				mouse.Flush();
+				break;
+			case sf::Event::LostFocus:
+				mouse.Flush();
+				break;
+			case sf::Event::Resized:
+				break;
+			case sf::Event::KeyPressed:
+				keyboard.OnKeyPressed(event.key.code);
+				break;
+			case sf::Event::KeyReleased:
+				keyboard.OnKeyReleased(event.key.code);
+				break;
+			case sf::Event::Closed:
 				m_window.close();
+				break;
+			default:
+				break;
 			}
 		}
 	}

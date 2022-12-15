@@ -1,6 +1,7 @@
 #pragma once
 #include <queue>
 #include <bitset>
+#include <iostream>
 #include "SFML/Graphics.hpp"
 
 namespace vg 

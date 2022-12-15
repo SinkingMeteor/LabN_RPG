@@ -71,6 +71,7 @@ namespace vg
 
 	void GameWorld::InitializeSystems()
 	{
+		m_systems.emplace_back(std::make_unique<ActorMovementSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

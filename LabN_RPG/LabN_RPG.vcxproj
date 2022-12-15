@@ -25,12 +25,14 @@
     <ClCompile Include="src\src\Input\PCInputDevice.cpp" />
     <ClCompile Include="src\src\Main.cpp" />
     <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp" />
+    <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Window\Window.cpp" />
     <ClCompile Include="src\src\World\GameWorld.cpp" />
     <ClCompile Include="src\src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Components\MovementComponent.h" />
     <ClInclude Include="src\include\Components\SpriteComponent.h" />
     <ClInclude Include="src\include\Components\TransformComponent.h" />
     <ClInclude Include="src\include\Game.h" />
@@ -40,6 +42,7 @@
     <ClInclude Include="src\include\Input\PCInputDevice.h" />
     <ClInclude Include="src\include\Locator.h" />
     <ClInclude Include="src\include\Prefabs\ActorPrefab.h" />
+    <ClInclude Include="src\include\Systems\ActorMovementSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="src\include\Window\Window.h" />

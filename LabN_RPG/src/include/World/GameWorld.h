@@ -8,6 +8,7 @@
 #include "Systems/SpriteRenderSystem.h"
 #include "entt/entt.hpp"
 #include "Prefabs/ActorPrefab.h"
+#include "Systems/ActorMovementSystem.h"
 namespace vg
 {
 	class GameWorld : public World 
