@@ -7,13 +7,13 @@ namespace vg
 	{
 	public:
 		virtual ~IRenderSystem() {};
-		virtual void Render(entt::registry& registy, sf::RenderWindow& window) = 0;
+		virtual void Render(entt::registry& registry, sf::RenderWindow& window) = 0;
 	};
 
 	class ISystem 
 	{
 	public:
 		virtual ~ISystem() {};
-		virtual void Tick(entt::registry& registy, sf::Time deltaTime) = 0;
+		virtual void Tick(entt::registry& registry, sf::Time deltaTime) = 0;
 	};
 }

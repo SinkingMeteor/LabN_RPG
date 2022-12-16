@@ -26,6 +26,7 @@
     <ClCompile Include="src\src\Main.cpp" />
     <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp" />
     <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp" />
+    <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Window\Window.cpp" />
     <ClCompile Include="src\src\World\GameWorld.cpp" />
@@ -33,7 +34,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
+    <ClInclude Include="src\include\Components\CommonTags.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />
+    <ClInclude Include="src\include\Components\PlayerControllerComponent.h" />
     <ClInclude Include="src\include\Components\SpriteComponent.h" />
     <ClInclude Include="src\include\Components\TransformComponent.h" />
     <ClInclude Include="src\include\Game.h" />
@@ -45,6 +48,7 @@
     <ClInclude Include="src\include\Prefabs\ActorPrefab.h" />
     <ClInclude Include="src\include\Systems\ActorMovementSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
+    <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="src\include\Window\Window.h" />
     <ClInclude Include="src\include\World\GameWorld.h" />

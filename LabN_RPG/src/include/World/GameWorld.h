@@ -8,6 +8,8 @@
 #include "Systems/SpriteRenderSystem.h"
 #include "ResourceManagement/TextureProvider.h"
 #include "entt/entt.hpp"
+#include "Systems/PlayerControllerSystem.h"
+#include "Components/PlayerControllerComponent.h"
 #include "Prefabs/ActorPrefab.h"
 #include "Systems/ActorMovementSystem.h"
 namespace vg

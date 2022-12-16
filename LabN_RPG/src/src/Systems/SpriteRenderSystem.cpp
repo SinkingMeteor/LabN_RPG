@@ -2,9 +2,9 @@
 
 namespace vg
 {
-	void SpriteRenderSystem::Render(entt::registry& registy, sf::RenderWindow& window)
+	void SpriteRenderSystem::Render(entt::registry& registry, sf::RenderWindow& window)
 	{
-		auto view = registy.view<SpriteComponent, TransformComponent>();
+		auto view = registry.view<SpriteComponent, TransformComponent>();
 
 		for (entt::entity entity : view)
 		{

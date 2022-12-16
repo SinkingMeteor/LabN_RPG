@@ -17,9 +17,11 @@ namespace vg
 		entt::registry& registry = Locator::ECS::value();
 		entt::entity hero = ActorPrefab::CreateEntity(registry);
 		SpriteComponent& spriteComponent = registry.get<SpriteComponent>(hero);
-
 		TextureResource result = m_textureProvider['HERO'];
 		spriteComponent.Sprite.setTexture(*result);
+
+		entt::entity playerController = registry.create();
+		registry.emplace<PlayerControllerComponent>(playerController, hero);
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -67,6 +69,7 @@ namespace vg
 
 	void GameWorld::InitializeSystems()
 	{
+		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>());
 		m_systems.emplace_back(std::make_unique<ActorMovementSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}

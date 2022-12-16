@@ -3,6 +3,7 @@
 #include "Components/TransformComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/MovementComponent.h"
+#include "Components/CommonTags.h"
 #include "SFML/Graphics.hpp"
 namespace vg 
 {

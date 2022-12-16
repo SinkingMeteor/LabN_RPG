@@ -9,6 +9,6 @@ namespace vg
 	class SpriteRenderSystem final : public IRenderSystem 
 	{
 	public:
-		virtual void Render(entt::registry& registy, sf::RenderWindow& window) override;
+		virtual void Render(entt::registry& registry, sf::RenderWindow& window) override;
 	};
 }
