@@ -49,6 +49,18 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{5f15ca51-c9b0-4ea3-b8c9-7fe052bc897e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{d5252ba6-47c7-4d03-839e-47db44909f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{93aa5851-228d-4f61-8c45-9fa095d3df3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common\ResourceManagement">
+      <UniqueIdentifier>{81d147ab-7856-417a-b38e-1d3c277cd945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\ResourceManagement">
+      <UniqueIdentifier>{30868433-ae55-4132-896b-d4601d0ff8d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -133,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="src\include\Components\MovementComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h">
+      <Filter>Header Files\Common\ResourceManagement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

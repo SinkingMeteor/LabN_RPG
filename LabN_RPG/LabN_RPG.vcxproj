@@ -32,6 +32,7 @@
     <ClCompile Include="src\src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />
     <ClInclude Include="src\include\Components\SpriteComponent.h" />
     <ClInclude Include="src\include\Components\TransformComponent.h" />
@@ -107,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Includes/;./src/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -125,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Includes/;./src/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,7 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Includes/;./src/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -161,7 +162,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./Includes/;./src/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

@@ -5,7 +5,7 @@ namespace vg
 	GameWorld::GameWorld() :
 		m_systems(),
 		m_renderSystems(),
-		m_textures()
+		m_textureProvider()
 	{}
 
 	void GameWorld::Initialize()
@@ -17,7 +17,9 @@ namespace vg
 		entt::registry& registry = Locator::ECS::value();
 		entt::entity hero = ActorPrefab::CreateEntity(registry);
 		SpriteComponent& spriteComponent = registry.get<SpriteComponent>(hero);
-		spriteComponent.Sprite.setTexture(m_textures.at(0));
+
+		TextureResource result = m_textureProvider['HERO'];
+		spriteComponent.Sprite.setTexture(*result);
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -60,13 +62,7 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		sf::Texture tex{};
-		if (!tex.loadFromFile("D:/Projects/VisualStudio/LabN_RPG/LabN_RPG/resources/Textures/Hero.png")) 
-		{
-			std::cout << "Path not found!" << std::endl;
-			return;
-		}
-		m_textures.emplace_back<sf::Texture>(std::move(tex));
+		m_textureProvider.load(entt::id_type{'HERO'}, "./resources/Textures/Hero.png");
 	}
 
 	void GameWorld::InitializeSystems()
