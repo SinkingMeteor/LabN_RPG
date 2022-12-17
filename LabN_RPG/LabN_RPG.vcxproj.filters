@@ -104,9 +104,6 @@
     <ClInclude Include="src\include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Locator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\World\World.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
@@ -163,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h">
       <Filter>Header Files\Common\ResourceManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\Components.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\Systems.h">
+      <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

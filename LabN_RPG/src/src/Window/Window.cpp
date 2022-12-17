@@ -3,19 +3,13 @@
 namespace vg 
 {
 	Window::Window() :
-		m_window(sf::VideoMode(640, 360), "Game")
+		m_window(sf::VideoMode(640, 360), "Game"),
+		m_keyboard(),
+		m_mouse()
 	{
 		m_window.setFramerateLimit(60);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setKeyRepeatEnabled(false);
-
-		InitializeServices();
-	}
-
-	void Window::InitializeServices() const
-	{
-		Locator::Keyboard::emplace();
-		Locator::Mouse::emplace();
 	}
 
 	bool Window::Update()
@@ -32,50 +26,47 @@ namespace vg
 	{
 		sf::Event event{};
 
-		Mouse& mouse = Locator::Mouse::value();
-		Keyboard& keyboard = Locator::Keyboard::value();
-
 		while (m_window.pollEvent(event))
 		{
 			switch (event.type)
 			{
 			case sf::Event::MouseMoved:
-				mouse.OnMouseMove(event.mouseMove.x, event.mouseMove.y);
+				m_mouse.OnMouseMove(event.mouseMove.x, event.mouseMove.y);
 				break;
 
 			case sf::Event::MouseButtonPressed:
 			{
 				if (event.mouseButton.button == sf::Mouse::Left)
-					mouse.OnLeftPressed();
+					m_mouse.OnLeftPressed();
 				else
-					mouse.OnRightPressed();
+					m_mouse.OnRightPressed();
 			}
 				break;
 			case sf::Event::MouseButtonReleased: 
 			{
 				if (event.mouseButton.button == sf::Mouse::Left)
-					mouse.OnLeftReleased();
+					m_mouse.OnLeftReleased();
 				else
-					mouse.OnRightReleased();
+					m_mouse.OnRightReleased();
 			}
 				break;
 			case sf::Event::MouseWheelScrolled:
 				if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
-					mouse.OnWheel(event.mouseWheelScroll.delta);
+					m_mouse.OnWheel(event.mouseWheelScroll.delta);
 				break;
 			case sf::Event::MouseLeft:
-				mouse.Flush();
+				m_mouse.Flush();
 				break;
 			case sf::Event::LostFocus:
-				mouse.Flush();
+				m_mouse.Flush();
 				break;
 			case sf::Event::Resized:
 				break;
 			case sf::Event::KeyPressed:
-				keyboard.OnKeyPressed(event.key.code);
+				m_keyboard.OnKeyPressed(event.key.code);
 				break;
 			case sf::Event::KeyReleased:
-				keyboard.OnKeyReleased(event.key.code);
+				m_keyboard.OnKeyReleased(event.key.code);
 				break;
 			case sf::Event::Closed:
 				m_window.close();

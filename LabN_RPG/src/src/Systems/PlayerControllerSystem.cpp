@@ -6,7 +6,7 @@ namespace vg
 	{
 		auto view = registry.view<PlayerControllerComponent>();
 
-		Keyboard& keyboard = Locator::Keyboard::value();
+		Keyboard& keyboard = m_world->GetWindow()->GetKeyboard();
 
 		sf::Vector2f velocityDirection{};
 

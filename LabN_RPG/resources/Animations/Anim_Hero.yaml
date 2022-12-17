@@ -1,4 +1,16 @@
+---
 animations:
-    - [[0, 0, 32, 32]]
+  - name: IDLW
+    frames:
+      - [0, 0, 32, 32]
+  - name: IDLA
+    frames:
+      - [32, 32, 32, 32]
+  - name: IDLS
+    frames:
+      - [64, 64, 32, 32]
+  - name: IDLD
+    frames:
+      - [96, 96, 32, 32]
 
     

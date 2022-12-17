@@ -4,7 +4,6 @@
 #include "entt/entt.hpp"
 #include <memory>
 #include "World/World.h"
-#include "Locator.h"
 #include "World/GameWorld.h"
 namespace vg 
 {
@@ -12,13 +11,14 @@ namespace vg
 	{
 	public: 
 		Game();
+		void Start();
 		void Update();
 
 	private:
 		sf::Clock m_clock;
 		std::unique_ptr<World> m_currentWorld;
+		Window m_window;
 
-		void Start();
 		void Tick(sf::Time deltaTime);
 		void Render();
 

@@ -2,7 +2,8 @@
 
 namespace vg 
 {
-	GameWorld::GameWorld() :
+	GameWorld::GameWorld(Window* window) :
+		World(window),
 		m_systems(),
 		m_renderSystems(),
 		m_textureProvider(),
@@ -11,71 +12,55 @@ namespace vg
 
 	void GameWorld::Initialize()
 	{
-		InitializeServices();
 		LoadResources();
 		InitializeSystems();
 
-		entt::registry& registry = Locator::ECS::value();
-		entt::entity hero = ActorPrefab::CreateEntity(registry);
-		SpriteComponent& spriteComponent = registry.get<SpriteComponent>(hero);
-		TextureResource result = m_textureProvider['HERO'];
+		entt::entity hero = ActorPrefab::CreateEntity(m_registry);
+		SpriteComponent& spriteComponent = m_registry.get<SpriteComponent>(hero);
+		TextureResource result = m_textureProvider[Database::Textures::HERO_ATLAS];
 		spriteComponent.Sprite.setTexture(*result);
 
-		entt::entity playerController = registry.create();
-		registry.emplace<PlayerControllerComponent>(playerController, hero);
+		entt::entity playerController = m_registry.create();
+		m_registry.emplace<PlayerControllerComponent>(playerController, hero);
 
-		//AnimationResource animResult = m_animationProvider['HIDL'];
-		//std::cout << animResult->frames.at(0).height;
+		AnimationResource animResult = m_animationProvider[Database::AnimConfigs::HERO_ANIM_CONFIG];
+		std::cout << animResult->Animations.size() << '\n';
+		std::cout << animResult->Animations[Database::AnimTypes::IDLE_W].frames.at(0).top;
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
 	{
-		assert(Locator::ECS::has_value());
 
-		entt::registry& registry = Locator::ECS::value();
-		for (std::unique_ptr<ISystem>& systemPointer : m_systems) 
+		for (std::unique_ptr<System>& systemPointer : m_systems) 
 		{
-			systemPointer->Tick(registry, deltaTime);
+			systemPointer->Tick(m_registry, deltaTime);
 		}
 	}
 
 	void GameWorld::Render()
 	{
-		assert(Locator::ECS::has_value());
-		assert(Locator::GameWindow::has_value());
-
-		entt::registry& registry = Locator::ECS::value();
-		sf::RenderWindow& window = Locator::GameWindow::value().GetWindow();
+		sf::RenderWindow& window = m_window->GetWindow();
 
 		window.clear(sf::Color::Black);
 
 		for (std::unique_ptr<IRenderSystem>& systemPointer : m_renderSystems)
 		{
-			systemPointer->Render(registry, window);
+			systemPointer->Render(m_registry, window);
 		}
 
 		window.display();
 	}
 
-	void GameWorld::InitializeServices()
-	{
-		if (Locator::ECS::has_value())
-		{
-			Locator::ECS::reset();
-		}
-		Locator::ECS::emplace();
-	}
-
 	void GameWorld::LoadResources()
 	{
-		auto heroTexResult = m_textureProvider.load(entt::id_type{'HERO'}, "./resources/Textures/Hero.png");
-		m_animationProvider.load(entt::id_type{ 'HIDL' }, AnimationLoadingData{ "./resources/Animations/Anim_Hero.yaml", &(*heroTexResult.first->second)});
+		auto heroTexResult = m_textureProvider.load(entt::id_type{Database::Textures::HERO_ATLAS}, "./resources/Textures/Hero.png");
+		m_animationProvider.load(entt::id_type{Database::AnimConfigs::HERO_ANIM_CONFIG}, AnimationLoadingData{ "./resources/Animations/Anim_Hero.yaml", &(*heroTexResult.first->second)});
 	}
 
 	void GameWorld::InitializeSystems()
 	{
-		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>());
-		m_systems.emplace_back(std::make_unique<ActorMovementSystem>());
+		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
+		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

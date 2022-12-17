@@ -1,11 +1,13 @@
 #pragma once
 #include "Systems/ISystem.h"
-#include "Components/TransformComponent.h"
-#include "Components/MovementComponent.h"
+#include "Components/Components.h"
 namespace vg 
 {
-	class ActorMovementSystem : public ISystem
+	class ActorMovementSystem : public System
 	{
+	public:
+		ActorMovementSystem(World* world) : System(world) {}
+	private:
 		virtual void Tick(entt::registry& registry, sf::Time deltaTime) override;
 	};
 }

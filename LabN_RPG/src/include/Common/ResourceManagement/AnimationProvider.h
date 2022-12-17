@@ -13,6 +13,11 @@ namespace vg
 		std::vector<sf::IntRect> frames;
 	};
 
+	struct AnimationPack
+	{
+		std::unordered_map<std::string, Animation> Animations{};
+	};
+
 	struct AnimationLoadingData
 	{
 		const std::string& Path;
@@ -22,33 +27,36 @@ namespace vg
 	//const std::string& path, sf::Texture* texture
 	struct AnimationLoader
 	{
-		using result_type = std::shared_ptr<Animation>;
+		using result_type = std::shared_ptr<AnimationPack>;
 
 		result_type operator()(const AnimationLoadingData& loadingData) const
 		{
-			std::vector<sf::IntRect> frames{};
+			AnimationPack animationPack{};
 
 			YAML::Node node = YAML::LoadFile(loadingData.Path);
 
 			if (node.IsNull()) return nullptr;
 
-			YAML::Node framesNode = node["animations"][0];
+			YAML::Node animations = node["animations"];
 
-			for (std::size_t i = 0; i < framesNode.size(); ++i)
+			for (auto animation : animations)
 			{
-				YAML::Node rect = framesNode[i];
-				if (!rect.IsSequence() || rect.size() != 4) 
+				std::vector<sf::IntRect> frames{};
+				YAML::Node framesNode = animation["frames"];
+				for (auto frame : framesNode)
 				{
-					std::cout << "Animation config at path: " << loadingData.Path << "is invalid";
-					return nullptr;
+					if (!frame.IsSequence() || frame.size() != 4)
+					{
+						std::cout << "Animation config at path: " << loadingData.Path << "is invalid";
+						return nullptr;
+					}
+					frames.emplace_back(frame[0].as<int>(), frame[1].as<int>(), frame[2].as<int>(), frame[3].as<int>());
 				}
-				frames.emplace_back(rect[0].as<int>(), rect[1].as<int>(), rect[2].as<int>(), rect[3].as<int>());
+				animationPack.Animations.emplace(animation["name"].as<std::string>(), Animation{loadingData.Texture, std::move(frames)});
 			}
-
-			Animation animation{loadingData.Texture, std::move(frames) };
-			return std::make_shared<Animation>(std::move(animation));
+			return std::make_shared<AnimationPack>(std::move(animationPack));
 		}
 	};
-	using AnimationResource = entt::resource<Animation>;
-	using AnimationProvider = entt::resource_cache<Animation, AnimationLoader>;
+	using AnimationResource = entt::resource<AnimationPack>;
+	using AnimationProvider = entt::resource_cache<AnimationPack, AnimationLoader>;
 }

@@ -4,32 +4,35 @@ namespace vg
 {
 	Game::Game() :
 		m_clock(),
-		m_currentWorld(nullptr)
+		m_currentWorld(nullptr),
+		m_window()
+	{}
+
+	void Game::Start()
 	{
-		Start();
+		m_currentWorld = std::make_unique<GameWorld>(&m_window);
+		m_currentWorld->Initialize();
 	}
 
 	void Game::Update()
 	{
-		if (!m_currentWorld) return;
-
-		sf::Time passedTime = m_clock.restart();
-		sf::Time deltaTime = sf::seconds(1.0f / 60.0f);
-
-		while (passedTime > deltaTime) 
+		while (m_window.Update())
 		{
-			passedTime -= deltaTime;
-			Tick(deltaTime);
+			if (!m_currentWorld) return;
+
+			sf::Time passedTime = m_clock.restart();
+			sf::Time deltaTime = sf::seconds(1.0f / 60.0f);
+
+			while (passedTime > deltaTime)
+			{
+				passedTime -= deltaTime;
+				Tick(deltaTime);
+			}
+
+			Tick(passedTime);
+			Render();
 		}
 
-		Tick(passedTime);
-		Render();
-	}
-
-	void Game::Start()
-	{
-		m_currentWorld = std::make_unique<GameWorld>();
-		m_currentWorld->Initialize();
 	}
 
 	void Game::Tick(sf::Time deltaTime)
