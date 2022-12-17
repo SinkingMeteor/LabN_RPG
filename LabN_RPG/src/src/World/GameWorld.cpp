@@ -5,7 +5,8 @@ namespace vg
 	GameWorld::GameWorld() :
 		m_systems(),
 		m_renderSystems(),
-		m_textureProvider()
+		m_textureProvider(),
+		m_animationProvider()
 	{}
 
 	void GameWorld::Initialize()
@@ -22,6 +23,9 @@ namespace vg
 
 		entt::entity playerController = registry.create();
 		registry.emplace<PlayerControllerComponent>(playerController, hero);
+
+		//AnimationResource animResult = m_animationProvider['HIDL'];
+		//std::cout << animResult->frames.at(0).height;
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -64,7 +68,8 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		m_textureProvider.load(entt::id_type{'HERO'}, "./resources/Textures/Hero.png");
+		auto heroTexResult = m_textureProvider.load(entt::id_type{'HERO'}, "./resources/Textures/Hero.png");
+		m_animationProvider.load(entt::id_type{ 'HIDL' }, AnimationLoadingData{ "./resources/Animations/Anim_Hero.yaml", &(*heroTexResult.first->second)});
 	}
 
 	void GameWorld::InitializeSystems()

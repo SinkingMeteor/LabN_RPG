@@ -161,5 +161,8 @@
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h">
+      <Filter>Header Files\Common\ResourceManagement</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

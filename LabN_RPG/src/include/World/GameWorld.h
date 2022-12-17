@@ -7,6 +7,7 @@
 #include "Systems/ISystem.h"
 #include "Systems/SpriteRenderSystem.h"
 #include "ResourceManagement/TextureProvider.h"
+#include "ResourceManagement/AnimationProvider.h"
 #include "entt/entt.hpp"
 #include "Systems/PlayerControllerSystem.h"
 #include "Components/PlayerControllerComponent.h"
@@ -26,6 +27,7 @@ namespace vg
 		std::vector<std::unique_ptr<ISystem>> m_systems;
 		std::vector<std::unique_ptr<IRenderSystem>> m_renderSystems;
 		TextureProvider m_textureProvider;
+		AnimationProvider m_animationProvider;
 		void InitializeServices();
 		void LoadResources();
 		void InitializeSystems();
