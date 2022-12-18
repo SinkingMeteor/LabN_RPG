@@ -26,6 +26,7 @@
     <ClCompile Include="src\src\Main.cpp" />
     <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp" />
     <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp" />
+    <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Window\Window.cpp" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
+    <ClInclude Include="src\include\Components\AnimationComponent.h" />
     <ClInclude Include="src\include\Components\CommonTags.h" />
     <ClInclude Include="src\include\Components\Components.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />
@@ -49,6 +51,7 @@
     <ClInclude Include="src\include\Input\PCInputDevice.h" />
     <ClInclude Include="src\include\Prefabs\ActorPrefab.h" />
     <ClInclude Include="src\include\Systems\ActorMovementSystem.h" />
+    <ClInclude Include="src\include\Systems\AnimationSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />

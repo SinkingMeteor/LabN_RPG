@@ -5,3 +5,4 @@
 #include "Components/PlayerControllerComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
+#include "Components/AnimationComponent.h"

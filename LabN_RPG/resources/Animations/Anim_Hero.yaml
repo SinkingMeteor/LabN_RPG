@@ -1,16 +1,24 @@
 ---
 animations:
   - name: IDLW
+    frame_rate: 5.5
     frames:
       - [0, 0, 32, 32]
+      - [32, 0, 32, 32]
   - name: IDLA
+    frame_rate: 5.5
     frames:
+      - [0, 32, 32, 32]
       - [32, 32, 32, 32]
   - name: IDLS
+    frame_rate: 5.5
     frames:
-      - [64, 64, 32, 32]
+      - [0, 64, 32, 32]
+      - [32, 64, 32, 32]
   - name: IDLD
+    frame_rate: 5.5
     frames:
-      - [96, 96, 32, 32]
+      - [0, 96, 32, 32]
+      - [32, 96, 32, 32]
 
     

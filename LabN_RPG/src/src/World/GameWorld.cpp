@@ -7,7 +7,8 @@ namespace vg
 		m_systems(),
 		m_renderSystems(),
 		m_textureProvider(),
-		m_animationProvider()
+		m_animationProvider(),
+		m_actorFactory(&m_textureProvider, &m_animationProvider)
 	{}
 
 	void GameWorld::Initialize()
@@ -15,17 +16,17 @@ namespace vg
 		LoadResources();
 		InitializeSystems();
 
-		entt::entity hero = ActorPrefab::CreateEntity(m_registry);
-		SpriteComponent& spriteComponent = m_registry.get<SpriteComponent>(hero);
-		TextureResource result = m_textureProvider[Database::Textures::HERO_ATLAS];
-		spriteComponent.Sprite.setTexture(*result);
+		ActorLoadingData playerLoadingData{};
+		playerLoadingData.TextureID = Database::Textures::HERO_ATLAS;
+		playerLoadingData.AnimationPackID = Database::AnimConfigs::HERO_ANIM_CONFIG;
+		entt::entity hero = m_actorFactory.CreateEntity(m_registry, playerLoadingData);
 
 		entt::entity playerController = m_registry.create();
 		m_registry.emplace<PlayerControllerComponent>(playerController, hero);
 
 		AnimationResource animResult = m_animationProvider[Database::AnimConfigs::HERO_ANIM_CONFIG];
 		std::cout << animResult->Animations.size() << '\n';
-		std::cout << animResult->Animations[Database::AnimTypes::IDLE_W].frames.at(0).top;
+		std::cout << animResult->Animations[Database::AnimTypes::IDLE_W].Frames.at(0).top;
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -60,6 +61,7 @@ namespace vg
 	void GameWorld::InitializeSystems()
 	{
 		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
+		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
 		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}

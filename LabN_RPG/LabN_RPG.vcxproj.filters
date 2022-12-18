@@ -99,6 +99,9 @@
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\src\Systems\AnimationSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Game.h">
@@ -168,6 +171,12 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Systems\Systems.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\AnimationComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\AnimationSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>

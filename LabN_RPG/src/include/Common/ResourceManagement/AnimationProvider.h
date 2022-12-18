@@ -1,21 +1,25 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <iostream>
 #include "SFML/Graphics.hpp"
 #include "entt/resource/fwd.hpp"
+#include "entt/core/hashed_string.hpp"
 #include "yaml-cpp/yaml.h"
 
 namespace vg 
 {
 	struct Animation
 	{
-		sf::Texture* texture;
-		std::vector<sf::IntRect> frames;
+		sf::Texture* Texture;
+		std::vector<sf::IntRect> Frames;
+		float FrameRate;
+		entt::id_type AnimationId;
 	};
 
 	struct AnimationPack
 	{
-		std::unordered_map<std::string, Animation> Animations{};
+		std::unordered_map<entt::id_type, Animation> Animations{};
 	};
 
 	struct AnimationLoadingData
@@ -24,7 +28,6 @@ namespace vg
 		sf::Texture* Texture;
 	};
 
-	//const std::string& path, sf::Texture* texture
 	struct AnimationLoader
 	{
 		using result_type = std::shared_ptr<AnimationPack>;
@@ -52,7 +55,9 @@ namespace vg
 					}
 					frames.emplace_back(frame[0].as<int>(), frame[1].as<int>(), frame[2].as<int>(), frame[3].as<int>());
 				}
-				animationPack.Animations.emplace(animation["name"].as<std::string>(), Animation{loadingData.Texture, std::move(frames)});
+				entt::id_type id = entt::hashed_string{ animation["name"].as<std::string>().c_str() }.value();
+				float frameRate = animation["frame_rate"].as<float>();
+				animationPack.Animations.emplace(id, Animation{loadingData.Texture, std::move(frames), frameRate, id});
 			}
 			return std::make_shared<AnimationPack>(std::move(animationPack));
 		}

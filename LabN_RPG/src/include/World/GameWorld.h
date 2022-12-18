@@ -25,7 +25,7 @@ namespace vg
 		std::vector<std::unique_ptr<IRenderSystem>> m_renderSystems;
 		TextureProvider m_textureProvider;
 		AnimationProvider m_animationProvider;
-
+		ActorFactory m_actorFactory;
 		void LoadResources();
 		void InitializeSystems();
 	};
