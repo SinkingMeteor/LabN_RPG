@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\src\Common\AnimationStates\IdleAnimationState.cpp" />
+    <ClCompile Include="src\src\Common\AnimationStates\MovementAnimationState.cpp" />
+    <ClCompile Include="src\src\Common\GameplayUtils.cpp" />
     <ClCompile Include="src\src\Game.cpp" />
     <ClCompile Include="src\src\Input\Keyboard.cpp" />
     <ClCompile Include="src\src\Input\Mouse.cpp" />
@@ -26,6 +29,7 @@
     <ClCompile Include="src\src\Main.cpp" />
     <ClCompile Include="src\src\Prefabs\ActorPrefab.cpp" />
     <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp" />
+    <ClCompile Include="src\src\Systems\AnimationStateSystem.cpp" />
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
@@ -34,6 +38,11 @@
     <ClCompile Include="src\src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Common\AnimationStates\IAnimationState.h" />
+    <ClInclude Include="src\include\Common\AnimationStates\IdleAnimationState.h" />
+    <ClInclude Include="src\include\Common\AnimationStates\MovementAnimationState.h" />
+    <ClInclude Include="src\include\Common\GameplayUtils.h" />
+    <ClInclude Include="src\include\Common\MathUtils.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
     <ClInclude Include="src\include\Components\AnimationComponent.h" />
@@ -51,6 +60,7 @@
     <ClInclude Include="src\include\Input\PCInputDevice.h" />
     <ClInclude Include="src\include\Prefabs\ActorPrefab.h" />
     <ClInclude Include="src\include\Systems\ActorMovementSystem.h" />
+    <ClInclude Include="src\include\Systems\AnimationStateSystem.h" />
     <ClInclude Include="src\include\Systems\AnimationSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
@@ -65,7 +75,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{d5296728-3f38-47d0-8882-4158156d9c87}</ProjectGuid>
     <RootNamespace>LabNRPG</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -84,13 +94,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -155,7 +165,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,7 +184,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./src/include/Common/;./Includes/;./src/include/</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

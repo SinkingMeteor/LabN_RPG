@@ -1,5 +1,5 @@
 #include "Systems/AnimationSystem.h"
-
+#include <cmath>
 namespace vg
 {
 	void AnimationSystem::Tick(entt::registry& registry, sf::Time deltaTime)
@@ -19,7 +19,9 @@ namespace vg
 
 			if (animationComponent.CurrentFrame >= framesCount) 
 			{
-				animationComponent.CurrentFrame -= framesCount;
+				//std::cout << "Was added " << deltaTime.asSeconds() * animationComponent.CurrentAnimation->FrameRate << '\n';
+				//std::cout << "Anim frame size: " << framesCount << " Current frame: " << animationComponent.CurrentFrame << '\n';
+				animationComponent.CurrentFrame = fmod(animationComponent.CurrentFrame, framesCount);
 			}
 			animationComponent.CurrentIndex = static_cast<int>(animationComponent.CurrentFrame);
 		}

@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Common\ResourceManagement">
       <UniqueIdentifier>{30868433-ae55-4132-896b-d4601d0ff8d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Common\AnimationStates">
+      <UniqueIdentifier>{0dc1f8b9-ab91-4eab-9081-c6bf0876e7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\AnimationStates">
+      <UniqueIdentifier>{74002585-42bd-4016-9e99-4dd53773bd59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -101,6 +107,18 @@
     </ClCompile>
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp">
       <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\AnimationStateSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Common\AnimationStates\IdleAnimationState.cpp">
+      <Filter>Source Files\Common\AnimationStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Common\AnimationStates\MovementAnimationState.cpp">
+      <Filter>Source Files\Common\AnimationStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Common\GameplayUtils.cpp">
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +196,24 @@
     </ClInclude>
     <ClInclude Include="src\include\Systems\AnimationSystem.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\AnimationStateSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\AnimationStates\IAnimationState.h">
+      <Filter>Header Files\Common\AnimationStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\AnimationStates\IdleAnimationState.h">
+      <Filter>Header Files\Common\AnimationStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\AnimationStates\MovementAnimationState.h">
+      <Filter>Header Files\Common\AnimationStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\GameplayUtils.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\Math.h">
+      <Filter>Header Files\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

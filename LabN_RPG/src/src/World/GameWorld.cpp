@@ -31,7 +31,6 @@ namespace vg
 
 	void GameWorld::Tick(sf::Time deltaTime)
 	{
-
 		for (std::unique_ptr<System>& systemPointer : m_systems) 
 		{
 			systemPointer->Tick(m_registry, deltaTime);
@@ -60,9 +59,12 @@ namespace vg
 
 	void GameWorld::InitializeSystems()
 	{
+
 		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
-		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
 		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
+
+		m_systems.emplace_back(std::make_unique<AnimationStateSystem>(this));
+		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

@@ -15,6 +15,7 @@ namespace vg
 		std::vector<sf::IntRect> Frames;
 		float FrameRate;
 		entt::id_type AnimationId;
+		entt::id_type AnimationGroupId;
 	};
 
 	struct AnimationPack
@@ -56,8 +57,9 @@ namespace vg
 					frames.emplace_back(frame[0].as<int>(), frame[1].as<int>(), frame[2].as<int>(), frame[3].as<int>());
 				}
 				entt::id_type id = entt::hashed_string{ animation["name"].as<std::string>().c_str() }.value();
+				entt::id_type groupId = entt::hashed_string{ animation["group"].as<std::string>().c_str() }.value();
 				float frameRate = animation["frame_rate"].as<float>();
-				animationPack.Animations.emplace(id, Animation{loadingData.Texture, std::move(frames), frameRate, id});
+				animationPack.Animations.emplace(id, Animation{loadingData.Texture, std::move(frames), frameRate, id, groupId});
 			}
 			return std::make_shared<AnimationPack>(std::move(animationPack));
 		}
