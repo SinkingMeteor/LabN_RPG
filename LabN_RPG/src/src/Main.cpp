@@ -2,8 +2,6 @@
 #include "Window/Window.h"
 #include "entt/locator/locator.hpp"
 #include "Game.h"
-#include "yaml-cpp/yaml.h"
-
 
 int main() 
 {

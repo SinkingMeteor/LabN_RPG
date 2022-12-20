@@ -1,48 +1,81 @@
----
-animations:
-  - name: IDLW #idle
-    frame_rate: 5.5
-    group: G_IDLE
-    frames:
-      - [0, 0, 32, 32]
-  - name: IDLA
-    frame_rate: 5.5
-    group: G_IDLE
-    frames:
-      - [0, 32, 32, 32]
-  - name: IDLS
-    frame_rate: 5.5
-    group: G_IDLE
-    frames:
-      - [0, 64, 32, 32]
-  - name: IDLD
-    frame_rate: 5.5
-    group: G_IDLE
-    frames:
-      - [0, 96, 32, 32]
-  - name: MOVW #movement
-    frame_rate: 5.5
-    group: G_MOVE
-    frames:
-      - [0, 128, 32, 32]
-      - [32, 128, 32, 32]
-  - name: MOVA
-    frame_rate: 5.5
-    group: G_MOVE
-    frames:
-      - [0, 160, 32, 32]
-      - [32, 160, 32, 32]
-  - name: MOVS
-    frame_rate: 5.5
-    group: G_MOVE
-    frames:
-      - [0, 192, 32, 32]
-      - [32, 192, 32, 32]
-  - name: MOVD
-    frame_rate: 5.5
-    group: G_MOVE
-    frames:
-      - [0, 224, 32, 32]
-      - [32, 224, 32, 32]
-
-    
+{
+  "animations": 
+  [
+    {
+      "name": "IDLW",
+      "frame_rate": 5.5,
+      "group": "G_IDLE",
+      "frames": 
+      [
+        [0, 0, 32, 32]
+      ]
+    },
+    {
+      "name": "IDLA",
+      "frame_rate": 5.5,
+      "group": "G_IDLE",
+      "frames":
+      [
+        [0, 32, 32, 32]
+      ]
+    },
+    {
+      "name": "IDLS",
+      "frame_rate": 5.5,
+      "group": "G_IDLE",
+      "frames": 
+      [
+        [0, 64, 32, 32]
+      ]
+    },
+    {
+      "name": "IDLD",
+      "frame_rate": 5.5,
+      "group": "G_IDLE",
+      "frames": 
+      [
+        [0, 96, 32, 32]
+      ]
+    },
+    {
+      "name": "MOVW",
+      "frame_rate": 5.5,
+      "group": "G_MOVE",
+      "frames": 
+      [
+        [0, 128, 32, 32],
+        [32, 128, 32, 32]
+      ]
+    },
+    {
+      "name": "MOVA",
+      "frame_rate": 5.5,
+      "group": "G_MOVE",
+      "frames": 
+      [
+        [0, 160, 32, 32],
+        [32, 160, 32, 32]
+      ]
+    },
+    {
+      "name": "MOVS",
+      "frame_rate": 5.5,
+      "group": "G_MOVE",
+      "frames": 
+      [
+        [0, 192, 32, 32],
+        [32, 192, 32, 32]
+      ]
+    },
+    {
+      "name": "MOVD",
+      "frame_rate": 5.5,
+      "group": "G_MOVE",
+      "frames": 
+      [
+        [0, 224, 32, 32],
+        [32, 224, 32, 32]
+      ]
+    }
+  ]
+}

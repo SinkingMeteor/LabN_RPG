@@ -1,11 +1,12 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <fstream>
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "entt/resource/fwd.hpp"
 #include "entt/core/hashed_string.hpp"
-#include "yaml-cpp/yaml.h"
+#include "json.hpp"
 
 namespace vg 
 {
@@ -37,28 +38,31 @@ namespace vg
 		{
 			AnimationPack animationPack{};
 
-			YAML::Node node = YAML::LoadFile(loadingData.Path);
+			std::ifstream input{ static_cast<const char*>(loadingData.Path.c_str()) };
+			nlohmann::json jsonNode;
+			input >> jsonNode;
+			input.close();
 
-			if (node.IsNull()) return nullptr;
+			if (jsonNode.is_null()) return nullptr;
 
-			YAML::Node animations = node["animations"];
+			auto& animations = jsonNode["animations"];
 
-			for (auto animation : animations)
+			for (auto& animation : animations)
 			{
 				std::vector<sf::IntRect> frames{};
-				YAML::Node framesNode = animation["frames"];
+				auto& framesNode = animation["frames"];
 				for (auto frame : framesNode)
 				{
-					if (!frame.IsSequence() || frame.size() != 4)
+					if (!frame.is_array() || frame.size() != 4)
 					{
 						std::cout << "Animation config at path: " << loadingData.Path << "is invalid";
 						return nullptr;
 					}
-					frames.emplace_back(frame[0].as<int>(), frame[1].as<int>(), frame[2].as<int>(), frame[3].as<int>());
+					frames.emplace_back(frame[0].get<int>(), frame[1].get<int>(), frame[2].get<int>(), frame[3].get<int>());
 				}
-				entt::id_type id = entt::hashed_string{ animation["name"].as<std::string>().c_str() }.value();
-				entt::id_type groupId = entt::hashed_string{ animation["group"].as<std::string>().c_str() }.value();
-				float frameRate = animation["frame_rate"].as<float>();
+				entt::id_type id = entt::hashed_string{ animation["name"].get<std::string>().c_str() }.value();
+				entt::id_type groupId = entt::hashed_string{ animation["group"].get<std::string>().c_str() }.value();
+				float frameRate = animation["frame_rate"].get<float>();
 				animationPack.Animations.emplace(id, Animation{loadingData.Texture, std::move(frames), frameRate, id, groupId});
 			}
 			return std::make_shared<AnimationPack>(std::move(animationPack));

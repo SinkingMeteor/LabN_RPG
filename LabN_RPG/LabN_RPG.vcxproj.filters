@@ -212,8 +212,8 @@
     <ClInclude Include="src\include\Common\GameplayUtils.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Common\Math.h">
-      <Filter>Header Files\Common</Filter>
+    <ClInclude Include="src\include\Common\MathUtils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
