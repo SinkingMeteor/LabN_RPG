@@ -31,6 +31,7 @@
     <ClCompile Include="src\src\Systems\ActorMovementSystem.cpp" />
     <ClCompile Include="src\src\Systems\AnimationStateSystem.cpp" />
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
+    <ClCompile Include="src\src\Systems\CameraFollowingSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Window\Window.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
     <ClInclude Include="src\include\Components\AnimationComponent.h" />
+    <ClInclude Include="src\include\Components\CameraComponent.h" />
     <ClInclude Include="src\include\Components\CommonTags.h" />
     <ClInclude Include="src\include\Components\Components.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />
@@ -62,6 +64,7 @@
     <ClInclude Include="src\include\Systems\ActorMovementSystem.h" />
     <ClInclude Include="src\include\Systems\AnimationStateSystem.h" />
     <ClInclude Include="src\include\Systems\AnimationSystem.h" />
+    <ClInclude Include="src\include\Systems\CameraFollowingSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />

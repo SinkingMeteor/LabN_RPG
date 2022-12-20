@@ -3,4 +3,5 @@
 namespace vg 
 {
 	struct Possessable{};
+	struct CameraTarget{};
 }

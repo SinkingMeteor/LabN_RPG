@@ -14,7 +14,9 @@ namespace vg
 		registry.emplace<Possessable>(actor);
 
 		TextureResource result = (*m_textureProvider)[data.TextureID];
-		registry.emplace<SpriteComponent>(actor).Sprite.setTexture(*result);
+		SpriteComponent& spriteComponent = registry.emplace<SpriteComponent>(actor);
+		spriteComponent.Sprite.setTexture(*result);
+		spriteComponent.Sprite.getTextureRect();
 
 		AnimationResource animResource = (*m_animationProvider)[data.AnimationPackID];
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);

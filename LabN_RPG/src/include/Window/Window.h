@@ -13,11 +13,12 @@ namespace vg
 		sf::RenderWindow& GetWindow() { return m_window; }
 		Keyboard& GetKeyboard() { return m_keyboard; }
 		Mouse& GetMouse() { return m_mouse; }
+		void SetView(const sf::View& view) { m_window.setView(view); }
+		sf::Vector2f GetScreenSize() const { return sf::Vector2f{ 640.0f, 360.0f }; }
 	private:
 		sf::RenderWindow m_window;
 		Keyboard m_keyboard;
 		Mouse m_mouse;
-
 		void ProcessEvents();
 	};
 }

@@ -12,7 +12,9 @@ namespace vg
 			AnimationComponent& animationComponent = view.get<AnimationComponent>(entity);
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 
-			spriteComponent.Sprite.setTextureRect(animationComponent.CurrentAnimation->Frames[animationComponent.CurrentFrame]);
+			const sf::IntRect& rect = animationComponent.CurrentAnimation->Frames[animationComponent.CurrentFrame];
+			spriteComponent.Sprite.setTextureRect(rect);
+			spriteComponent.Sprite.setOrigin(sf::Vector2f{ rect.width * 0.5f, rect.height * 0.5f });
 
 			spriteComponent.Sprite.setPosition(transformComponent.Position);
 			spriteComponent.Sprite.setScale(transformComponent.Scale);

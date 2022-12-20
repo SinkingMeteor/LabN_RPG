@@ -20,6 +20,7 @@ namespace vg
 		playerLoadingData.TextureID = Database::Textures::HERO_ATLAS;
 		playerLoadingData.AnimationPackID = Database::AnimConfigs::HERO_ANIM_CONFIG;
 		entt::entity hero = m_actorFactory.CreateEntity(m_registry, playerLoadingData);
+		m_registry.emplace<CameraTarget>(hero);
 
 		entt::entity playerController = m_registry.create();
 		m_registry.emplace<PlayerControllerComponent>(playerController, hero);
@@ -48,6 +49,7 @@ namespace vg
 			systemPointer->Render(m_registry, window);
 		}
 
+		m_window->SetView(m_worldView);
 		window.display();
 	}
 
@@ -59,12 +61,14 @@ namespace vg
 
 	void GameWorld::InitializeSystems()
 	{
-
 		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
 		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
 
 		m_systems.emplace_back(std::make_unique<AnimationStateSystem>(this));
 		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
+		
+		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
+
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

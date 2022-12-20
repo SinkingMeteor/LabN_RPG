@@ -6,3 +6,4 @@
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
 #include "Components/AnimationComponent.h"
+#include "Components/CameraComponent.h"
