@@ -9,6 +9,7 @@ namespace vg
 		{
 			static constexpr unsigned int HERO_ATLAS = 'HERO';
 			static constexpr unsigned int DESERT_MAP = 'MDES';
+			static constexpr entt::id_type DESERT_GROUND_TILESET = entt::hashed_string{ "GroundTiles" }.value();
 		}
 
 		namespace AnimConfigs 

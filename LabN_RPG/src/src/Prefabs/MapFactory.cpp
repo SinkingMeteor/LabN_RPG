@@ -1,23 +1,28 @@
 #include "Prefabs/MapFactory.h"
-
+#include "Database.h"
 namespace vg 
 {
 	 std::optional<entt::entity> MapFactory::CreateEntity(entt::registry& registry, const MapLoadingData& data)
 	{
-		if(!m_textureProvider->contains(data.RelatedTexture)) return std::optional<entt::entity>{};
-		
-		entt::resource<sf::Texture> texture = (*m_textureProvider)[data.RelatedTexture];
-
-		if(!texture) return std::optional<entt::entity>{};
-
-		std::ifstream input{ static_cast<const char*>(data.LoadingPath.c_str()) };
+		std::string mapFullPath = (data.LoadingPath + data.MapFileName);
+		std::ifstream input{ static_cast<const char*>(mapFullPath.c_str()) };
 		nlohmann::json rootNode;
 		input >> rootNode;
 		input.close();
 
 		if (rootNode.is_null()) return std::optional<entt::entity>{};
 
-		nlohmann::json layersNode = rootNode["layers"];
+		nlohmann::json& tilesetNode = rootNode["tilesets"];
+		for (nlohmann::json& tileSet : tilesetNode) 
+		{
+			entt::id_type tilesetId = entt::hashed_string{ tileSet["name"].get<std::string>().c_str() }.value();
+			std::string tilesetFileName = tileSet["image"];
+			m_textureProvider->load(tilesetId, (data.LoadingPath + tilesetFileName).c_str());
+		}
+
+		entt::resource<sf::Texture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
+
+		nlohmann::json& layersNode = rootNode["layers"];
 
 		if(layersNode.is_null() || !layersNode.is_array()) return std::optional<entt::entity>{};
 
@@ -25,7 +30,10 @@ namespace vg
 
 		for (auto& layer : layersNode)
 		{
-			indices = layer["data"].get<std::vector<unsigned int>>();
+			nlohmann::json tilesData = layer["data"];
+			if (tilesData.is_null()) continue;
+
+			indices = tilesData.get<std::vector<unsigned int>>();
 		}
 		unsigned int mapHeight = rootNode["height"].get<unsigned int>();
 		unsigned int mapWidth = rootNode["width"].get<unsigned int>();
@@ -56,6 +64,7 @@ namespace vg
 				quad[3].texCoords = sf::Vector2f(tu * tileWidth, (tv + 1) * tileHeight);
 			}
 		}
+
 
 		MapComponent& mapComponent = registry.emplace<MapComponent>(mapEntity);
 		mapComponent.MapIndices = std::move(indices);

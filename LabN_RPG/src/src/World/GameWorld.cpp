@@ -16,22 +16,6 @@ namespace vg
 	{
 		LoadResources();
 		InitializeSystems();
-
-		ActorLoadingData playerLoadingData{};
-		playerLoadingData.TextureID = Database::Textures::HERO_ATLAS;
-		playerLoadingData.AnimationPackID = Database::AnimConfigs::HERO_ANIM_CONFIG;
-		std::optional<entt::entity> hero = m_actorFactory.CreateEntity(m_registry, playerLoadingData);
-		m_registry.emplace<CameraTarget>(hero.value());
-
-		entt::entity playerController = m_registry.create();
-		m_registry.emplace<PlayerControllerComponent>(playerController, hero.value());
-
-		AnimationResource animResult = m_animationProvider[Database::AnimConfigs::HERO_ANIM_CONFIG];
-		std::cout << animResult->Animations.size() << '\n';
-		std::cout << animResult->Animations[Database::AnimTypes::IDLE_W].Frames.at(0).top;
-
-		MapLoadingData mapLoadingData{ "./resources/Maps/DesertMap.json", Database::Textures::DESERT_MAP};
-		m_mapFactory.CreateEntity(m_registry, mapLoadingData);
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -59,11 +43,25 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		auto heroTexResult = m_textureProvider.load(entt::id_type{Database::Textures::HERO_ATLAS}, "./resources/Textures/Actors/Hero.png");
-		auto desertMapResult = m_textureProvider.load(entt::id_type{Database::Textures::DESERT_MAP}, "./resources/Textures/Maps/DesertMap.png");
+		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Desert.json")};
+		nlohmann::json rootNode;
+		input >> rootNode;
+		input.close();
 
-		sf::Texture* heroTexture = &*m_textureProvider[Database::Textures::HERO_ATLAS];
-		m_animationProvider.load(entt::id_type{Database::AnimConfigs::HERO_ANIM_CONFIG}, AnimationLoadingData{ "./resources/Animations/Anim_Hero.json", heroTexture});
+		assert(!rootNode.is_null());
+
+		nlohmann::json& mapNode = rootNode["map"];
+		MapLoadingData mapLoadingData{ mapNode["path"], mapNode["fileName"]};
+		m_mapFactory.CreateEntity(m_registry, mapLoadingData);
+
+		entt::entity playerController = m_registry.create();
+		m_registry.emplace<PlayerControllerComponent>(playerController);
+
+		nlohmann::json& actorsNode = rootNode["actors"];
+		for (const nlohmann::json& actorData : actorsNode)
+		{
+			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(m_registry, actorData);
+		}
 	}
 
 	void GameWorld::InitializeSystems()

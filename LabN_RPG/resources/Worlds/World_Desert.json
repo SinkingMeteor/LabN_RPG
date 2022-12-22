@@ -1,0 +1,18 @@
+{
+  "name" : "Desert",
+  "map" : 
+  {
+    "name" : "Map_Desert",
+	"fileName" : "DesertMap.json",
+    "path" : "./resources/Maps/DesertMap/"
+  },
+  "actors" : 
+  [
+    {
+       "name" : "Actor_Hero",
+       "isPlayable" : true,
+       "textureFilePath" : "./resources/Textures/Actors/Hero.png",
+       "animationFilePath" : "./resources/Animations/Anim_Hero.json"
+    }
+  ]
+}

@@ -12,8 +12,8 @@ namespace vg
 {
 	struct MapLoadingData 
 	{
-		std::string LoadingPath;
-		int RelatedTexture;
+		const std::string LoadingPath;
+		const std::string MapFileName;
 	};
 
 	class MapFactory

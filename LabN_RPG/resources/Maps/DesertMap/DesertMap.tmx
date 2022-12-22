@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="11" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="9">
+ <editorsettings>
+  <export target="DesertMap.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="GroundTiles" tilewidth="32" tileheight="32" tilecount="4" columns="2">
+  <image source="DesertMap.png" width="64" height="64"/>
+ </tileset>
+ <layer id="1" name="DesertTiles" width="11" height="7">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,
+1,2,2,2,3,3,3,2,2,2,1,
+1,2,2,3,4,4,3,3,2,2,1,
+1,1,2,3,4,4,4,3,2,1,1,
+1,2,2,3,3,4,4,3,2,2,1,
+1,2,2,2,3,3,3,2,2,2,1,
+1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="2" name="SpawnPlaceholders">
+  <object id="3" name="SpawnPoint_Hero" class="SpawnPoint" x="176" y="110">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

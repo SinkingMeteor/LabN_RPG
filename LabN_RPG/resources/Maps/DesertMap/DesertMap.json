@@ -1,0 +1,70 @@
+{ "compressionlevel":-1,
+ "height":7,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1,
+            1, 2, 2, 3, 4, 4, 3, 3, 2, 2, 1,
+            1, 1, 2, 3, 4, 4, 4, 3, 2, 1, 1,
+            1, 2, 2, 3, 3, 4, 4, 3, 2, 2, 1,
+            1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "height":7,
+         "id":1,
+         "name":"DesertTiles",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":11,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"SpawnPlaceholders",
+         "objects":[
+                {
+                 "class":"SpawnPoint",
+                 "height":0,
+                 "id":3,
+                 "name":"SpawnPoint_Hero",
+                 "point":true,
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":176,
+                 "y":110
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":3,
+ "nextobjectid":9,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.9.2",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":2,
+         "firstgid":1,
+         "image":"DesertMap.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "margin":0,
+         "name":"GroundTiles",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.9",
+ "width":11
+}

@@ -5,14 +5,15 @@
 #include "ResourceManagement/TextureProvider.h"
 #include "SFML/Graphics.hpp"
 #include <optional>
+#include <string>
 #include "Database.h"
 namespace vg 
 {
 	struct ActorLoadingData 
 	{
-	public:
-		int TextureID;
-		int AnimationPackID;
+		const std::string Name;
+		const std::string TextureFullPath;
+		const std::string AnimationFullPath;
 	};
 
 	class ActorFactory 
@@ -21,7 +22,7 @@ namespace vg
 		ActorFactory(TextureProvider* texProvider, AnimationProvider* animProvider) :
 			m_textureProvider(texProvider),
 			m_animationProvider(animProvider) {}
-		std::optional<entt::entity> CreateEntity(entt::registry& registry, const ActorLoadingData& data);
+		std::optional<entt::entity> CreateEntity(entt::registry& registry, const nlohmann::json& dataNode);
 	private:
 		TextureProvider* m_textureProvider;
 		AnimationProvider* m_animationProvider;
