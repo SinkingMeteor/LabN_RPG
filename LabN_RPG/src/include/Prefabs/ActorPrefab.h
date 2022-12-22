@@ -4,6 +4,7 @@
 #include "ResourceManagement/AnimationProvider.h"
 #include "ResourceManagement/TextureProvider.h"
 #include "SFML/Graphics.hpp"
+#include <optional>
 #include "Database.h"
 namespace vg 
 {
@@ -20,7 +21,7 @@ namespace vg
 		ActorFactory(TextureProvider* texProvider, AnimationProvider* animProvider) :
 			m_textureProvider(texProvider),
 			m_animationProvider(animProvider) {}
-		entt::entity CreateEntity(entt::registry& registry, const ActorLoadingData& data);
+		std::optional<entt::entity> CreateEntity(entt::registry& registry, const ActorLoadingData& data);
 	private:
 		TextureProvider* m_textureProvider;
 		AnimationProvider* m_animationProvider;

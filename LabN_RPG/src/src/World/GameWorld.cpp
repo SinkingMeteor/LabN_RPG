@@ -8,7 +8,8 @@ namespace vg
 		m_renderSystems(),
 		m_textureProvider(),
 		m_animationProvider(),
-		m_actorFactory(&m_textureProvider, &m_animationProvider)
+		m_actorFactory(&m_textureProvider, &m_animationProvider),
+		m_mapFactory(&m_textureProvider)
 	{}
 
 	void GameWorld::Initialize()
@@ -19,15 +20,18 @@ namespace vg
 		ActorLoadingData playerLoadingData{};
 		playerLoadingData.TextureID = Database::Textures::HERO_ATLAS;
 		playerLoadingData.AnimationPackID = Database::AnimConfigs::HERO_ANIM_CONFIG;
-		entt::entity hero = m_actorFactory.CreateEntity(m_registry, playerLoadingData);
-		m_registry.emplace<CameraTarget>(hero);
+		std::optional<entt::entity> hero = m_actorFactory.CreateEntity(m_registry, playerLoadingData);
+		m_registry.emplace<CameraTarget>(hero.value());
 
 		entt::entity playerController = m_registry.create();
-		m_registry.emplace<PlayerControllerComponent>(playerController, hero);
+		m_registry.emplace<PlayerControllerComponent>(playerController, hero.value());
 
 		AnimationResource animResult = m_animationProvider[Database::AnimConfigs::HERO_ANIM_CONFIG];
 		std::cout << animResult->Animations.size() << '\n';
 		std::cout << animResult->Animations[Database::AnimTypes::IDLE_W].Frames.at(0).top;
+
+		MapLoadingData mapLoadingData{ "./resources/Maps/DesertMap.json", Database::Textures::DESERT_MAP};
+		m_mapFactory.CreateEntity(m_registry, mapLoadingData);
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -55,8 +59,11 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		auto heroTexResult = m_textureProvider.load(entt::id_type{Database::Textures::HERO_ATLAS}, "./resources/Textures/Hero.png");
-		m_animationProvider.load(entt::id_type{Database::AnimConfigs::HERO_ANIM_CONFIG}, AnimationLoadingData{ "./resources/Animations/Anim_Hero.yaml", &(*heroTexResult.first->second)});
+		auto heroTexResult = m_textureProvider.load(entt::id_type{Database::Textures::HERO_ATLAS}, "./resources/Textures/Actors/Hero.png");
+		auto desertMapResult = m_textureProvider.load(entt::id_type{Database::Textures::DESERT_MAP}, "./resources/Textures/Maps/DesertMap.png");
+
+		sf::Texture* heroTexture = &*m_textureProvider[Database::Textures::HERO_ATLAS];
+		m_animationProvider.load(entt::id_type{Database::AnimConfigs::HERO_ANIM_CONFIG}, AnimationLoadingData{ "./resources/Animations/Anim_Hero.json", heroTexture});
 	}
 
 	void GameWorld::InitializeSystems()
@@ -69,6 +76,7 @@ namespace vg
 		
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 
+		m_renderSystems.emplace_back(std::make_unique<MapRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cassert>
+#include <optional>
 
 #include "World/World.h"
 #include "Systems/Systems.h"
@@ -8,6 +9,7 @@
 #include "ResourceManagement/TextureProvider.h"
 #include "ResourceManagement/AnimationProvider.h"
 #include "Prefabs/ActorPrefab.h"
+#include "Prefabs/MapFactory.h"
 #include "entt/entt.hpp"
 #include "Database.h"
 namespace vg
@@ -26,6 +28,7 @@ namespace vg
 		TextureProvider m_textureProvider;
 		AnimationProvider m_animationProvider;
 		ActorFactory m_actorFactory;
+		MapFactory m_mapFactory;
 		void LoadResources();
 		void InitializeSystems();
 	};

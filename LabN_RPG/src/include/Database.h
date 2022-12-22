@@ -8,6 +8,7 @@ namespace vg
 		namespace Textures 
 		{
 			static constexpr unsigned int HERO_ATLAS = 'HERO';
+			static constexpr unsigned int DESERT_MAP = 'MDES';
 		}
 
 		namespace AnimConfigs 

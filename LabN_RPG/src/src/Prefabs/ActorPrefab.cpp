@@ -2,7 +2,7 @@
 
 namespace vg 
 {
-	entt::entity ActorFactory::CreateEntity(entt::registry& registry, const ActorLoadingData& data)
+	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const ActorLoadingData& data)
 	{
 		assert(m_textureProvider->contains(data.TextureID));
 		assert(m_animationProvider->contains(data.AnimationPackID));
