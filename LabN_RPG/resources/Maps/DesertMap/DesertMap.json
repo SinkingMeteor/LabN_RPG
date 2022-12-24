@@ -29,7 +29,7 @@
                  "class":"SpawnPoint",
                  "height":0,
                  "id":3,
-                 "name":"SpawnPoint_Hero",
+                 "name":"Actor_Hero",
                  "point":true,
                  "rotation":0,
                  "visible":true,

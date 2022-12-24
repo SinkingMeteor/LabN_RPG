@@ -51,8 +51,11 @@ namespace vg
 		assert(!rootNode.is_null());
 
 		nlohmann::json& mapNode = rootNode["map"];
+
 		MapLoadingData mapLoadingData{ mapNode["path"], mapNode["fileName"]};
-		m_mapFactory.CreateEntity(m_registry, mapLoadingData);
+		std::optional<entt::entity> mapEntity = m_mapFactory.CreateEntity(m_registry, mapLoadingData);
+
+		assert(mapEntity.has_value());
 
 		entt::entity playerController = m_registry.create();
 		m_registry.emplace<PlayerControllerComponent>(playerController);

@@ -27,13 +27,29 @@ namespace vg
 		if(layersNode.is_null() || !layersNode.is_array()) return std::optional<entt::entity>{};
 
 		std::vector<unsigned int> indices{};
+		std::unordered_map<entt::id_type, sf::Vector2f> spawnPoints{};
 
 		for (auto& layer : layersNode)
 		{
 			nlohmann::json tilesData = layer["data"];
-			if (tilesData.is_null()) continue;
-
-			indices = tilesData.get<std::vector<unsigned int>>();
+			if (!tilesData.is_null())
+			{
+				indices = tilesData.get<std::vector<unsigned int>>();
+			}
+			nlohmann::json objectsData = layer["objects"];
+			if (!objectsData.is_null())
+			{
+				for (auto& object : objectsData)
+				{
+					if (object["class"] == "SpawnPoint")
+					{
+						float x = object["x"].get<float>();
+						float y = object["y"].get<float>();
+						entt::id_type objectName = entt::hashed_string{ object["name"].get<std::string>().c_str() }.value();
+						spawnPoints.emplace(std::make_pair(objectName, sf::Vector2f{ x, y }));
+					}
+				}
+			}
 		}
 		unsigned int mapHeight = rootNode["height"].get<unsigned int>();
 		unsigned int mapWidth = rootNode["width"].get<unsigned int>();
@@ -67,13 +83,12 @@ namespace vg
 
 
 		MapComponent& mapComponent = registry.emplace<MapComponent>(mapEntity);
+		mapComponent.SpawnPoints = std::move(spawnPoints);
 		mapComponent.MapIndices = std::move(indices);
 		mapComponent.VertexArray = std::move(vertices);
 		mapComponent.RelatedTexture = &*texture;
-		mapComponent.MapWidth = mapWidth;
-		mapComponent.MapHeight = mapHeight;
-		mapComponent.TileSizeX = tileWidth;
-		mapComponent.TileSizeY = tileHeight;
+		mapComponent.MapSize = sf::Vector2<unsigned int>{ mapWidth, mapHeight };
+		mapComponent.TileSize = sf::Vector2<unsigned int>{ tileWidth, tileHeight };
 		return mapEntity;
 	}
 }

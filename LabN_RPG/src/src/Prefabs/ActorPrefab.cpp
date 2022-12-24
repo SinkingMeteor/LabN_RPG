@@ -5,12 +5,16 @@ namespace vg
 	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const nlohmann::json& data)
 	{
 		assert(!data.is_null());
+
+		auto mapView = registry.view<MapComponent>();
+		assert(mapView.size() == 1);
+
+		entt::entity mapEntity = *mapView.begin();
+		MapComponent& mapComponent = registry.get<MapComponent>(mapEntity);
 		
 		entt::id_type actorNameId = entt::hashed_string{ data["name"].get<std::string>().c_str() }.value();
 		std::string texturePath = data["textureFilePath"];
 		std::string animationPath = data["animationFilePath"];
-
-		bool isPlayable = data["isPlayable"].get<bool>();
 
 		auto heroTexResult = m_textureProvider->load(actorNameId, texturePath);
 		sf::Texture* actorTexture = &*(*m_textureProvider)[actorNameId];
@@ -19,8 +23,18 @@ namespace vg
 
 		entt::entity actor = registry.create();
 
-		registry.emplace<TransformComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+		sf::Vector2f startPosition{};
+		auto spawnPointIterator = mapComponent.SpawnPoints.find(actorNameId);
+		if (spawnPointIterator != mapComponent.SpawnPoints.end()) 
+		{
+			startPosition = spawnPointIterator->second;
+		}
+
+		registry.emplace<TransformComponent>(actor, startPosition, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
 		registry.emplace<MovementComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 0.0f, 0.0f }, 100.0f);
+		
+		bool isPlayable = data["isPlayable"].get<bool>();
+
 		registry.emplace<Possessable>(actor);
 		if (isPlayable) 
 		{
