@@ -5,6 +5,7 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "entt/resource/fwd.hpp"
+#include "TextureProvider.h"
 #include "entt/core/hashed_string.hpp"
 #include "json.hpp"
 
@@ -12,8 +13,8 @@ namespace vg
 {
 	struct Animation
 	{
-		sf::Texture* Texture;
-		std::vector<sf::IntRect> Frames;
+		SlicedTexture* Texture;
+		std::vector<std::size_t> Frames;
 		float FrameRate;
 		entt::id_type AnimationId;
 		entt::id_type AnimationGroupId;
@@ -27,7 +28,7 @@ namespace vg
 	struct AnimationLoadingData
 	{
 		const std::string& Path;
-		sf::Texture* Texture;
+		SlicedTexture* Texture;
 	};
 
 	struct AnimationLoader
@@ -49,16 +50,11 @@ namespace vg
 
 			for (auto& animation : animations)
 			{
-				std::vector<sf::IntRect> frames{};
+				std::vector<std::size_t> frames{};
 				auto& framesNode = animation["frames"];
 				for (auto frame : framesNode)
 				{
-					if (!frame.is_array() || frame.size() != 4)
-					{
-						std::cout << "Animation config at path: " << loadingData.Path << "is invalid";
-						return nullptr;
-					}
-					frames.emplace_back(frame[0].get<int>(), frame[1].get<int>(), frame[2].get<int>(), frame[3].get<int>());
+					frames.emplace_back(frame.get<std::size_t>());
 				}
 				entt::id_type id = entt::hashed_string{ animation["name"].get<std::string>().c_str() }.value();
 				entt::id_type groupId = entt::hashed_string{ animation["group"].get<std::string>().c_str() }.value();

@@ -3,13 +3,13 @@
  "infinite":false,
  "layers":[
         {
-         "data":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1,
-            1, 2, 2, 3, 4, 4, 3, 3, 2, 2, 1,
-            1, 1, 2, 3, 4, 4, 4, 3, 2, 1, 1,
-            1, 2, 2, 3, 3, 4, 4, 3, 2, 2, 1,
-            1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "data":[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4,
+            5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 8,
+            5, 6, 7, 7, 7, 7, 10, 10, 7, 6, 8,
+            5, 6, 7, 11, 10, 11, 10, 10, 7, 6, 8,
+            5, 6, 7, 7, 10, 10, 10, 7, 7, 6, 8,
+            5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 8,
+            13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 16],
          "height":7,
          "id":1,
          "name":"DesertTiles",
@@ -17,6 +17,63 @@
          "type":"tilelayer",
          "visible":true,
          "width":11,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"Items",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":9,
+                 "height":32,
+                 "id":12,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spriteOriginX",
+                         "type":"float",
+                         "value":16
+                        }, 
+                        {
+                         "name":"spriteOriginY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":239.10057867181,
+                 "y":142.095343069716
+                }, 
+                {
+                 "class":"",
+                 "gid":9,
+                 "height":32,
+                 "id":13,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"spriteOriginX",
+                         "type":"float",
+                         "value":16
+                        }, 
+                        {
+                         "name":"spriteOriginY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":32,
+                 "x":46.0777073573987,
+                 "y":110.086525213557
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -43,23 +100,23 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":3,
- "nextobjectid":9,
+ "nextlayerid":6,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
  "tileheight":32,
  "tilesets":[
         {
-         "columns":2,
+         "columns":4,
          "firstgid":1,
          "image":"DesertMap.png",
-         "imageheight":64,
-         "imagewidth":64,
+         "imageheight":128,
+         "imagewidth":128,
          "margin":0,
          "name":"GroundTiles",
          "spacing":0,
-         "tilecount":4,
+         "tilecount":16,
          "tileheight":32,
          "tilewidth":32
         }],

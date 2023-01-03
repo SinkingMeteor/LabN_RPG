@@ -10,7 +10,7 @@ namespace vg
 		{
 			MapComponent& mapComponent = view.get<MapComponent>(entity);
 			sf::RenderStates states{};
-			states.texture = mapComponent.RelatedTexture;
+			states.texture = &mapComponent.RelatedTexture->Texture;
 			window.draw(mapComponent.VertexArray, states);
 		}
 	}

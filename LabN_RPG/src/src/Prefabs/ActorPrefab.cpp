@@ -13,11 +13,11 @@ namespace vg
 		MapComponent& mapComponent = registry.get<MapComponent>(mapEntity);
 		
 		entt::id_type actorNameId = entt::hashed_string{ data["name"].get<std::string>().c_str() }.value();
-		std::string texturePath = data["textureFilePath"];
+		std::string texturePath = data["spriteFilePath"];
 		std::string animationPath = data["animationFilePath"];
 
 		auto heroTexResult = m_textureProvider->load(actorNameId, texturePath);
-		sf::Texture* actorTexture = &*(*m_textureProvider)[actorNameId];
+		SlicedTexture* actorTexture = &*(*m_textureProvider)[actorNameId];
 		m_animationProvider->load(actorNameId, AnimationLoadingData{ animationPath, actorTexture});
 		AnimationPack& actorAnimation = *(*m_animationProvider)[actorNameId];
 
@@ -48,7 +48,7 @@ namespace vg
 		}
 
 		SpriteComponent& spriteComponent = registry.emplace<SpriteComponent>(actor);
-		spriteComponent.Sprite.setTexture(*actorTexture);
+		spriteComponent.Sprite.setTexture(actorTexture->Texture);
 		spriteComponent.Sprite.getTextureRect();
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);

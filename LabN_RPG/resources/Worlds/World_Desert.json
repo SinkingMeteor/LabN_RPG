@@ -11,7 +11,7 @@
     {
        "name" : "Actor_Hero",
        "isPlayable" : true,
-       "textureFilePath" : "./resources/Textures/Actors/Hero.png",
+       "spriteFilePath" : "./resources/Sprites/Actors/Hero.png",
        "animationFilePath" : "./resources/Animations/Anim_Hero.json"
     }
   ]

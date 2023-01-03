@@ -20,7 +20,7 @@ namespace vg
 			m_textureProvider->load(tilesetId, (data.LoadingPath + tilesetFileName).c_str());
 		}
 
-		entt::resource<sf::Texture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
+		entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
 
 		nlohmann::json& layersNode = rootNode["layers"];
 
@@ -64,8 +64,8 @@ namespace vg
 			{
 				unsigned int tileNumber = indices[x + y * mapWidth] - 1;
 
-				unsigned int tu = tileNumber % (texture->getSize().x / tileWidth);
-				unsigned int tv = tileNumber / (texture->getSize().x / tileHeight);
+				unsigned int tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
+				unsigned int tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
 
 				sf::Vertex* quad = &vertices[(x + y * mapWidth) * 4];
 
