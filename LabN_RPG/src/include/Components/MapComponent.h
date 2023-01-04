@@ -6,9 +6,13 @@
 #include <unordered_map>
 namespace vg 
 {
-	struct MapComponent 
+	struct PlaceholdersComponent 
 	{
 		std::unordered_map<entt::id_type, sf::Vector2f> SpawnPoints{};
+	};
+
+	struct MapComponent 
+	{
 		std::vector<unsigned int> MapIndices{};
 		sf::VertexArray VertexArray{};
 		SlicedTexture* RelatedTexture{};

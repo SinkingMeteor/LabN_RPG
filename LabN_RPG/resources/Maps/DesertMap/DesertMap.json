@@ -3,6 +3,7 @@
  "infinite":false,
  "layers":[
         {
+         "class":"Ground",
          "data":[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4,
             5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 8,
             5, 6, 7, 7, 7, 7, 10, 10, 7, 6, 8,
@@ -12,7 +13,7 @@
             13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 16],
          "height":7,
          "id":1,
-         "name":"DesertTiles",
+         "name":"Ground_Layer",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -21,55 +22,34 @@
          "y":0
         }, 
         {
+         "class":"Objects",
          "draworder":"topdown",
-         "id":5,
-         "name":"Items",
+         "id":8,
+         "name":"OnGround_Layer",
          "objects":[
                 {
                  "class":"",
                  "gid":9,
                  "height":32,
-                 "id":12,
+                 "id":14,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"spriteOriginX",
-                         "type":"float",
-                         "value":16
-                        }, 
-                        {
-                         "name":"spriteOriginY",
-                         "type":"float",
-                         "value":25
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":239.10057867181,
-                 "y":142.095343069716
+                 "x":236.675668228162,
+                 "y":105.72168641499
                 }, 
                 {
                  "class":"",
                  "gid":9,
                  "height":32,
-                 "id":13,
+                 "id":15,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"spriteOriginX",
-                         "type":"float",
-                         "value":16
-                        }, 
-                        {
-                         "name":"spriteOriginY",
-                         "type":"float",
-                         "value":25
-                        }],
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":46.0777073573987,
-                 "y":110.086525213557
+                 "x":80.5114356572058,
+                 "y":145.490217690824
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -78,9 +58,10 @@
          "y":0
         }, 
         {
+         "class":"SpawnPlaceholders",
          "draworder":"topdown",
          "id":2,
-         "name":"SpawnPlaceholders",
+         "name":"Placeholders",
          "objects":[
                 {
                  "class":"SpawnPoint",
@@ -100,8 +81,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":14,
+ "nextlayerid":9,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

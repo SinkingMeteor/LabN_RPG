@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="11" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="14">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="11" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="20">
  <editorsettings>
   <export target="DesertMap.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="GroundTiles" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="DesertMap.png" width="128" height="128"/>
  </tileset>
- <layer id="1" name="DesertTiles" width="11" height="7">
+ <layer id="1" name="Ground_Layer" class="Ground" width="11" height="7">
   <data encoding="csv">
 1,2,2,2,2,2,2,2,2,2,4,
 5,6,6,6,6,6,6,6,6,6,8,
@@ -17,21 +17,11 @@
 13,14,14,14,14,14,14,14,14,14,16
 </data>
  </layer>
- <objectgroup id="5" name="Items">
-  <object id="12" gid="9" x="239.101" y="142.095" width="32" height="32">
-   <properties>
-    <property name="spriteOriginX" type="float" value="16"/>
-    <property name="spriteOriginY" type="float" value="25"/>
-   </properties>
-  </object>
-  <object id="13" gid="9" x="46.0777" y="110.087" width="32" height="32">
-   <properties>
-    <property name="spriteOriginX" type="float" value="16"/>
-    <property name="spriteOriginY" type="float" value="25"/>
-   </properties>
-  </object>
+ <objectgroup id="8" name="OnGround_Layer" class="Objects">
+  <object id="14" gid="9" x="236.676" y="105.722" width="32" height="32"/>
+  <object id="15" gid="9" x="80.5114" y="145.49" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="2" name="SpawnPlaceholders">
+ <objectgroup id="2" name="Placeholders" class="SpawnPlaceholders">
   <object id="3" name="Actor_Hero" class="SpawnPoint" x="176" y="110">
    <point/>
   </object>

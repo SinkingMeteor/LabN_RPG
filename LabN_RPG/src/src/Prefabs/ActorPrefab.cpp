@@ -6,11 +6,11 @@ namespace vg
 	{
 		assert(!data.is_null());
 
-		auto mapView = registry.view<MapComponent>();
-		assert(mapView.size() == 1);
+		auto placeholdersView = registry.view<PlaceholdersComponent>();
+		assert(placeholdersView.size() == 1);
 
-		entt::entity mapEntity = *mapView.begin();
-		MapComponent& mapComponent = registry.get<MapComponent>(mapEntity);
+		entt::entity mapEntity = *placeholdersView.begin();
+		PlaceholdersComponent& placeholdersComponent = registry.get<PlaceholdersComponent>(mapEntity);
 		
 		entt::id_type actorNameId = entt::hashed_string{ data["name"].get<std::string>().c_str() }.value();
 		std::string texturePath = data["spriteFilePath"];
@@ -24,8 +24,8 @@ namespace vg
 		entt::entity actor = registry.create();
 
 		sf::Vector2f startPosition{};
-		auto spawnPointIterator = mapComponent.SpawnPoints.find(actorNameId);
-		if (spawnPointIterator != mapComponent.SpawnPoints.end()) 
+		auto spawnPointIterator = placeholdersComponent.SpawnPoints.find(actorNameId);
+		if (spawnPointIterator != placeholdersComponent.SpawnPoints.end()) 
 		{
 			startPosition = spawnPointIterator->second;
 		}

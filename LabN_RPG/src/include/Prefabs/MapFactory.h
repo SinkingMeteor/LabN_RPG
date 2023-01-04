@@ -22,8 +22,12 @@ namespace vg
 		MapFactory(TextureProvider* texProvider) :
 			m_textureProvider(texProvider)
 		{}
-		std::optional<entt::entity> CreateEntity(entt::registry& registry, const MapLoadingData& data);
+		void LoadMap(entt::registry& registry, const MapLoadingData& data);
 	private:
 		TextureProvider* m_textureProvider;
+
+		void ProcessGround(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
+		void ProcessTiles(entt::registry& registry, nlohmann::json& layerNode);
+		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
 	};
 }
