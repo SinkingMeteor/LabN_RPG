@@ -122,6 +122,7 @@ namespace vg
 			float x = object["x"].get<float>();
 			float y = object["y"].get<float>();
 			registry.emplace<TransformComponent>(staticObject, sf::Vector2f{ x, y }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+			registry.emplace<OnGroundSortingLayer>(staticObject, OnGroundSortingLayer{});
 		 }
 	 }
 }

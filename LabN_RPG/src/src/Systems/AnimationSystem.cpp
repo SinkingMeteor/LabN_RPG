@@ -30,7 +30,6 @@ namespace vg
 			const sf::IntRect& rect = textureRect.Rect;
 			spriteComponent.Sprite.setOrigin(textureRect.Pivot);
 			spriteComponent.Sprite.setTextureRect(rect);
-			spriteComponent.Sprite.setOrigin(sf::Vector2f{ rect.width * 0.5f, rect.height * 0.5f });
 		}
 	}
 }

@@ -32,6 +32,7 @@ namespace vg
 
 		registry.emplace<TransformComponent>(actor, startPosition, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
 		registry.emplace<MovementComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 0.0f, 0.0f }, 100.0f);
+		registry.emplace<OnGroundSortingLayer>(actor, OnGroundSortingLayer{});
 		
 		bool isPlayable = data["isPlayable"].get<bool>();
 
@@ -49,7 +50,6 @@ namespace vg
 
 		SpriteComponent& spriteComponent = registry.emplace<SpriteComponent>(actor);
 		spriteComponent.Sprite.setTexture(actorTexture->Texture);
-		spriteComponent.Sprite.getTextureRect();
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);
 		animComponent.CurrentAnimationPack = &actorAnimation;

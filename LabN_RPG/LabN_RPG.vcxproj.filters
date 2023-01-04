@@ -129,6 +129,9 @@
     <ClCompile Include="src\src\Systems\MapRenderSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Game.h">
@@ -237,6 +240,12 @@
       <Filter>Header Files\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Systems\MapRenderSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\SortingLayers.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\ApplyTransformSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>

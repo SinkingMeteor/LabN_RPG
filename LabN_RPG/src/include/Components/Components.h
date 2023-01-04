@@ -8,3 +8,4 @@
 #include "Components/AnimationComponent.h"
 #include "Components/CameraComponent.h"
 #include "Components/MapComponent.h"
+#include "Components/SortingLayers.h"
