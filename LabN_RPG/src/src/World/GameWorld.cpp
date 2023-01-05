@@ -76,7 +76,6 @@ namespace vg
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
 
-		m_renderSystems.emplace_back(std::make_unique<MapRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

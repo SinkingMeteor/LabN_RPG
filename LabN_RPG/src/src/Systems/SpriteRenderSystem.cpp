@@ -9,8 +9,15 @@ namespace vg
 			return (lhs.Transform * VGMath::One).y < (rhs.Transform * VGMath::One).y;
 		});
 
-		auto view = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>();
+		auto groundView = registry.view<DrawableComponent, GroundSortingLayer>();
+		DrawLayer(groundView, window);
+		auto onGroundView = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>();
+		DrawLayer(onGroundView, window);
 
+	}
+
+	void SpriteRenderSystem::DrawLayer(auto& view, sf::RenderWindow& window)
+	{
 		for (entt::entity entity : view)
 		{
 			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
@@ -19,8 +26,8 @@ namespace vg
 
 			for (size_t i = 0; i < spriteComponent.VertexArray.getVertexCount(); i += 4)
 			{
-				const TextureRect& spriteRect = spriteComponent.Rects[i / 4];
-			
+				const std::size_t spriteRectIndex = spriteComponent.RectsIndices[i / 4];
+				const TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteRectIndex];
 				float top = (float)spriteRect.Rect.top;
 				float left = (float)spriteRect.Rect.left;
 				float width = (float)spriteRect.Rect.width;
@@ -36,6 +43,5 @@ namespace vg
 			window.draw(spriteComponent.VertexArray, states);
 		}
 	}
-
 }
 

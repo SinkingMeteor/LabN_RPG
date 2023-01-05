@@ -11,7 +11,8 @@ namespace vg
 
 			for (size_t i = 0; i < spriteComponent.VertexArray.getVertexCount(); i += 4)
 			{
-				const TextureRect& spriteRect = spriteComponent.Rects[i / 4];
+				const std::size_t spriteRectIndex = spriteComponent.RectsIndices[i / 4];
+				const TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteRectIndex];
 				spriteComponent.VertexArray[i].position = transformComponent.Transform * -spriteRect.Pivot;
 				spriteComponent.VertexArray[i + 1].position = transformComponent.Transform * (-spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, 0.0f});
 				spriteComponent.VertexArray[i + 2].position = transformComponent.Transform * (-spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, (float)spriteRect.Rect.height});

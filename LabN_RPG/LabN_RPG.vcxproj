@@ -34,7 +34,6 @@
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\CameraFollowingSystem.cpp" />
     <ClCompile Include="src\src\Systems\CullingRenderSystem.cpp" />
-    <ClCompile Include="src\src\Systems\MapRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp" />
@@ -54,11 +53,11 @@
     <ClInclude Include="src\include\Components\CameraComponent.h" />
     <ClInclude Include="src\include\Components\CommonTags.h" />
     <ClInclude Include="src\include\Components\Components.h" />
-    <ClInclude Include="src\include\Components\MapComponent.h" />
+    <ClInclude Include="src\include\Components\PlaceholdersComponent.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />
     <ClInclude Include="src\include\Components\PlayerControllerComponent.h" />
     <ClInclude Include="src\include\Components\SortingLayers.h" />
-    <ClInclude Include="src\include\Components\SpriteComponent.h" />
+    <ClInclude Include="src\include\Components\DrawableComponent.h" />
     <ClInclude Include="src\include\Components\TransformComponent.h" />
     <ClInclude Include="src\include\Database.h" />
     <ClInclude Include="src\include\Game.h" />
@@ -74,7 +73,6 @@
     <ClInclude Include="src\include\Systems\CameraFollowingSystem.h" />
     <ClInclude Include="src\include\Systems\CullingRenderSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
-    <ClInclude Include="src\include\Systems\MapRenderSystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />
     <ClInclude Include="src\include\Systems\ApplyTransformSystem.h" />

@@ -8,5 +8,7 @@ namespace vg
 	{
 	public:
 		virtual void Render(entt::registry& registry, sf::RenderWindow& window) override;
+	private:
+		void DrawLayer(auto& view, sf::RenderWindow& window);
 	};
 }

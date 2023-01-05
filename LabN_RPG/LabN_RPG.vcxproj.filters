@@ -126,9 +126,6 @@
     <ClCompile Include="src\src\Prefabs\MapFactory.cpp">
       <Filter>Source Files\Prefabs</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\Systems\MapRenderSystem.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
@@ -155,7 +152,7 @@
     <ClInclude Include="src\include\Prefabs\ActorPrefab.h">
       <Filter>Header Files\Prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Components\SpriteComponent.h">
+    <ClInclude Include="src\include\Components\DrawableComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Input\Keyboard.h">
@@ -236,14 +233,11 @@
     <ClInclude Include="src\include\Systems\CameraFollowingSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Components\MapComponent.h">
+    <ClInclude Include="src\include\Components\PlaceholdersComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Prefabs\MapFactory.h">
       <Filter>Header Files\Prefabs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\Systems\MapRenderSystem.h">
-      <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Components\SortingLayers.h">
       <Filter>Header Files\Components</Filter>

@@ -64,11 +64,18 @@ namespace vg
 	 void MapFactory::ProcessGround(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
 		 entt::entity mapEntity = registry.create();
-		 TileMapComponent& mapComponent = registry.emplace<TileMapComponent>(mapEntity);
+		 DrawableComponent& mapComponent = registry.emplace<DrawableComponent>(mapEntity);
+		 registry.emplace<GroundSortingLayer>(mapEntity);
 
 		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
 		 
 		 std::vector<std::size_t> indices = layerNode["data"].get<std::vector<std::size_t>>();
+
+		 for (std::size_t& num : indices) 
+		 {
+			 num -= 1;
+		 }
+
 		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
 		 std::size_t mapWidth = rootNode["width"].get<std::size_t>();
 		 std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
@@ -80,7 +87,7 @@ namespace vg
 		 {
 			 for (size_t y = 0; y < mapHeight; ++y)
 			 {
-				 std::size_t tileNumber = indices[x + y * mapWidth] - 1;
+				 std::size_t tileNumber = indices[x + y * mapWidth];
 
 				 std::size_t tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
 				 std::size_t tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
@@ -99,11 +106,9 @@ namespace vg
 			 }
 		 }
 
-		 mapComponent.MapIndices = std::move(indices);
+		 mapComponent.RectsIndices = std::move(indices);
 		 mapComponent.VertexArray = std::move(vertices);
 		 mapComponent.RelatedTexture = &*texture;
-		 mapComponent.MapSize = sf::Vector2<std::size_t>{ mapWidth, mapHeight };
-		 mapComponent.TileSize = sf::Vector2<std::size_t>{ tileWidth, tileHeight };
 	 }
 	 void MapFactory::ProcessTiles(entt::registry& registry, nlohmann::json& layerNode)
 	 {
@@ -116,12 +121,12 @@ namespace vg
 			std::size_t rectIndex = object["gid"].get<std::size_t>() - 1;
 			const TextureRect& rectData = texture->RectDatas[rectIndex];
 			sf::VertexArray quad( sf::Quads, 4 );
-			std::vector<TextureRect> rects{rectData};
+			std::vector<std::size_t> rects{rectIndex};
 
 			GameplayUtils::SetInitialPositionAndTexCoords(quad, rectData);
 			DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(staticObject);
 			spriteComponent.VertexArray = std::move(quad);
-			spriteComponent.Rects = std::move(rects);
+			spriteComponent.RectsIndices = std::move(rects);
 			spriteComponent.RelatedTexture = &*texture;
 
 			float x = object["x"].get<float>();

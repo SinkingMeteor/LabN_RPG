@@ -52,10 +52,10 @@ namespace vg
 
 		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect);
 
-		std::vector<TextureRect> rects{spriteRect};
+		std::vector<std::size_t> rects{0};
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);
-		spriteComponent.Rects = std::move(rects);
+		spriteComponent.RectsIndices = std::move(rects);
 		spriteComponent.RelatedTexture = actorTexture;
 
 		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor);
