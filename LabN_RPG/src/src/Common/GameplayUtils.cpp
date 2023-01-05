@@ -26,4 +26,23 @@ namespace vg
         entt::id_type downId = entt::hashed_string{ (totalText + "S").c_str() }.value();
         return downId;
 	}
+
+    void GameplayUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect)
+    {
+        quad[0].position = -spriteRect.Pivot;
+        quad[1].position = -spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
+        quad[2].position = -spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };
+        quad[3].position = -spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height };
+
+        float top = (float)spriteRect.Rect.top;
+        float left = (float)spriteRect.Rect.left;
+        float width = (float)spriteRect.Rect.width;
+        float height = (float)spriteRect.Rect.height;
+
+        quad[0].texCoords = sf::Vector2f{ left, top };
+        quad[1].texCoords = sf::Vector2f{ left + width, top };
+        quad[2].texCoords = sf::Vector2f{ left + width, top + height };
+        quad[3].texCoords = sf::Vector2f{ left, top + height };
+    }
+
 }

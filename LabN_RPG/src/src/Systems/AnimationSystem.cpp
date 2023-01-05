@@ -5,11 +5,11 @@ namespace vg
 {
 	void AnimationSystem::Tick(entt::registry& registry, sf::Time deltaTime)
 	{
-		auto view = registry.view<SpriteComponent, AnimationComponent>();
+		auto view = registry.view<DrawableComponent, AnimationComponent>();
 
 		for (entt::entity entity : view)
 		{
-			SpriteComponent& spriteComponent = view.get<SpriteComponent>(entity);
+			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
 			AnimationComponent& animationComponent = view.get<AnimationComponent>(entity);
 
 			if (!animationComponent.CurrentAnimation) continue;
@@ -28,8 +28,7 @@ namespace vg
 			const std::size_t frameIndex = animationComponent.CurrentAnimation->Frames[animationComponent.CurrentFrame];
 			const TextureRect& textureRect = animationComponent.CurrentAnimation->Texture->RectDatas[frameIndex];
 			const sf::IntRect& rect = textureRect.Rect;
-			spriteComponent.Sprite.setOrigin(textureRect.Pivot);
-			spriteComponent.Sprite.setTextureRect(rect);
+			spriteComponent.Rects[0] = textureRect;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 #include "Prefabs/ActorPrefab.h"
-
+#include "Common/GameplayUtils.h"
 namespace vg 
 {
 	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const nlohmann::json& data)
@@ -30,9 +30,9 @@ namespace vg
 			startPosition = spawnPointIterator->second;
 		}
 
-		registry.emplace<TransformComponent>(actor, startPosition, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor, startPosition, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
 		registry.emplace<MovementComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 0.0f, 0.0f }, 100.0f);
-		registry.emplace<OnGroundSortingLayer>(actor, OnGroundSortingLayer{});
+		registry.emplace<OnGroundSortingLayer>(actor);
 		
 		bool isPlayable = data["isPlayable"].get<bool>();
 
@@ -48,8 +48,16 @@ namespace vg
 			}
 		}
 
-		SpriteComponent& spriteComponent = registry.emplace<SpriteComponent>(actor);
-		spriteComponent.Sprite.setTexture(actorTexture->Texture);
+		TextureRect& spriteRect = actorTexture->RectDatas[0];
+		sf::VertexArray quad( sf::Quads, 4 );
+
+		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect);
+
+		std::vector<TextureRect> rects{spriteRect};
+		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
+		spriteComponent.VertexArray = std::move(quad);
+		spriteComponent.Rects = std::move(rects);
+		spriteComponent.RelatedTexture = actorTexture;
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);
 		animComponent.CurrentAnimationPack = &actorAnimation;

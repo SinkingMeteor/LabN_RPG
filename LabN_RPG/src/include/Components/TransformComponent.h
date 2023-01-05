@@ -6,6 +6,7 @@ namespace vg
 	{
 	public:
 		sf::Vector2f Position{};
+		sf::Vector2f Origin{};
 		sf::Vector2f Scale{};
 		float Rotation{};
 	};

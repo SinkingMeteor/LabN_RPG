@@ -33,6 +33,7 @@
     <ClCompile Include="src\src\Systems\AnimationStateSystem.cpp" />
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\CameraFollowingSystem.cpp" />
+    <ClCompile Include="src\src\Systems\CullingRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\MapRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="src\include\Systems\AnimationStateSystem.h" />
     <ClInclude Include="src\include\Systems\AnimationSystem.h" />
     <ClInclude Include="src\include\Systems\CameraFollowingSystem.h" />
+    <ClInclude Include="src\include\Systems\CullingRenderSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\MapRenderSystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />

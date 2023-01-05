@@ -11,12 +11,12 @@ namespace vg
 		std::unordered_map<entt::id_type, sf::Vector2f> SpawnPoints{};
 	};
 
-	struct MapComponent 
+	struct TileMapComponent 
 	{
-		std::vector<unsigned int> MapIndices{};
+		std::vector<std::size_t> MapIndices{};
 		sf::VertexArray VertexArray{};
 		SlicedTexture* RelatedTexture{};
-		sf::Vector2<unsigned int> MapSize{};
-		sf::Vector2<unsigned int> TileSize{};
+		sf::Vector2<std::size_t> MapSize{};
+		sf::Vector2<std::size_t> TileSize{};
 	};
 }

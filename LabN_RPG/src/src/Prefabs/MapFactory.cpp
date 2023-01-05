@@ -1,4 +1,5 @@
 #include "Prefabs/MapFactory.h"
+#include "GameplayUtils.h"
 #include "Database.h"
 namespace vg 
 {
@@ -63,26 +64,26 @@ namespace vg
 	 void MapFactory::ProcessGround(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
 		 entt::entity mapEntity = registry.create();
-		 MapComponent& mapComponent = registry.emplace<MapComponent>(mapEntity);
+		 TileMapComponent& mapComponent = registry.emplace<TileMapComponent>(mapEntity);
 
 		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
 		 
-		 std::vector<unsigned int> indices = layerNode["data"].get<std::vector<unsigned int>>();
-		 unsigned int mapHeight = rootNode["height"].get<unsigned int>();
-		 unsigned int mapWidth = rootNode["width"].get<unsigned int>();
-		 unsigned int tileHeight = rootNode["tileheight"].get<unsigned int>();
-		 unsigned int tileWidth = rootNode["tilewidth"].get<unsigned int>();
-		 unsigned int vertexCount = mapHeight * mapWidth * 4;
+		 std::vector<std::size_t> indices = layerNode["data"].get<std::vector<std::size_t>>();
+		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
+		 std::size_t mapWidth = rootNode["width"].get<std::size_t>();
+		 std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
+		 std::size_t tileWidth = rootNode["tilewidth"].get<std::size_t>();
+		 std::size_t vertexCount = mapHeight * mapWidth * 4;
 		 sf::VertexArray vertices{ sf::Quads, vertexCount };
 
 		 for (size_t x = 0; x < mapWidth; ++x)
 		 {
 			 for (size_t y = 0; y < mapHeight; ++y)
 			 {
-				 unsigned int tileNumber = indices[x + y * mapWidth] - 1;
+				 std::size_t tileNumber = indices[x + y * mapWidth] - 1;
 
-				 unsigned int tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
-				 unsigned int tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
+				 std::size_t tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
+				 std::size_t tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
 
 				 sf::Vertex* quad = &vertices[(x + y * mapWidth) * 4];
 
@@ -101,8 +102,8 @@ namespace vg
 		 mapComponent.MapIndices = std::move(indices);
 		 mapComponent.VertexArray = std::move(vertices);
 		 mapComponent.RelatedTexture = &*texture;
-		 mapComponent.MapSize = sf::Vector2<unsigned int>{ mapWidth, mapHeight };
-		 mapComponent.TileSize = sf::Vector2<unsigned int>{ tileWidth, tileHeight };
+		 mapComponent.MapSize = sf::Vector2<std::size_t>{ mapWidth, mapHeight };
+		 mapComponent.TileSize = sf::Vector2<std::size_t>{ tileWidth, tileHeight };
 	 }
 	 void MapFactory::ProcessTiles(entt::registry& registry, nlohmann::json& layerNode)
 	 {
@@ -112,16 +113,21 @@ namespace vg
 		 for (auto& object : objectsData)
 		 {
 			entt::entity staticObject = registry.create();
-			SpriteComponent& spriteComponent = registry.emplace<SpriteComponent>(staticObject);
 			std::size_t rectIndex = object["gid"].get<std::size_t>() - 1;
 			const TextureRect& rectData = texture->RectDatas[rectIndex];
-			spriteComponent.Sprite.setTexture(texture->Texture);
-			spriteComponent.Sprite.setOrigin(rectData.Pivot);
-			spriteComponent.Sprite.setTextureRect(rectData.Rect);
+			sf::VertexArray quad( sf::Quads, 4 );
+			std::vector<TextureRect> rects{rectData};
+
+			GameplayUtils::SetInitialPositionAndTexCoords(quad, rectData);
+			DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(staticObject);
+			spriteComponent.VertexArray = std::move(quad);
+			spriteComponent.Rects = std::move(rects);
+			spriteComponent.RelatedTexture = &*texture;
 
 			float x = object["x"].get<float>();
 			float y = object["y"].get<float>();
-			registry.emplace<TransformComponent>(staticObject, sf::Vector2f{ x, y }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+			registry.emplace<TransformComponent>(staticObject, sf::Vector2f{ x, y }, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+			registry.emplace<Drawable>(staticObject);
 			registry.emplace<OnGroundSortingLayer>(staticObject, OnGroundSortingLayer{});
 		 }
 	 }

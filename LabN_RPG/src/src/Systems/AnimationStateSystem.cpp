@@ -13,7 +13,7 @@ namespace vg
 
 	void AnimationStateSystem::Tick(entt::registry& registry, sf::Time deltaTime)
 	{
-		auto view = registry.view<SpriteComponent, AnimationComponent>();
+		auto view = registry.view<DrawableComponent, AnimationComponent>();
 
 		for (entt::entity entity : view)
 		{

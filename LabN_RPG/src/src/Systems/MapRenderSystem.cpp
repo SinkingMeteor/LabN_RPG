@@ -4,11 +4,11 @@ namespace vg
 {
 	void MapRenderSystem::Render(entt::registry& registry, sf::RenderWindow& window)
 	{
-		auto view = registry.view<MapComponent>();
+		auto view = registry.view<TileMapComponent>();
 
 		for (entt::entity entity : view)
 		{
-			MapComponent& mapComponent = view.get<MapComponent>(entity);
+			TileMapComponent& mapComponent = view.get<TileMapComponent>(entity);
 			sf::RenderStates states{};
 			states.texture = &mapComponent.RelatedTexture->Texture;
 			window.draw(mapComponent.VertexArray, states);

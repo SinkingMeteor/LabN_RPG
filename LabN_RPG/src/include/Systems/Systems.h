@@ -9,3 +9,4 @@
 #include "Systems/MapRenderSystem.h"
 #include "Systems/ISystem.h"
 #include "Systems/ApplyTransformSystem.h"
+#include "Systems/CullingRenderSystem.h"
