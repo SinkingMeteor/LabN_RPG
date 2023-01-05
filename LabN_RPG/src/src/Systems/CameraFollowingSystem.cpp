@@ -1,5 +1,5 @@
 #include "Systems/CameraFollowingSystem.h"
-
+#include "MathUtils.h"
 namespace vg 
 {
 	void CameraFollowingSystem::Tick(entt::registry& registry, sf::Time deltaTime)
@@ -13,7 +13,7 @@ namespace vg
 		for (entt::entity entity : view) 
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
-			worldView.setCenter(transformComponent.Position);
+			worldView.setCenter(transformComponent.Transform * VGMath::One);
 		}
 	}
 }

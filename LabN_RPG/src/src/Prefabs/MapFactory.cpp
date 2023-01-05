@@ -126,7 +126,11 @@ namespace vg
 
 			float x = object["x"].get<float>();
 			float y = object["y"].get<float>();
-			registry.emplace<TransformComponent>(staticObject, sf::Vector2f{ x, y }, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
+			TransformComponent& transformComponent = registry.emplace<TransformComponent>(staticObject);
+			transformComponent.Origin = rectData.Pivot;
+			transformComponent.Transform.translate(sf::Vector2f{x, y});
+			transformComponent.Transform.scale(VGMath::One);
+
 			registry.emplace<Drawable>(staticObject);
 			registry.emplace<OnGroundSortingLayer>(staticObject, OnGroundSortingLayer{});
 		 }

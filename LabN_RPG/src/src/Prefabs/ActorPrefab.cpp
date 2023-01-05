@@ -30,7 +30,6 @@ namespace vg
 			startPosition = spawnPointIterator->second;
 		}
 
-		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor, startPosition, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1.0f, 1.0f }, 0.0f);
 		registry.emplace<MovementComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 0.0f, 0.0f }, 100.0f);
 		registry.emplace<OnGroundSortingLayer>(actor);
 		
@@ -58,6 +57,11 @@ namespace vg
 		spriteComponent.VertexArray = std::move(quad);
 		spriteComponent.Rects = std::move(rects);
 		spriteComponent.RelatedTexture = actorTexture;
+
+		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor);
+		transformComponent.Origin = spriteRect.Pivot;
+		transformComponent.Transform.translate(startPosition);
+		transformComponent.Transform.scale(sf::Vector2f{ 1.0f, 1.0f });
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);
 		animComponent.CurrentAnimationPack = &actorAnimation;

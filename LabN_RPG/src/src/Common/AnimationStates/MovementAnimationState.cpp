@@ -7,7 +7,7 @@ namespace vg
 		if (!m_registry.all_of<MovementComponent>(entity)) return false;
 
 		MovementComponent& movementComponent = m_registry.get<MovementComponent>(entity);
-		return MathUtils::GetLengthOfVector2(movementComponent.Velocity) > 0.0f;
+		return VGMath::GetLengthOfVector2(movementComponent.Velocity) > 0.0f;
 	}
 
 	void MovementAnimationState::StartAnimation(entt::entity entity, entt::registry& m_registry)

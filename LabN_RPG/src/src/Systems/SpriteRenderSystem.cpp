@@ -1,12 +1,12 @@
 #include "Systems/SpriteRenderSystem.h"
-
+#include "MathUtils.h"
 namespace vg
 {
 	void SpriteRenderSystem::Render(entt::registry& registry, sf::RenderWindow& window)
 	{
-		registry.sort<TransformComponent>([](const TransformComponent& lhs, const TransformComponent& rhs) 
+		registry.sort<TransformComponent>([](const TransformComponent& lhs, const TransformComponent& rhs)
 		{
-			return lhs.Position.y < rhs.Position.y;
+			return (lhs.Transform * VGMath::One).y < (rhs.Transform * VGMath::One).y;
 		});
 
 		auto view = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>();

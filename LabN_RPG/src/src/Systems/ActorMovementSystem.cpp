@@ -10,7 +10,7 @@ namespace vg
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 			MovementComponent& movementComponent = view.get<MovementComponent>(entity);
-			transformComponent.Position += movementComponent.Velocity * movementComponent.Speed * deltaTime.asSeconds();
+			transformComponent.Transform.translate(movementComponent.Velocity * movementComponent.Speed * deltaTime.asSeconds());
 		}
 	}
 }

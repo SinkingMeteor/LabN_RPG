@@ -4,7 +4,7 @@
 
 namespace vg 
 {
-	namespace MathUtils
+	namespace VGMath
 	{
 		static const float PI = 3.1415f;
 

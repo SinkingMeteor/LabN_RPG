@@ -5,9 +5,7 @@ namespace vg
 	struct TransformComponent 
 	{
 	public:
-		sf::Vector2f Position{};
+		sf::Transform Transform{};
 		sf::Vector2f Origin{};
-		sf::Vector2f Scale{};
-		float Rotation{};
 	};
 }

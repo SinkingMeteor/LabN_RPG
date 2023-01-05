@@ -4,10 +4,10 @@ namespace vg
 {
 	entt::id_type GameplayUtils::GetIDByDirection(const std::string& textWithNoPrefix, const sf::Vector2f& direction)
 	{
-        sf::Vector2f normalizedDirection = MathUtils::NormalizeVector2<float>(direction);
-        float movesToRight = MathUtils::Dot(MathUtils::Right, normalizedDirection);
+        sf::Vector2f normalizedDirection = VGMath::NormalizeVector2<float>(direction);
+        float movesToRight = VGMath::Dot(VGMath::Right, normalizedDirection);
 
-        float dotProduct = MathUtils::Dot(MathUtils::Up, normalizedDirection);
+        float dotProduct = VGMath::Dot(VGMath::Up, normalizedDirection);
         std::string totalText { textWithNoPrefix };
 
         if (normalizedDirection.x > 0.0f) 
