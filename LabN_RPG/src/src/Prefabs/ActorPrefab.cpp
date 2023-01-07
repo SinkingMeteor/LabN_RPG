@@ -50,18 +50,19 @@ namespace vg
 		TextureRect& spriteRect = actorTexture->RectDatas[0];
 		sf::VertexArray quad( sf::Quads, 4 );
 
-		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect);
-
-		std::vector<std::size_t> rects{0};
-		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
-		spriteComponent.VertexArray = std::move(quad);
-		spriteComponent.RectsIndices = std::move(rects);
-		spriteComponent.RelatedTexture = actorTexture;
-
 		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor);
 		transformComponent.Origin = spriteRect.Pivot;
 		transformComponent.Transform.translate(startPosition);
 		transformComponent.Transform.scale(sf::Vector2f{ 1.0f, 1.0f });
+
+		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect, transformComponent);
+
+		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
+		spriteComponent.VertexArray = std::move(quad);
+		spriteComponent.RectsIndices.push_back(0);
+		spriteComponent.RelatedTexture = actorTexture;
+		spriteComponent.SpriteWidthByTiles = 1;
+		spriteComponent.SpriteHeightByTiles = 1;
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);
 		animComponent.CurrentAnimationPack = &actorAnimation;

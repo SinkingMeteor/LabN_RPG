@@ -8,17 +8,25 @@ namespace vg
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
-
-			for (size_t i = 0; i < spriteComponent.VertexArray.getVertexCount(); i += 4)
+			std::size_t amountOfTiles = spriteComponent.VertexArray.getVertexCount() / 4;
+			for (size_t i = 0; i < amountOfTiles; ++i)
 			{
-				const std::size_t spriteRectIndex = spriteComponent.RectsIndices[i / 4];
+				const int spriteRectIndex = spriteComponent.RectsIndices[i];
+				if (spriteRectIndex < 0) continue;
 				const TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteRectIndex];
-				spriteComponent.VertexArray[i].position = transformComponent.Transform * -spriteRect.Pivot;
-				spriteComponent.VertexArray[i + 1].position = transformComponent.Transform * (-spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, 0.0f});
-				spriteComponent.VertexArray[i + 2].position = transformComponent.Transform * (-spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, (float)spriteRect.Rect.height});
-				spriteComponent.VertexArray[i + 3].position = transformComponent.Transform * (-spriteRect.Pivot + sf::Vector2f{0.0f, (float)spriteRect.Rect.height});
-			}
 
+				float x = i % spriteComponent.SpriteWidthByTiles;
+				float y = i / spriteComponent.SpriteWidthByTiles;
+				
+				const sf::Vector2f gridOffset = sf::Vector2f{ x * spriteRect.Rect.width, y * spriteRect.Rect.width };
+
+				sf::Vector2f spritePosition = transformComponent.Transform * spriteRect.Pivot;
+
+				spriteComponent.VertexArray[i * 4].position = spritePosition - spriteRect.Pivot + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, 0.0f} + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, (float)spriteRect.Rect.height} + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 3].position = spritePosition - spriteRect.Pivot + sf::Vector2f{0.0f, (float)spriteRect.Rect.height} + gridOffset;
+			}
 		}
 	}
 

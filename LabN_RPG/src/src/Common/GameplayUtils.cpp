@@ -27,12 +27,13 @@ namespace vg
         return downId;
 	}
 
-    void GameplayUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect)
+    void GameplayUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect, const TransformComponent& transformComponent)
     {
-        quad[0].position = -spriteRect.Pivot;
-        quad[1].position = -spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
-        quad[2].position = -spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };
-        quad[3].position = -spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height };
+        sf::Vector2f spritePosition = transformComponent.Transform * spriteRect.Pivot;
+        quad[0].position = spritePosition - spriteRect.Pivot;
+        quad[1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
+        quad[2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };
+        quad[3].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height };
 
         float top = (float)spriteRect.Rect.top;
         float left = (float)spriteRect.Rect.left;

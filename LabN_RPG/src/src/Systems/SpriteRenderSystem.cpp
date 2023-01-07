@@ -6,12 +6,12 @@ namespace vg
 	{
 		registry.sort<TransformComponent>([](const TransformComponent& lhs, const TransformComponent& rhs)
 		{
-			return (lhs.Transform * VGMath::One).y < (rhs.Transform * VGMath::One).y;
+			return (lhs.Transform * lhs.Origin).y < (rhs.Transform * rhs.Origin).y;
 		});
 
-		auto groundView = registry.view<DrawableComponent, GroundSortingLayer>();
+		auto groundView = registry.view<TransformComponent, DrawableComponent, GroundSortingLayer>();
 		DrawLayer(groundView, window);
-		auto onGroundView = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>();
+		auto onGroundView = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>().use<TransformComponent>();
 		DrawLayer(onGroundView, window);
 
 	}
@@ -21,12 +21,14 @@ namespace vg
 		for (entt::entity entity : view)
 		{
 			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
+			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 			sf::RenderStates states{};
 			states.texture = &spriteComponent.RelatedTexture->Texture;
 
 			for (size_t i = 0; i < spriteComponent.VertexArray.getVertexCount(); i += 4)
 			{
-				const std::size_t spriteRectIndex = spriteComponent.RectsIndices[i / 4];
+				const int spriteRectIndex = spriteComponent.RectsIndices[i / 4];
+				if (spriteRectIndex < 0) continue;
 				const TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteRectIndex];
 				float top = (float)spriteRect.Rect.top;
 				float left = (float)spriteRect.Rect.left;
@@ -38,7 +40,6 @@ namespace vg
 				spriteComponent.VertexArray[i + 2].texCoords = sf::Vector2f{ left + width, top + height };
 				spriteComponent.VertexArray[i + 3].texCoords = sf::Vector2f{ left, top + height };
 			}
-
 
 			window.draw(spriteComponent.VertexArray, states);
 		}

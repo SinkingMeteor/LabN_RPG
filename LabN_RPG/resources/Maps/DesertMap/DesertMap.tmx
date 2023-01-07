@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="11" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="20">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="11" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="20">
  <editorsettings>
   <export target="DesertMap.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="GroundTiles" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="DesertMap.png" width="128" height="128"/>
  </tileset>
- <layer id="1" name="Ground_Layer" class="Ground" width="11" height="7">
+ <layer id="1" name="Ground_Tilemap" class="Tilemap" width="11" height="7">
+  <properties>
+   <property name="individualSorting" type="bool" value="false"/>
+   <property name="sortingLayer" value="Ground"/>
+  </properties>
   <data encoding="csv">
 1,2,2,2,2,2,2,2,2,2,4,
 5,6,6,6,6,6,6,6,6,6,8,
@@ -17,10 +21,21 @@
 13,14,14,14,14,14,14,14,14,14,16
 </data>
  </layer>
- <objectgroup id="8" name="OnGround_Layer" class="Objects">
-  <object id="14" gid="9" x="236.676" y="105.722" width="32" height="32"/>
-  <object id="15" gid="9" x="80.5114" y="145.49" width="32" height="32"/>
- </objectgroup>
+ <layer id="9" name="OnGround_Tilemap" class="Tilemap" width="11" height="7">
+  <properties>
+   <property name="individualSorting" type="bool" value="true"/>
+   <property name="sortingLayer" value="OnGround"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,9,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,9,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
  <objectgroup id="2" name="Placeholders" class="SpawnPlaceholders">
   <object id="3" name="Actor_Hero" class="SpawnPoint" x="176" y="110">
    <point/>

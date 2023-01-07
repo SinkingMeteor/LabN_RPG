@@ -31,13 +31,26 @@ namespace vg
 
 			std::string layerClass = layer["class"].get<std::string>();
 
-			if (layerClass == "Ground")
+			if (layerClass == "Tilemap")
 			{
-				ProcessGround(registry, rootNode, layer);
-			}
-			else if (layerClass == "Objects")
-			{
-				ProcessTiles(registry, layer);
+				nlohmann::json& propertiesNode = layer["properties"];
+				if (!propertiesNode.is_null() && propertiesNode.is_array())
+				{
+					for (nlohmann::json& propertyNode : propertiesNode)
+					{
+						if (!propertyNode.is_null() && propertyNode["name"] == "individualSorting")
+						{
+							if (propertyNode["value"].get<bool>())
+							{
+								CreateTilesAsIndividuals(registry, rootNode, layer);
+							}
+							else
+							{
+								CreateTilemap(registry, rootNode, layer);
+							}
+						}
+					}
+				}
 			}
 			else if (layerClass == "SpawnPlaceholders") 
 			{
@@ -61,17 +74,83 @@ namespace vg
 			 }
 		 }
 	 }
-	 void MapFactory::ProcessGround(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
+	 void MapFactory::CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
+	 {
+		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
+		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
+
+		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
+		 std::size_t mapWidth = rootNode["width"].get<std::size_t>();
+		 std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
+		 std::size_t tileWidth = rootNode["tilewidth"].get<std::size_t>();
+		 std::size_t vertexCount = mapHeight * mapWidth * 4;
+		 sf::VertexArray vertices{ sf::Quads, vertexCount };
+
+		 for (size_t i = 0; i < indices.size(); ++i)
+		 {
+			 int& num = indices[i];
+			 num -= 1;
+			 if (num < 0) continue;
+
+			 entt::entity tileEntity = registry.create();
+			 sf::VertexArray vertices{ sf::Quads, 4 };
+
+			 TransformComponent& transformComponent = registry.emplace<TransformComponent>(tileEntity);
+			 TextureRect& spriteRect = texture->RectDatas[num];
+
+			 std::size_t x = i % mapWidth;
+			 std::size_t y = i / mapWidth;
+			 std::size_t tu = i % (texture->Texture.getSize().x / tileWidth);
+			 std::size_t tv = i / (texture->Texture.getSize().x / tileHeight);
+
+			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width, (float)y * spriteRect.Rect.width };
+			 transformComponent.Origin = spriteRect.Pivot;
+			 transformComponent.Transform.translate(offset);
+
+			 GameplayUtils::SetInitialPositionAndTexCoords(vertices, spriteRect, transformComponent);
+
+			 ProcessProperties(registry, tileEntity, layerNode["properties"]);
+
+			 DrawableComponent& tileComponent = registry.emplace<DrawableComponent>(tileEntity);
+			 tileComponent.RectsIndices.push_back(num);
+			 tileComponent.VertexArray = std::move(vertices);
+			 tileComponent.RelatedTexture = &*texture;
+			 tileComponent.SpriteWidthByTiles = 1;
+			 tileComponent.SpriteHeightByTiles = 1;
+		 }
+	 }
+
+	 void MapFactory::ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode)
+	 {
+		 if (propertiesNode.is_null()) return;
+
+		 nlohmann::json& sortingLayerNode = propertiesNode[1];
+		 if (!sortingLayerNode.is_null() && sortingLayerNode["name"] == "sortingLayer")
+		 {
+			 entt::id_type layerId = entt::hashed_string{ sortingLayerNode["value"].get<std::string>().c_str() }.value();
+			 if (layerId == Database::SortingLayers::Ground)
+			 {
+				 registry.emplace<GroundSortingLayer>(entity);
+			 }
+			 else if (layerId == Database::SortingLayers::OnGround)
+			 {
+				 registry.emplace<OnGroundSortingLayer>(entity);
+			 }
+		 }
+	 }
+	 void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
 		 entt::entity mapEntity = registry.create();
 		 DrawableComponent& mapComponent = registry.emplace<DrawableComponent>(mapEntity);
-		 registry.emplace<GroundSortingLayer>(mapEntity);
+		 registry.emplace<TransformComponent>(mapEntity);
+
+		ProcessProperties(registry, mapEntity, layerNode["properties"]);
 
 		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
-		 
-		 std::vector<std::size_t> indices = layerNode["data"].get<std::vector<std::size_t>>();
 
-		 for (std::size_t& num : indices) 
+		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
+
+		 for (int& num : indices) 
 		 {
 			 num -= 1;
 		 }
@@ -109,35 +188,7 @@ namespace vg
 		 mapComponent.RectsIndices = std::move(indices);
 		 mapComponent.VertexArray = std::move(vertices);
 		 mapComponent.RelatedTexture = &*texture;
-	 }
-	 void MapFactory::ProcessTiles(entt::registry& registry, nlohmann::json& layerNode)
-	 {
-		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
-
-		 nlohmann::json& objectsData = layerNode["objects"];
-		 for (auto& object : objectsData)
-		 {
-			entt::entity staticObject = registry.create();
-			std::size_t rectIndex = object["gid"].get<std::size_t>() - 1;
-			const TextureRect& rectData = texture->RectDatas[rectIndex];
-			sf::VertexArray quad( sf::Quads, 4 );
-			std::vector<std::size_t> rects{rectIndex};
-
-			GameplayUtils::SetInitialPositionAndTexCoords(quad, rectData);
-			DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(staticObject);
-			spriteComponent.VertexArray = std::move(quad);
-			spriteComponent.RectsIndices = std::move(rects);
-			spriteComponent.RelatedTexture = &*texture;
-
-			float x = object["x"].get<float>();
-			float y = object["y"].get<float>();
-			TransformComponent& transformComponent = registry.emplace<TransformComponent>(staticObject);
-			transformComponent.Origin = rectData.Pivot;
-			transformComponent.Transform.translate(sf::Vector2f{x, y});
-			transformComponent.Transform.scale(VGMath::One);
-
-			registry.emplace<Drawable>(staticObject);
-			registry.emplace<OnGroundSortingLayer>(staticObject, OnGroundSortingLayer{});
-		 }
+		 mapComponent.SpriteWidthByTiles = mapWidth;
+		 mapComponent.SpriteHeightByTiles = mapHeight;
 	 }
 }

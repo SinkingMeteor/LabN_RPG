@@ -14,7 +14,6 @@ namespace vg
 
 		namespace AnimConfigs 
 		{
-
 			static constexpr unsigned int HERO_ANIM_CONFIG = 'HERO';
 		}
 
@@ -34,5 +33,10 @@ namespace vg
 			static constexpr entt::id_type MOVE_D = entt::hashed_string{ "MOVD" }.value();
 		}
 
+		namespace SortingLayers 
+		{
+			static constexpr entt::id_type Ground = entt::hashed_string{ "Ground" }.value();
+			static constexpr entt::id_type OnGround = entt::hashed_string{ "OnGround" }.value();
+		}
 	}
 }

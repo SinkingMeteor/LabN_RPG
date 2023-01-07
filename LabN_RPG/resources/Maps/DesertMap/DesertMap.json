@@ -3,7 +3,7 @@
  "infinite":false,
  "layers":[
         {
-         "class":"Ground",
+         "class":"Tilemap",
          "data":[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4,
             5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 8,
             5, 6, 7, 7, 7, 7, 10, 10, 7, 6, 8,
@@ -13,8 +13,19 @@
             13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 16],
          "height":7,
          "id":1,
-         "name":"Ground_Layer",
+         "name":"Ground_Tilemap",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"individualSorting",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"sortingLayer",
+                 "type":"string",
+                 "value":"Ground"
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":11,
@@ -22,38 +33,32 @@
          "y":0
         }, 
         {
-         "class":"Objects",
-         "draworder":"topdown",
-         "id":8,
-         "name":"OnGround_Layer",
-         "objects":[
+         "class":"Tilemap",
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":7,
+         "id":9,
+         "name":"OnGround_Tilemap",
+         "opacity":1,
+         "properties":[
                 {
-                 "class":"",
-                 "gid":9,
-                 "height":32,
-                 "id":14,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":32,
-                 "x":236.676,
-                 "y":105.722
+                 "name":"individualSorting",
+                 "type":"bool",
+                 "value":true
                 }, 
                 {
-                 "class":"",
-                 "gid":9,
-                 "height":32,
-                 "id":15,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":32,
-                 "x":80.5114,
-                 "y":145.49
+                 "name":"sortingLayer",
+                 "type":"string",
+                 "value":"OnGround"
                 }],
-         "opacity":1,
-         "type":"objectgroup",
+         "type":"tilelayer",
          "visible":true,
+         "width":11,
          "x":0,
          "y":0
         }, 
@@ -81,7 +86,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
+ "nextlayerid":10,
  "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",

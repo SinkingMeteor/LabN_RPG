@@ -26,8 +26,9 @@ namespace vg
 	private:
 		TextureProvider* m_textureProvider;
 
-		void ProcessGround(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
-		void ProcessTiles(entt::registry& registry, nlohmann::json& layerNode);
+		void CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
+		void CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
+		void ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode);
 	};
 }

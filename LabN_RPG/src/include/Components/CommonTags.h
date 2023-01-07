@@ -6,4 +6,5 @@ namespace vg
 	struct CameraTarget{};
 	struct Drawable{};
 	struct IWantToBeDrawn{};
+	struct GroupRendering{};
 }

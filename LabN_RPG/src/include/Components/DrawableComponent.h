@@ -7,7 +7,9 @@ namespace vg
 	{
 	public:
 		sf::VertexArray VertexArray{};
-		std::vector<std::size_t> RectsIndices{};
+		std::vector<int> RectsIndices{};
 		SlicedTexture* RelatedTexture{};
+		std::size_t SpriteWidthByTiles{};
+		std::size_t SpriteHeightByTiles{};
 	};
 }
