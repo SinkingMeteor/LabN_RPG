@@ -18,6 +18,21 @@ namespace vg
 		InitializeSystems();
 	}
 
+	void GameWorld::InitializeSystems()
+	{
+		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
+		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
+
+		m_systems.emplace_back(std::make_unique<AnimationStateSystem>(this));
+		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
+
+		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
+		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
+
+		m_renderSystems.emplace_back(std::make_unique<CullingRenderSystem>());
+		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
+	}
+
 	void GameWorld::Tick(sf::Time deltaTime)
 	{
 		for (std::unique_ptr<System>& systemPointer : m_systems) 
@@ -63,19 +78,5 @@ namespace vg
 		{
 			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(m_registry, actorData);
 		}
-	}
-
-	void GameWorld::InitializeSystems()
-	{
-		m_systems.emplace_back(std::make_unique<PlayerControllerSystem>(this));
-		m_systems.emplace_back(std::make_unique<ActorMovementSystem>(this));
-
-		m_systems.emplace_back(std::make_unique<AnimationStateSystem>(this));
-		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
-		
-		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
-		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
-
-		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 }

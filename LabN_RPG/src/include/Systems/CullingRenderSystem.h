@@ -2,8 +2,9 @@
 #include "Systems/ISystem.h"
 namespace vg 
 {
-	class CullingRenderSystem : IRenderSystem 
+	class CullingRenderSystem final : public IRenderSystem 
 	{
+	public:
 		virtual void Render(entt::registry& registry, sf::RenderWindow& window) override;
 	};
 }

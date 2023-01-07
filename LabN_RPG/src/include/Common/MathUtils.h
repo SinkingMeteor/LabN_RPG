@@ -37,6 +37,31 @@ namespace vg
 			return sf::Vector2<T>{x, y};
 		}
 
+		template<typename T, typename V>
+		static bool Intersects2D(const sf::Rect<T>& rect1, const sf::Rect<V>& rect2)
+		{
+			static_assert(std::is_arithmetic_v<T> && std::is_arithmetic_v<V>);
+
+			sf::Vector2<T> rect1Min = sf::Vector2<T>{ rect1.left, rect1.top };
+			sf::Vector2<V> rect2Min = sf::Vector2<V>{ rect2.left, rect2.top };
+			sf::Vector2<T> rect1Max = rect1Min + sf::Vector2<T>{ rect1.width, rect1.height };
+			sf::Vector2<V> rect2Max = rect2Min + sf::Vector2<V>{ rect2.width, rect2.height };
+
+			return rect1Min.x <= rect2Max.x &&
+				rect1Max.x >= rect2Min.x &&
+				rect1Min.y <= rect2Max.y &&
+				rect1Max.y >= rect2Min.y;
+		}
+
+		template<typename T>
+		static sf::Rect<T> TwoVectorsToRect(const sf::Vector2<T>& leftTop, const sf::Vector2<T>& rightBottom)
+		{
+			static_assert(std::is_arithmetic_v<T>);
+
+			sf::Vector2<T> size = sf::Vector2<T>{ rightBottom.x - leftTop.x, rightBottom.y - leftTop.y };
+			return sf::Rect<T>{leftTop, size};
+		}
+
 		template<typename L, typename R>
 		float Dot(const sf::Vector2<L>& lhs, const sf::Vector2<R>& rhs)
 		{
