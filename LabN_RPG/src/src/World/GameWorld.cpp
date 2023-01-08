@@ -58,7 +58,7 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Desert.json")};
+		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Forest.json")};
 		nlohmann::json rootNode;
 		input >> rootNode;
 		input.close();

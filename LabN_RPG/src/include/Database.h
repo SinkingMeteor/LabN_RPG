@@ -9,7 +9,9 @@ namespace vg
 		{
 			static constexpr unsigned int HERO_ATLAS = 'HERO';
 			static constexpr unsigned int DESERT_MAP = 'MDES';
-			static constexpr entt::id_type DESERT_GROUND_TILESET = entt::hashed_string{ "GroundTiles" }.value();
+			static constexpr unsigned int FOREST_MAP = 'MFOR';
+			static constexpr entt::id_type DESERT_GROUND_TILESET = entt::hashed_string{ "DesertGroundTiles" }.value();
+			static constexpr entt::id_type FOREST_GROUND_TILESET = entt::hashed_string{ "ForestMap" }.value();
 		}
 
 		namespace AnimConfigs 
@@ -37,6 +39,7 @@ namespace vg
 		{
 			static constexpr entt::id_type Ground = entt::hashed_string{ "Ground" }.value();
 			static constexpr entt::id_type OnGround = entt::hashed_string{ "OnGround" }.value();
+			static constexpr entt::id_type AboveGround = entt::hashed_string{ "AboveGround" }.value();
 		}
 	}
 }

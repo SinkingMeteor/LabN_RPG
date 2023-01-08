@@ -29,6 +29,7 @@ namespace vg
 		{
 			if (layer.is_null()) continue;
 
+			assert(!layer["class"].is_null());
 			std::string layerClass = layer["class"].get<std::string>();
 
 			if (layerClass == "Tilemap")
@@ -76,7 +77,7 @@ namespace vg
 	 }
 	 void MapFactory::CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
-		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
+		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::FOREST_GROUND_TILESET];
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
 
 		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
@@ -137,6 +138,10 @@ namespace vg
 			 {
 				 registry.emplace<OnGroundSortingLayer>(entity);
 			 }
+			 else if (layerId == Database::SortingLayers::AboveGround)
+			 {
+				 registry.emplace<AboveGroundSortingLayer>(entity);
+			 }
 		 }
 	 }
 	 void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
@@ -147,7 +152,7 @@ namespace vg
 
 		ProcessProperties(registry, mapEntity, layerNode["properties"]);
 
-		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::DESERT_GROUND_TILESET];
+		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::FOREST_GROUND_TILESET];
 
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
 
@@ -167,17 +172,19 @@ namespace vg
 		 {
 			 for (size_t y = 0; y < mapHeight; ++y)
 			 {
-				 std::size_t tileNumber = indices[x + y * mapWidth];
-
-				 std::size_t tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
-				 std::size_t tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
-
 				 sf::Vertex* quad = &vertices[(x + y * mapWidth) * 4];
 
 				 quad[0].position = sf::Vector2f(x * tileWidth, y * tileHeight);
 				 quad[1].position = sf::Vector2f((x + 1) * tileWidth, y * tileHeight);
 				 quad[2].position = sf::Vector2f((x + 1) * tileWidth, (y + 1) * tileHeight);
 				 quad[3].position = sf::Vector2f(x * tileWidth, (y + 1) * tileHeight);
+
+				 int tileNumber = indices[x + y * mapWidth];
+
+				 if (tileNumber < 0) continue;
+
+				 std::size_t tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
+				 std::size_t tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
 
 				 quad[0].texCoords = sf::Vector2f(tu * tileWidth, tv * tileHeight);
 				 quad[1].texCoords = sf::Vector2f((tu + 1) * tileWidth, tv * tileHeight);

@@ -9,12 +9,14 @@ namespace vg
 			return (lhs.Transform * lhs.Origin).y < (rhs.Transform * rhs.Origin).y;
 		});
 
-		auto groundView = registry.view<TransformComponent, DrawableComponent, GroundSortingLayer>();
+		auto groundView = registry.view<TransformComponent, DrawableComponent, GroundSortingLayer>().use<TransformComponent>();
 		DrawLayer(groundView, window);
 
 		auto onGroundView = registry.view<TransformComponent, DrawableComponent, OnGroundSortingLayer>().use<TransformComponent>();
 		DrawLayer(onGroundView, window);
 
+		auto aboveGroundView = registry.view<TransformComponent, DrawableComponent, AboveGroundSortingLayer>().use<TransformComponent>();
+		DrawLayer(aboveGroundView, window);
 	}
 
 	void SpriteRenderSystem::DrawLayer(auto& view, sf::RenderWindow& window)
