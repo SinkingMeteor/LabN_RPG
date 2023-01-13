@@ -3,6 +3,9 @@
  <editorsettings>
   <export target="ForestMap.json" format="json"/>
  </editorsettings>
+ <properties>
+  <property name="tileMap" value="ForestMap"/>
+ </properties>
  <tileset firstgid="1" name="ForestMap" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="ForestMap.png" width="128" height="128"/>
  </tileset>
@@ -10,6 +13,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="false"/>
    <property name="sortingLayer" value="Ground"/>
+   <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -38,6 +42,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="true"/>
    <property name="sortingLayer" value="Ground"/>
+   <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -66,6 +71,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="true"/>
    <property name="sortingLayer" value="OnGround"/>
+   <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -94,6 +100,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="false"/>
    <property name="sortingLayer" value="AboveGround"/>
+   <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

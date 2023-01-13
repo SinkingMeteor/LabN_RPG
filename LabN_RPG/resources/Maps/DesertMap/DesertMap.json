@@ -25,6 +25,11 @@
                  "name":"sortingLayer",
                  "type":"string",
                  "value":"Ground"
+                }, 
+                {
+                 "name":"tileMap",
+                 "type":"string",
+                 "value":"GroundTiles"
                 }],
          "type":"tilelayer",
          "visible":true,
@@ -55,6 +60,11 @@
                  "name":"sortingLayer",
                  "type":"string",
                  "value":"OnGround"
+                }, 
+                {
+                 "name":"tileMap",
+                 "type":"string",
+                 "value":"GroundTiles"
                 }],
          "type":"tilelayer",
          "visible":true,

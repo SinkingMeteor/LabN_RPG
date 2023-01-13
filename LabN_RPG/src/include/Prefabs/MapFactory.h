@@ -29,6 +29,6 @@ namespace vg
 		void CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
 		void CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
-		void ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode);
+		void ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode, entt::resource<SlicedTexture>& tilemapTexture);
 	};
 }

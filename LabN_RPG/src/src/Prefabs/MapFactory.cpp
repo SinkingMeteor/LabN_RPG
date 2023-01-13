@@ -77,7 +77,6 @@ namespace vg
 	 }
 	 void MapFactory::CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
-		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::FOREST_GROUND_TILESET];
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
 
 		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
@@ -96,6 +95,10 @@ namespace vg
 			 entt::entity tileEntity = registry.create();
 			 sf::VertexArray vertices{ sf::Quads, 4 };
 
+			 entt::resource<SlicedTexture> texture{};
+
+			 ProcessProperties(registry, tileEntity, layerNode["properties"], texture);
+
 			 TransformComponent& transformComponent = registry.emplace<TransformComponent>(tileEntity);
 			 TextureRect& spriteRect = texture->RectDatas[num];
 
@@ -110,8 +113,6 @@ namespace vg
 
 			 GameplayUtils::SetInitialPositionAndTexCoords(vertices, spriteRect, transformComponent);
 
-			 ProcessProperties(registry, tileEntity, layerNode["properties"]);
-
 			 DrawableComponent& tileComponent = registry.emplace<DrawableComponent>(tileEntity);
 			 tileComponent.RectsIndices.push_back(num);
 			 tileComponent.VertexArray = std::move(vertices);
@@ -122,7 +123,7 @@ namespace vg
 		 }
 	 }
 
-	 void MapFactory::ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode)
+	 void MapFactory::ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode, entt::resource<SlicedTexture>& tilemapTexture)
 	 {
 		 if (propertiesNode.is_null()) return;
 
@@ -143,6 +144,13 @@ namespace vg
 				 registry.emplace<AboveGroundSortingLayer>(entity);
 			 }
 		 }
+
+		 nlohmann::json& tilemapNode = propertiesNode[2];
+		 if (!tilemapNode.is_null() && tilemapNode["name"] == "tileMap")
+		 {
+			 entt::id_type tilemapId = entt::hashed_string{ tilemapNode["value"].get<std::string>().c_str() }.value();
+			 tilemapTexture = (*m_textureProvider)[tilemapId];
+		 }
 	 }
 	 void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
 	 {
@@ -150,9 +158,9 @@ namespace vg
 		 DrawableComponent& mapComponent = registry.emplace<DrawableComponent>(mapEntity);
 		 registry.emplace<TransformComponent>(mapEntity);
 
-		ProcessProperties(registry, mapEntity, layerNode["properties"]);
+		 entt::resource<SlicedTexture> texture{};
 
-		 entt::resource<SlicedTexture> texture = (*m_textureProvider)[Database::Textures::FOREST_GROUND_TILESET];
+		ProcessProperties(registry, mapEntity, layerNode["properties"], texture);
 
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
 

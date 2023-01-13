@@ -10,6 +10,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="false"/>
    <property name="sortingLayer" value="Ground"/>
+   <property name="tileMap" value="GroundTiles"/>
   </properties>
   <data encoding="csv">
 1,2,2,2,2,2,2,2,2,2,4,
@@ -25,6 +26,7 @@
   <properties>
    <property name="individualSorting" type="bool" value="true"/>
    <property name="sortingLayer" value="OnGround"/>
+   <property name="tileMap" value="GroundTiles"/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,
