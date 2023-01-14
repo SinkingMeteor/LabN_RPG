@@ -5,7 +5,7 @@ namespace vg
 	struct TransformComponent 
 	{
 	public:
-		sf::Transform LocalTransform{sf::Transform::Identity};
-		sf::Transform GlobalTransform{ sf::Transform::Identity};
+		sf::Transform LocalTransform{};
+		sf::Transform GlobalTransform{};
 	};
 }

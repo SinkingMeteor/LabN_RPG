@@ -125,7 +125,6 @@ namespace vg
 			 tileComponent.RectsIndices.push_back(num);
 			 tileComponent.VertexArray = std::move(vertices);
 			 tileComponent.RelatedTexture = &*texture;
-			 tileComponent.CullingBits.resize(1);
 			 tileComponent.SpriteWidthByTiles = 1;
 			 tileComponent.SpriteHeightByTiles = 1;
 		 }
@@ -219,7 +218,6 @@ namespace vg
 		 mapComponent.RectsIndices = std::move(indices);
 		 mapComponent.VertexArray = std::move(vertices);
 		 mapComponent.RelatedTexture = &*texture;
-		 mapComponent.CullingBits.resize(mapWidth * mapHeight);
 		 mapComponent.SpriteWidthByTiles = mapWidth;
 		 mapComponent.SpriteHeightByTiles = mapHeight;
 	 }

@@ -6,7 +6,7 @@ namespace vg
 {
 	struct NodeComponent 
 	{
-		std::optional<entt::entity> Parent{};
+		entt::entity Parent{ entt::null };
 		std::vector<entt::entity> Children{};
 	};
 }

@@ -29,7 +29,6 @@ namespace vg
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
 
-		//m_renderSystems.emplace_back(std::make_unique<CullingRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 
@@ -50,6 +49,23 @@ namespace vg
 		for (std::unique_ptr<IRenderSystem>& systemPointer : m_renderSystems)
 		{
 			systemPointer->Render(m_registry, window);
+		}
+
+		auto view = m_registry.view<TransformComponent, DrawableComponent>();
+		for (entt::entity entity : view)
+		{
+			TransformComponent& heroTransform = view.get<TransformComponent>(entity);
+			DrawableComponent& heroDrawable = view.get<DrawableComponent>(entity);
+			for (int rectIndex : heroDrawable.RectsIndices)
+			{
+				if (rectIndex < 0) continue;
+				TextureRect rect = heroDrawable.RelatedTexture->RectDatas[rectIndex];
+
+				sf::CircleShape circle{ 1.0f };
+				circle.setFillColor(sf::Color::Magenta);
+				circle.setPosition(heroTransform.GlobalTransform * rect.Pivot);
+				window.draw(circle);
+			}
 		}
 
 		m_window->SetView(m_window->GetView());

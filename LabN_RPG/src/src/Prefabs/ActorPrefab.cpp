@@ -67,7 +67,6 @@ namespace vg
 		spriteComponent.VertexArray = std::move(quad);
 		spriteComponent.RectsIndices.push_back(0);
 		spriteComponent.RelatedTexture = actorTexture;
-		spriteComponent.CullingBits.resize(1);
 		spriteComponent.SpriteWidthByTiles = 1;
 		spriteComponent.SpriteHeightByTiles = 1;
 

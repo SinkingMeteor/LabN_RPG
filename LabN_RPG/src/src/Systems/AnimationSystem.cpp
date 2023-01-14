@@ -5,10 +5,11 @@ namespace vg
 {
 	void AnimationSystem::Tick(entt::registry& registry, sf::Time deltaTime)
 	{
-		auto view = registry.view<DrawableComponent, AnimationComponent>();
+		auto view = registry.view<TransformComponent, DrawableComponent, AnimationComponent>();
 
 		for (entt::entity entity : view)
 		{
+			//TransformComponent& transformCompo
 			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
 			AnimationComponent& animationComponent = view.get<AnimationComponent>(entity);
 

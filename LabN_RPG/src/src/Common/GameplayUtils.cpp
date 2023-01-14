@@ -29,7 +29,8 @@ namespace vg
 
     void GameplayUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect, const TransformComponent& transformComponent)
     {
-        sf::Vector2f spritePosition = transformComponent.LocalTransform * spriteRect.Pivot;
+        sf::Vector2f spritePosition = transformComponent.GlobalTransform * VGMath::Zero;
+
         quad[0].position = spritePosition - spriteRect.Pivot;
         quad[1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
         quad[2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };

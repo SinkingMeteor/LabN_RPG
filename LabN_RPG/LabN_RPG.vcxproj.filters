@@ -129,9 +129,6 @@
     <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\Systems\CullingRenderSystem.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Game.h">
@@ -243,9 +240,6 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Systems\ApplyTransformSystem.h">
-      <Filter>Header Files\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\Systems\CullingRenderSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Components\NodeComponent.h">
