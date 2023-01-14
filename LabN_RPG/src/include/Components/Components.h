@@ -9,3 +9,4 @@
 #include "Components/CameraComponent.h"
 #include "Components/PlaceholdersComponent.h"
 #include "Components/SortingLayers.h"
+#include "Components/NodeComponent.h"

@@ -3,8 +3,10 @@
 #include "Database.h"
 namespace vg 
 {
-	void MapFactory::LoadMap(entt::registry& registry, const MapLoadingData& data)
+	void MapFactory::LoadMap(entt::registry& registry, const MapLoadingData& data, entt::entity parent)
 	{
+		assert(registry.all_of<NodeComponent>(parent));
+
 		std::string mapFullPath = (data.LoadingPath + data.MapFileName);
 		std::ifstream input{ static_cast<const char*>(mapFullPath.c_str()) };
 		nlohmann::json rootNode;
@@ -43,11 +45,11 @@ namespace vg
 						{
 							if (propertyNode["value"].get<bool>())
 							{
-								CreateTilesAsIndividuals(registry, rootNode, layer);
+								CreateTilesAsIndividuals(registry, rootNode, layer, parent);
 							}
 							else
 							{
-								CreateTilemap(registry, rootNode, layer);
+								CreateTilemap(registry, rootNode, layer, parent);
 							}
 						}
 					}
@@ -75,7 +77,7 @@ namespace vg
 			 }
 		 }
 	 }
-	 void MapFactory::CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
+	 void MapFactory::CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent)
 	 {
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
 
@@ -102,14 +104,20 @@ namespace vg
 			 TransformComponent& transformComponent = registry.emplace<TransformComponent>(tileEntity);
 			 TextureRect& spriteRect = texture->RectDatas[num];
 
+			 TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
+			 registry.get<NodeComponent>(parent).Children.push_back(tileEntity);
+			 NodeComponent& nodeComponent = registry.emplace<NodeComponent>(tileEntity);
+			 nodeComponent.Parent = parent;
+
 			 std::size_t x = i % mapWidth;
 			 std::size_t y = i / mapWidth;
 			 std::size_t tu = i % (texture->Texture.getSize().x / tileWidth);
 			 std::size_t tv = i / (texture->Texture.getSize().x / tileHeight);
 
+
 			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width, (float)y * spriteRect.Rect.width };
-			 transformComponent.Origin = spriteRect.Pivot;
-			 transformComponent.Transform.translate(offset);
+			 transformComponent.GlobalTransform.translate(offset);
+			 transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * offset);
 
 			 GameplayUtils::SetInitialPositionAndTexCoords(vertices, spriteRect, transformComponent);
 
@@ -152,11 +160,18 @@ namespace vg
 			 tilemapTexture = (*m_textureProvider)[tilemapId];
 		 }
 	 }
-	 void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode)
+	 void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent)
 	 {
 		 entt::entity mapEntity = registry.create();
 		 DrawableComponent& mapComponent = registry.emplace<DrawableComponent>(mapEntity);
-		 registry.emplace<TransformComponent>(mapEntity);
+		 TransformComponent& transformComponent = registry.emplace<TransformComponent>(mapEntity);
+
+		 TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
+		 registry.get<NodeComponent>(parent).Children.push_back(mapEntity);
+		 NodeComponent& nodeComponent = registry.emplace<NodeComponent>(mapEntity);
+		 nodeComponent.Parent = parent;
+
+		 transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * VGMath::Zero);
 
 		 entt::resource<SlicedTexture> texture{};
 

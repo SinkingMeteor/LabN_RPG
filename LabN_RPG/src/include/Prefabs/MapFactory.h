@@ -22,13 +22,13 @@ namespace vg
 		MapFactory(TextureProvider* texProvider) :
 			m_textureProvider(texProvider)
 		{}
-		void LoadMap(entt::registry& registry, const MapLoadingData& data);
+		void LoadMap(entt::registry& registry, const MapLoadingData& data, entt::entity parent);
 	private:
 		TextureProvider* m_textureProvider;
 
-		void CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
+		void CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
-		void CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode);
+		void CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
 		void ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode, entt::resource<SlicedTexture>& tilemapTexture);
 	};
 }

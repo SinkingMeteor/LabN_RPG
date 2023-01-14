@@ -6,7 +6,7 @@ namespace vg
 	{
 		registry.sort<TransformComponent>([](const TransformComponent& lhs, const TransformComponent& rhs)
 		{
-			return (lhs.Transform * lhs.Origin).y < (rhs.Transform * rhs.Origin).y;
+			return (lhs.GlobalTransform * VGMath::Zero).y < (rhs.GlobalTransform * VGMath::Zero).y;
 		});
 
 		auto groundView = registry.view<TransformComponent, DrawableComponent, GroundSortingLayer>().use<TransformComponent>();
@@ -27,6 +27,7 @@ namespace vg
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 			sf::RenderStates states{};
 			states.texture = &spriteComponent.RelatedTexture->Texture;
+
 			std::size_t amountOfTiles = spriteComponent.VertexArray.getVertexCount() / 4;
 
 			//todo: solve copy problem
@@ -50,6 +51,18 @@ namespace vg
 				float left = (float)spriteRect.Rect.left;
 				float width = (float)spriteRect.Rect.width;
 				float height = (float)spriteRect.Rect.height;
+
+				float x = i % spriteComponent.SpriteWidthByTiles;
+				float y = i / spriteComponent.SpriteWidthByTiles;
+
+				const sf::Vector2f gridOffset = sf::Vector2f{ x * spriteRect.Rect.width, y * spriteRect.Rect.width };
+
+				sf::Vector2f spritePosition = transformComponent.GlobalTransform * spriteRect.Pivot;
+
+				spriteComponent.VertexArray[i * 4].position = spritePosition - spriteRect.Pivot + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f } + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height } + gridOffset;
+				spriteComponent.VertexArray[i * 4 + 3].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height } + gridOffset;
 
 				spriteComponent.VertexArray[i * 4].texCoords = sf::Vector2f{ left, top };
 				spriteComponent.VertexArray[i * 4 + 1].texCoords = sf::Vector2f{ left + width, top };

@@ -1,9 +1,18 @@
 #include "Systems/ApplyTransformSystem.h"
+#include <cassert>
 namespace vg
 {
 	void ApplyTransformSystem::Tick(entt::registry& registry, sf::Time deltaTime)
 	{
-		auto view = registry.view<DrawableComponent, TransformComponent>();
+
+		entt::entity rootEntity = m_world->GetSceneRootEntity();
+		sf::Transform rootTransform = sf::Transform::Identity;
+
+		ApplyTransformToChildren(rootEntity, registry, rootTransform);
+
+		/*
+		auto view = registry.view<DrawableComponent, TransformComponent, NodeComponent>();
+
 		for (entt::entity entity : view)
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
@@ -27,6 +36,21 @@ namespace vg
 				spriteComponent.VertexArray[i * 4 + 2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{(float)spriteRect.Rect.width, (float)spriteRect.Rect.height} + gridOffset;
 				spriteComponent.VertexArray[i * 4 + 3].position = spritePosition - spriteRect.Pivot + sf::Vector2f{0.0f, (float)spriteRect.Rect.height} + gridOffset;
 			}
+		}*/
+	}
+
+	void ApplyTransformSystem::ApplyTransformToChildren(entt::entity rootEntity, entt::registry& registry, sf::Transform& parentTransform)
+	{
+		TransformComponent& transformComponent = registry.get<TransformComponent>(rootEntity);
+		NodeComponent& nodeComponent = registry.get<NodeComponent>(rootEntity);
+
+		transformComponent.GlobalTransform = parentTransform * transformComponent.LocalTransform;
+
+		for (entt::entity entity : nodeComponent.Children)
+		{
+			assert(registry.all_of<NodeComponent>(entity) && registry.all_of<TransformComponent>(entity));
+
+			ApplyTransformToChildren(entity, registry, transformComponent.GlobalTransform);
 		}
 	}
 

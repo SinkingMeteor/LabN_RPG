@@ -3,10 +3,12 @@
 namespace vg 
 {
 	Window::Window() :
+		m_view(),
 		m_window(sf::VideoMode(640, 360), "Game"),
 		m_keyboard(),
 		m_mouse()
 	{
+		m_view.setSize(GetScreenSize());
 		m_window.setFramerateLimit(60);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setKeyRepeatEnabled(false);

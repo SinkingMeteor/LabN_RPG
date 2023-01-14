@@ -29,7 +29,7 @@ namespace vg
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
 
-		m_renderSystems.emplace_back(std::make_unique<CullingRenderSystem>());
+		//m_renderSystems.emplace_back(std::make_unique<CullingRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
 	}
 
@@ -52,7 +52,7 @@ namespace vg
 			systemPointer->Render(m_registry, window);
 		}
 
-		m_window->SetView(m_worldView);
+		m_window->SetView(m_window->GetView());
 		window.display();
 	}
 
@@ -68,15 +68,16 @@ namespace vg
 		nlohmann::json& mapNode = rootNode["map"];
 
 		MapLoadingData mapLoadingData{ mapNode["path"], mapNode["fileName"]};
-		m_mapFactory.LoadMap(m_registry, mapLoadingData);
+		m_mapFactory.LoadMap(m_registry, mapLoadingData, m_rootEntity);
 
 		entt::entity playerController = m_registry.create();
 		m_registry.emplace<PlayerControllerComponent>(playerController);
 
 		nlohmann::json& actorsNode = rootNode["actors"];
+
 		for (const nlohmann::json& actorData : actorsNode)
 		{
-			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(m_registry, actorData);
+			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(m_registry, actorData, m_rootEntity);
 		}
 	}
 }

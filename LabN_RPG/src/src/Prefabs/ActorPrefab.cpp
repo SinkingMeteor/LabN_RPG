@@ -2,9 +2,10 @@
 #include "Common/GameplayUtils.h"
 namespace vg 
 {
-	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const nlohmann::json& data)
+	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const nlohmann::json& data, entt::entity parent)
 	{
 		assert(!data.is_null());
+		assert(registry.all_of<NodeComponent>(parent) && registry.all_of<TransformComponent>(parent));
 
 		auto placeholdersView = registry.view<PlaceholdersComponent>();
 		assert(placeholdersView.size() == 1);
@@ -50,10 +51,15 @@ namespace vg
 		TextureRect& spriteRect = actorTexture->RectDatas[0];
 		sf::VertexArray quad( sf::Quads, 4 );
 
+		TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
+		registry.get<NodeComponent>(parent).Children.push_back(actor);
+		NodeComponent& nodeComponent = registry.emplace<NodeComponent>(actor);
+		nodeComponent.Parent = parent;
+
 		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor);
-		transformComponent.Origin = spriteRect.Pivot;
-		transformComponent.Transform.translate(startPosition);
-		transformComponent.Transform.scale(sf::Vector2f{ 1.0f, 1.0f });
+		transformComponent.GlobalTransform.translate(startPosition);
+		transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * startPosition);
+		transformComponent.LocalTransform.scale(sf::Vector2f{ 1.0f, 1.0f });
 
 		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect, transformComponent);
 

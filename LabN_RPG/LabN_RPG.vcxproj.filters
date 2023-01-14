@@ -248,5 +248,8 @@
     <ClInclude Include="src\include\Systems\CullingRenderSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\Components\NodeComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
