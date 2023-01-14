@@ -18,6 +18,7 @@ namespace vg
 		virtual void Render(entt::registry& registry, sf::RenderWindow& window) override;
 	private:
 		void DrawLayer(std::vector<PivotEntity>& sortedPivots, sf::RenderWindow& window, auto& view);
+		void DrawLayer(auto& view, sf::RenderWindow& window);
 		void SortEntitiesByPivot(auto& view, std::vector<PivotEntity>& result);
 	};
 }

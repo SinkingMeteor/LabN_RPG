@@ -1,7 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "ResourceManagement/TextureProvider.h"
-#include "dynamic_bitset.hpp"
 namespace vg 
 {
 
