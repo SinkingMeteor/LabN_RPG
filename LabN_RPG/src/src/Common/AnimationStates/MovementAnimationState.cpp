@@ -17,7 +17,7 @@ namespace vg
 		AnimationComponent& animationComponent = m_registry.get<AnimationComponent>(entity);
 		MovementComponent& movementComponent = m_registry.get<MovementComponent>(entity);
 
-		entt::id_type animationId = GameplayUtils::GetIDByDirection("MOV", movementComponent.Velocity);
+		entt::id_type animationId = CommonUtils::GetIDByDirection("MOV", movementComponent.Velocity);
 		
 		Animation& newAnimation = animationComponent.CurrentAnimationPack->Animations[animationId];
 

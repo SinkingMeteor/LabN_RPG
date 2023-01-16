@@ -2,7 +2,7 @@
 #include <iostream>
 namespace vg 
 {
-	entt::id_type GameplayUtils::GetIDByDirection(const std::string& textWithNoPrefix, const sf::Vector2f& direction)
+	entt::id_type CommonUtils::GetIDByDirection(const std::string& textWithNoPrefix, const sf::Vector2f& direction)
 	{
         sf::Vector2f normalizedDirection = VGMath::NormalizeVector2<float>(direction);
         float movesToRight = VGMath::Dot(VGMath::Right, normalizedDirection);
@@ -27,7 +27,7 @@ namespace vg
         return downId;
 	}
 
-    void GameplayUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect, const TransformComponent& transformComponent)
+    void CommonUtils::SetInitialPositionAndTexCoords(sf::VertexArray& quad, const TextureRect& spriteRect, const TransformComponent& transformComponent)
     {
         sf::Vector2f spritePosition = transformComponent.GlobalTransform * VGMath::Zero;
 
@@ -45,6 +45,11 @@ namespace vg
         quad[1].texCoords = sf::Vector2f{ left + width, top };
         quad[2].texCoords = sf::Vector2f{ left + width, top + height };
         quad[3].texCoords = sf::Vector2f{ left, top + height };
+    }
+
+    entt::id_type CommonUtils::StringToId(const std::string& stringToConvert)
+    {
+        return entt::hashed_string{ stringToConvert.c_str() }.value();
     }
 
 }

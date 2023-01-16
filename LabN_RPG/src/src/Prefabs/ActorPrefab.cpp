@@ -18,7 +18,7 @@ namespace vg
 		std::string animationPath = data["animationFilePath"];
 
 		auto heroTexResult = m_textureProvider->load(actorNameId, texturePath);
-		SlicedTexture* actorTexture = &*(*m_textureProvider)[actorNameId];
+		SlicedTexture* actorTexture = (*m_textureProvider)[actorNameId].handle().get();
 		m_animationProvider->load(actorNameId, AnimationLoadingData{ animationPath, actorTexture});
 		AnimationPack& actorAnimation = *(*m_animationProvider)[actorNameId];
 
@@ -61,14 +61,14 @@ namespace vg
 		transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * startPosition);
 		transformComponent.LocalTransform.scale(sf::Vector2f{ 1.0f, 1.0f });
 
-		GameplayUtils::SetInitialPositionAndTexCoords(quad, spriteRect, transformComponent);
+		registry.emplace<DirtyTransform>(actor);
+
+		CommonUtils::SetInitialPositionAndTexCoords(quad, spriteRect, transformComponent);
 
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);
-		spriteComponent.RectsIndices.push_back(0);
 		spriteComponent.RelatedTexture = actorTexture;
-		spriteComponent.SpriteWidthByTiles = 1;
-		spriteComponent.SpriteHeightByTiles = 1;
+		spriteComponent.RectIndex = 0;
 
 		AnimationComponent& animComponent = registry.emplace<AnimationComponent>(actor);
 		animComponent.CurrentAnimationPack = &actorAnimation;

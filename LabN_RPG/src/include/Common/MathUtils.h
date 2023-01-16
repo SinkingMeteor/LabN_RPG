@@ -24,6 +24,14 @@ namespace vg
 		}
 
 		template<typename T>
+		float GetSqrtLengthOfVector2(const sf::Vector2<T>& vector)
+		{
+			float x = (float)vector.x;
+			float y = (float)vector.y;
+			return x * x + y * y;
+		}
+
+		template<typename T>
 		sf::Vector2<T> NormalizeVector2(const sf::Vector2<T>& vector)
 		{
 			float length = GetLengthOfVector2(vector);

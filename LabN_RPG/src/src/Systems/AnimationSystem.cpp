@@ -27,7 +27,7 @@ namespace vg
 			animationComponent.CurrentIndex = static_cast<int>(animationComponent.CurrentFrame);
 
 			const std::size_t frameIndex = animationComponent.CurrentAnimation->Frames[animationComponent.CurrentFrame];
-			spriteComponent.RectsIndices[0] = frameIndex;
+			spriteComponent.RectIndex = frameIndex;
 		}
 	}
 }

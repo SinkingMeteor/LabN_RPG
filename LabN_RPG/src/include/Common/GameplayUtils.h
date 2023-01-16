@@ -8,10 +8,11 @@
 #include <string>
 namespace vg 
 {
-	class GameplayUtils 
+	class CommonUtils 
 	{
 	public:
 		static entt::id_type GetIDByDirection(const std::string& textWithNoPrefix, const sf::Vector2f& direction);
 		static void SetInitialPositionAndTexCoords(sf::VertexArray& vertexArray, const TextureRect& rect, const TransformComponent& transformComponent);
+		static entt::id_type StringToId(const std::string& stringToConvert);
 	};
 }

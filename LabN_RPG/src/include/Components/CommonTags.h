@@ -4,6 +4,6 @@ namespace vg
 {
 	struct Possessable{};
 	struct CameraTarget{};
-	struct Drawable{};
-	struct IWantToBeDrawn{};
+	struct ReadyForRenderThisFrame{};
+	struct DirtyTransform{};
 }

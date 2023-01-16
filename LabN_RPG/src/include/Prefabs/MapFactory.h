@@ -12,8 +12,17 @@ namespace vg
 {
 	struct MapLoadingData 
 	{
+	public:
 		const std::string LoadingPath;
 		const std::string MapFileName;
+	};
+
+	struct LayerProperties 
+	{
+	public:
+		bool IsIndividualTiles{false};
+		entt::id_type SortingLayerId;
+		entt::resource<SlicedTexture> TilemapTexture{};
 	};
 
 	class MapFactory
@@ -26,9 +35,9 @@ namespace vg
 	private:
 		TextureProvider* m_textureProvider;
 
-		void CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
-		void CreateTilesAsIndividuals(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
-		void ProcessProperties(entt::registry& registry, entt::entity entity, nlohmann::json& propertiesNode, entt::resource<SlicedTexture>& tilemapTexture);
+		void CreateTiles(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
+		void ProcessProperties(nlohmann::json& propertiesNode, LayerProperties& result);
+		void SetSortingLayer(entt::registry& registry, entt::entity entity, entt::id_type layerId);
 	};
 }

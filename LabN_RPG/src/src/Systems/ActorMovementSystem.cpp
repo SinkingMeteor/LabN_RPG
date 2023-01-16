@@ -1,5 +1,6 @@
 #include "Systems/ActorMovementSystem.h"
-
+#include <limits>
+#include "MathUtils.h"
 namespace vg 
 {
 	void ActorMovementSystem::Tick(entt::registry& registry, sf::Time deltaTime)
@@ -10,7 +11,11 @@ namespace vg
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 			MovementComponent& movementComponent = view.get<MovementComponent>(entity);
-			transformComponent.LocalTransform.translate(movementComponent.Velocity * movementComponent.Speed * deltaTime.asSeconds());
+			if (VGMath::GetSqrtLengthOfVector2(movementComponent.Velocity) > FLT_EPSILON) 
+			{
+				transformComponent.LocalTransform.translate(movementComponent.Velocity * movementComponent.Speed * deltaTime.asSeconds());
+				registry.emplace<DirtyTransform>(entity);
+			}
 		}
 	}
 }

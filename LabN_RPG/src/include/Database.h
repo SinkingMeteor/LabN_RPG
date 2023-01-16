@@ -41,5 +41,12 @@ namespace vg
 			static constexpr entt::id_type OnGround = entt::hashed_string{ "OnGround" }.value();
 			static constexpr entt::id_type AboveGround = entt::hashed_string{ "AboveGround" }.value();
 		}
+
+		namespace LayerProperties 
+		{
+			static constexpr entt::id_type IndividualsTiles = entt::hashed_string{ "individualSorting" }.value();
+			static constexpr entt::id_type SortingLayer = entt::hashed_string{ "sortingLayer" }.value();
+			static constexpr entt::id_type TileMap = entt::hashed_string{ "tileMap" }.value();
+		}
 	}
 }
