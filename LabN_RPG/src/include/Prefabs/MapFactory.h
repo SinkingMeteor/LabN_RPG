@@ -6,6 +6,7 @@
 #include <fstream>
 #include <optional>
 #include <utility>
+#include "World/World.h"
 #include "json.hpp"
 #include <string>
 namespace vg
@@ -31,12 +32,12 @@ namespace vg
 		MapFactory(TextureProvider* texProvider) :
 			m_textureProvider(texProvider)
 		{}
-		void LoadMap(entt::registry& registry, const MapLoadingData& data, entt::entity parent);
+		void LoadMap(World* world, entt::registry& registry, const MapLoadingData& data, entt::entity parent);
 	private:
 		TextureProvider* m_textureProvider;
 
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
-		void CreateTiles(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
+		void CreateTiles(World* world, entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
 		void ProcessProperties(nlohmann::json& propertiesNode, LayerProperties& result);
 		void SetSortingLayer(entt::registry& registry, entt::entity entity, entt::id_type layerId);
 	};

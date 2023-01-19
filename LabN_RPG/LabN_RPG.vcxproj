@@ -22,6 +22,8 @@
     <ClCompile Include="src\src\Common\AnimationStates\IdleAnimationState.cpp" />
     <ClCompile Include="src\src\Common\AnimationStates\MovementAnimationState.cpp" />
     <ClCompile Include="src\src\Common\GameplayUtils.cpp" />
+    <ClCompile Include="src\src\Common\SpacePartitioning\PartitionCell.cpp" />
+    <ClCompile Include="src\src\Common\SpacePartitioning\PartitionGrid.cpp" />
     <ClCompile Include="src\src\Game.cpp" />
     <ClCompile Include="src\src\Input\Keyboard.cpp" />
     <ClCompile Include="src\src\Input\Mouse.cpp" />
@@ -48,6 +50,8 @@
     <ClInclude Include="src\include\Common\MathUtils.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\AnimationProvider.h" />
     <ClInclude Include="src\include\Common\ResourceManagement\TextureProvider.h" />
+    <ClInclude Include="src\include\Common\SpacePartitioning\PartitionCell.h" />
+    <ClInclude Include="src\include\Common\SpacePartitioning\PartitionGrid.h" />
     <ClInclude Include="src\include\Components\AnimationComponent.h" />
     <ClInclude Include="src\include\Components\CameraComponent.h" />
     <ClInclude Include="src\include\Components\CommonTags.h" />
@@ -59,6 +63,7 @@
     <ClInclude Include="src\include\Components\SortingLayers.h" />
     <ClInclude Include="src\include\Components\DrawableComponent.h" />
     <ClInclude Include="src\include\Components\TransformComponent.h" />
+    <ClInclude Include="src\include\Components\WorldPartitionComponent.h" />
     <ClInclude Include="src\include\Database.h" />
     <ClInclude Include="src\include\Game.h" />
     <ClInclude Include="src\include\Input\IInputDevice.h" />

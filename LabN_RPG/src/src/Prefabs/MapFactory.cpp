@@ -3,7 +3,7 @@
 #include "Database.h"
 namespace vg 
 {
-	void MapFactory::LoadMap(entt::registry& registry, const MapLoadingData& data, entt::entity parent)
+	void MapFactory::LoadMap(World* world, entt::registry& registry, const MapLoadingData& data, entt::entity parent)
 	{
 		assert(registry.all_of<NodeComponent>(parent));
 
@@ -13,8 +13,23 @@ namespace vg
 		input >> rootNode;
 		input.close();
 
-		if (rootNode.is_null()) return;
+		assert(world);
+		assert(!rootNode.is_null());
 
+		entt::entity worldRoot = world->GetSceneRootEntity();
+
+		assert(registry.all_of<WorldPartitionComponent>(worldRoot));
+
+		WorldPartitionComponent& worldPartitionComponent = registry.get<WorldPartitionComponent>(worldRoot);
+		entt::entity partitionGrid = registry.create();
+		std::size_t mapWidth = rootNode["width"].get<std::size_t>();
+		std::size_t mapHeight = rootNode["height"].get<std::size_t>();
+		float tileSize = rootNode["tilewidth"].get<float>();
+		float cellSize = tileSize * 4.0f;
+		std::size_t gridWidth = std::ceil((float)(mapWidth * tileSize) / cellSize);
+		std::size_t gridHeight = std::ceil((float)(mapHeight * tileSize) / cellSize);
+		worldPartitionComponent.Grid = PartitionGrid{ gridWidth, gridHeight, cellSize };
+			
 		nlohmann::json& tilesetNode = rootNode["tilesets"];
 		for (nlohmann::json& tileSet : tilesetNode) 
 		{
@@ -36,7 +51,7 @@ namespace vg
 
 			if (layerClass == "Tilemap")
 			{
-				CreateTiles(registry, rootNode, layer, parent);
+				CreateTiles(world, registry, rootNode, layer, parent);
 			}
 			else if (layerClass == "SpawnPlaceholders") 
 			{
@@ -61,18 +76,18 @@ namespace vg
 		 }
 	 }
 
-	 void MapFactory::CreateTiles(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent)
+	 void MapFactory::CreateTiles(World* world, entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent)
 	 {
 		 std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
-
 		 std::size_t mapHeight = rootNode["height"].get<std::size_t>();
 		 std::size_t mapWidth = rootNode["width"].get<std::size_t>();
 		 std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
 		 std::size_t tileWidth = rootNode["tilewidth"].get<std::size_t>();
 		 std::size_t vertexCount = mapHeight * mapWidth * 4;
 
-		 LayerProperties layerProperties{};
+		 WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(world->GetSceneRootEntity());
 
+		 LayerProperties layerProperties{};
 		 ProcessProperties(layerNode["properties"], layerProperties);
 
 		 for (size_t i = 0; i < indices.size(); ++i)
@@ -101,16 +116,20 @@ namespace vg
 			 std::size_t tu = i % (layerProperties.TilemapTexture->Texture.getSize().x / tileWidth);
 			 std::size_t tv = i / (layerProperties.TilemapTexture->Texture.getSize().x / tileHeight);
 
-			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width, (float)y * spriteRect.Rect.width };
+			 //Для соответствия позиций тайлов в редакторе и игре я добавляю пивот. 
+			 //Но только к тайлам, к персонажам и всему чего в редакторе нет, добавлять не нужно.
+			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width, (float)y * spriteRect.Rect.width } + spriteRect.Pivot;
 			 transformComponent.GlobalTransform.translate(offset);
 			 transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * offset);
 
-			 CommonUtils::SetInitialPositionAndTexCoords(vertices, spriteRect, transformComponent);
+			 PartitionCell& cell = partitionGrid.Grid.GetCell(offset);
+			 cell.AddEntity(tileEntity);
 
 			 DrawableComponent& tileComponent = registry.emplace<DrawableComponent>(tileEntity);
 			 tileComponent.VertexArray = std::move(vertices);
 			 tileComponent.RelatedTexture = layerProperties.TilemapTexture.handle().get();
 			 tileComponent.RectIndex = num;
+
 		 }
 	 }
 
@@ -155,66 +174,4 @@ namespace vg
 			 break;
 		 }
 	 }
-	 //void MapFactory::CreateTilemap(entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent)
-	 //{
-		// entt::entity mapEntity = registry.create();
-		// DrawableComponent& mapComponent = registry.emplace<DrawableComponent>(mapEntity);
-		// TransformComponent& transformComponent = registry.emplace<TransformComponent>(mapEntity);
-
-		// TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
-		// registry.get<NodeComponent>(parent).Children.push_back(mapEntity);
-		// NodeComponent& nodeComponent = registry.emplace<NodeComponent>(mapEntity);
-		// nodeComponent.Parent = parent;
-
-		// transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * VGMath::Zero);
-
-		// entt::resource<SlicedTexture> texture{};
-
-		//ProcessProperties(registry, mapEntity, layerNode["properties"], texture);
-
-		// std::vector<int> indices = layerNode["data"].get<std::vector<int>>();
-
-		// for (int& num : indices) 
-		// {
-		//	 num -= 1;
-		// }
-
-		// std::size_t mapHeight = rootNode["height"].get<std::size_t>();
-		// std::size_t mapWidth = rootNode["width"].get<std::size_t>();
-		// std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
-		// std::size_t tileWidth = rootNode["tilewidth"].get<std::size_t>();
-		// std::size_t vertexCount = mapHeight * mapWidth * 4;
-		// sf::VertexArray vertices{ sf::Quads, vertexCount };
-
-		// for (size_t x = 0; x < mapWidth; ++x)
-		// {
-		//	 for (size_t y = 0; y < mapHeight; ++y)
-		//	 {
-		//		 sf::Vertex* quad = &vertices[(x + y * mapWidth) * 4];
-
-		//		 quad[0].position = sf::Vector2f(x * tileWidth, y * tileHeight);
-		//		 quad[1].position = sf::Vector2f((x + 1) * tileWidth, y * tileHeight);
-		//		 quad[2].position = sf::Vector2f((x + 1) * tileWidth, (y + 1) * tileHeight);
-		//		 quad[3].position = sf::Vector2f(x * tileWidth, (y + 1) * tileHeight);
-
-		//		 int tileNumber = indices[x + y * mapWidth];
-
-		//		 if (tileNumber < 0) continue;
-
-		//		 std::size_t tu = tileNumber % (texture->Texture.getSize().x / tileWidth);
-		//		 std::size_t tv = tileNumber / (texture->Texture.getSize().x / tileHeight);
-
-		//		 quad[0].texCoords = sf::Vector2f(tu * tileWidth, tv * tileHeight);
-		//		 quad[1].texCoords = sf::Vector2f((tu + 1) * tileWidth, tv * tileHeight);
-		//		 quad[2].texCoords = sf::Vector2f((tu + 1) * tileWidth, (tv + 1) * tileHeight);
-		//		 quad[3].texCoords = sf::Vector2f(tu * tileWidth, (tv + 1) * tileHeight);
-		//	 }
-		// }
-
-		// mapComponent.RectsIndices = std::move(indices);
-		// mapComponent.VertexArray = std::move(vertices);
-		// mapComponent.RelatedTexture = &*texture;
-		// mapComponent.SpriteWidthByTiles = mapWidth;
-		// mapComponent.SpriteHeightByTiles = mapHeight;
-	 //}
 }

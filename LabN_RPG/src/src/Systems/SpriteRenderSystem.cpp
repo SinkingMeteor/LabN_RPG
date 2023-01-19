@@ -45,7 +45,7 @@ namespace vg
 			DrawableComponent& drawableComponent = view.get<DrawableComponent>(entity);
 
 			TextureRect& rect = drawableComponent.RelatedTexture->RectDatas[drawableComponent.RectIndex];
-			sf::Vector2f pivotPosition = transformComponent.GlobalTransform * rect.Pivot;
+			sf::Vector2f pivotPosition = transformComponent.GlobalTransform * VGMath::Zero;
 			PivotEntity pivotEntity{ entity, pivotPosition.y };
 			result.push_back(pivotEntity);
 		}

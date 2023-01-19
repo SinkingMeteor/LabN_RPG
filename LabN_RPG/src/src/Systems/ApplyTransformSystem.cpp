@@ -1,5 +1,6 @@
 #include "Systems/ApplyTransformSystem.h"
 #include <cassert>
+#include "MathUtils.h"
 namespace vg
 {
 	void ApplyTransformSystem::Tick(entt::registry& registry, sf::Time deltaTime)
@@ -26,7 +27,7 @@ namespace vg
 		{
 			DrawableComponent& spriteComponent = registry.get<DrawableComponent>(rootEntity);
 			TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteComponent.RectIndex];
-			sf::Vector2f spritePosition = transformComponent.GlobalTransform * spriteRect.Pivot;
+			sf::Vector2f spritePosition = transformComponent.GlobalTransform * VGMath::Zero;
 
 			spriteComponent.VertexArray[0].position = spritePosition - spriteRect.Pivot;
 			spriteComponent.VertexArray[1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };

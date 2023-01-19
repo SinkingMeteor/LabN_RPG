@@ -10,6 +10,7 @@ namespace vg
 	{
 		m_registry.emplace<TransformComponent>(m_rootEntity);
 		m_registry.emplace<NodeComponent>(m_rootEntity);
+		m_registry.emplace<WorldPartitionComponent>(m_rootEntity);
 	}
 }
 

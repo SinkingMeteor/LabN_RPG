@@ -2,10 +2,11 @@
 #include "Common/GameplayUtils.h"
 namespace vg 
 {
-	std::optional<entt::entity> ActorFactory::CreateEntity(entt::registry& registry, const nlohmann::json& data, entt::entity parent)
+	std::optional<entt::entity> ActorFactory::CreateEntity(World* world, entt::registry& registry, const nlohmann::json& data, entt::entity parent)
 	{
+		assert(world);
 		assert(!data.is_null());
-		assert(registry.all_of<NodeComponent>(parent) && registry.all_of<TransformComponent>(parent));
+		assert(registry.all_of<NodeComponent>(parent) || registry.all_of<TransformComponent>(parent));
 
 		auto placeholdersView = registry.view<PlaceholdersComponent>();
 		assert(placeholdersView.size() == 1);
@@ -13,6 +14,8 @@ namespace vg
 		entt::entity mapEntity = *placeholdersView.begin();
 		PlaceholdersComponent& placeholdersComponent = registry.get<PlaceholdersComponent>(mapEntity);
 		
+		WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(world->GetSceneRootEntity());
+
 		entt::id_type actorNameId = entt::hashed_string{ data["name"].get<std::string>().c_str() }.value();
 		std::string texturePath = data["spriteFilePath"];
 		std::string animationPath = data["animationFilePath"];
@@ -61,9 +64,10 @@ namespace vg
 		transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * startPosition);
 		transformComponent.LocalTransform.scale(sf::Vector2f{ 1.0f, 1.0f });
 
-		registry.emplace<DirtyTransform>(actor);
+		PartitionCell& cell = partitionGrid.Grid.GetCell(startPosition);
+		cell.AddEntity(actor);
 
-		CommonUtils::SetInitialPositionAndTexCoords(quad, spriteRect, transformComponent);
+		registry.emplace<DirtyTransform>(actor);
 
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);

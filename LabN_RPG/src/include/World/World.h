@@ -20,5 +20,6 @@ namespace vg
 		Window* m_window;
 		entt::registry m_registry;
 		entt::entity m_rootEntity;
+
 	};
 }

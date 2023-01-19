@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 #include <optional>
 #include <string>
+#include "World/World.h"
 #include "Database.h"
 namespace vg 
 {
@@ -22,7 +23,7 @@ namespace vg
 		ActorFactory(TextureProvider* texProvider, AnimationProvider* animProvider) :
 			m_textureProvider(texProvider),
 			m_animationProvider(animProvider) {}
-		std::optional<entt::entity> CreateEntity(entt::registry& registry, const nlohmann::json& dataNode, entt::entity parent);
+		std::optional<entt::entity> CreateEntity(World* world, entt::registry& registry, const nlohmann::json& dataNode, entt::entity parent);
 	private:
 		TextureProvider* m_textureProvider;
 		AnimationProvider* m_animationProvider;

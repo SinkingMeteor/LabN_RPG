@@ -50,6 +50,53 @@ namespace vg
 		{
 			systemPointer->Render(m_registry, window);
 		}
+		//====
+		//DEBUG: Отображение пивотов
+		auto pivotView = m_registry.view<TransformComponent>();
+
+		for (entt::entity entity : pivotView)
+		{
+			TransformComponent& transformComponent = m_registry.get<TransformComponent>(entity);
+			sf::CircleShape circle{ 1.0f };
+			circle.setPosition(transformComponent.GlobalTransform * VGMath::Zero);
+			window.draw(circle);
+		}
+
+		//====
+		//DEBUG: Отображение пространств
+		WorldPartitionComponent& partitionComponent = m_registry.get<WorldPartitionComponent>(m_rootEntity);
+		sf::Vector2<std::size_t> gridSize = partitionComponent.Grid.GetGridSize();
+		float cellSize = partitionComponent.Grid.GetCellSize();
+		auto actorView = m_registry.view<CameraTarget>();
+
+		for (size_t i = 0; i < gridSize.x * gridSize.y; ++i)
+		{
+			std::size_t xPos = i % gridSize.x;
+			std::size_t yPos = i / gridSize.x;
+
+			sf::Vector2f rectPosition = sf::Vector2f{ (float)cellSize * (float)xPos, (float)cellSize * (float)yPos };
+			sf::RectangleShape rect{ sf::Vector2f{cellSize, cellSize} };
+			rect.setPosition(rectPosition);
+			rect.setFillColor(sf::Color::Transparent);
+
+			PartitionCell& cell = partitionComponent.Grid.GetCell(rectPosition);
+
+			for (entt::entity actor : actorView) 
+			{
+				if (cell.Contains(actor))
+				{
+					rect.setOutlineColor(sf::Color::Cyan);
+				}
+				else
+				{
+					rect.setOutlineColor(sf::Color::Magenta);
+				}
+			}
+
+			rect.setOutlineThickness(-2.0f);
+			window.draw(rect);
+		}
+		//====
 
 		m_window->SetView(m_window->GetView());
 		window.display();
@@ -57,7 +104,7 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Desert.json")};
+		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Forest.json")};
 		nlohmann::json rootNode;
 		input >> rootNode;
 		input.close();
@@ -67,7 +114,7 @@ namespace vg
 		nlohmann::json& mapNode = rootNode["map"];
 
 		MapLoadingData mapLoadingData{ mapNode["path"], mapNode["fileName"]};
-		m_mapFactory.LoadMap(m_registry, mapLoadingData, m_rootEntity);
+		m_mapFactory.LoadMap(this, m_registry, mapLoadingData, m_rootEntity);
 
 		entt::entity playerController = m_registry.create();
 		m_registry.emplace<PlayerControllerComponent>(playerController);
@@ -76,7 +123,7 @@ namespace vg
 
 		for (const nlohmann::json& actorData : actorsNode)
 		{
-			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(m_registry, actorData, m_rootEntity);
+			std::optional<entt::entity> actor = m_actorFactory.CreateEntity(this, m_registry, actorData, m_rootEntity);
 		}
 	}
 }

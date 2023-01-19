@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Common\AnimationStates">
       <UniqueIdentifier>{74002585-42bd-4016-9e99-4dd53773bd59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Common\SpacePartitioning">
+      <UniqueIdentifier>{d3166d50-ce7b-4a16-bd29-4325549da69d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\SpacePartitioning">
+      <UniqueIdentifier>{fafc5d54-1cb0-40e4-baec-553af24d863d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -128,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp">
       <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Common\SpacePartitioning\PartitionGrid.cpp">
+      <Filter>Source Files\Common\SpacePartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Common\SpacePartitioning\PartitionCell.cpp">
+      <Filter>Source Files\Common\SpacePartitioning</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +255,15 @@
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="src\include\Components\NodeComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\SpacePartitioning\PartitionGrid.h">
+      <Filter>Header Files\Common\SpacePartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Common\SpacePartitioning\PartitionCell.h">
+      <Filter>Header Files\Common\SpacePartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\WorldPartitionComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
