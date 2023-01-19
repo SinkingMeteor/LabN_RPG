@@ -13,7 +13,7 @@ namespace vg
 		for (entt::entity entity : view) 
 		{
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
-			worldView.setCenter(transformComponent.LocalTransform * VGMath::One);
+			worldView.setCenter(transformComponent.GlobalTransform * VGMath::One);
 		}
 	}
 }

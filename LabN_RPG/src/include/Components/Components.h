@@ -11,3 +11,4 @@
 #include "Components/SortingLayers.h"
 #include "Components/NodeComponent.h"
 #include "Components/WorldPartitionComponent.h"
+#include "Components/DirtyTransformComponent.h"

@@ -102,7 +102,6 @@ namespace vg
 			 SetSortingLayer(registry, tileEntity, layerProperties.SortingLayerId);
 
 			 TransformComponent& transformComponent = registry.emplace<TransformComponent>(tileEntity);
-			 registry.emplace<DirtyTransform>(tileEntity);
 
 			 TextureRect& spriteRect = layerProperties.TilemapTexture->RectDatas[num];
 
@@ -122,7 +121,7 @@ namespace vg
 			 transformComponent.GlobalTransform.translate(offset);
 			 transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * offset);
 
-			 PartitionCell& cell = partitionGrid.Grid.GetCell(offset);
+			 PartitionCell& cell = partitionGrid.Grid.GetCell(transformComponent.GlobalTransform * VGMath::One);
 			 cell.AddEntity(tileEntity);
 
 			 DrawableComponent& tileComponent = registry.emplace<DrawableComponent>(tileEntity);

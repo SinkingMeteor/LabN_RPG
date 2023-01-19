@@ -67,8 +67,6 @@ namespace vg
 		PartitionCell& cell = partitionGrid.Grid.GetCell(startPosition);
 		cell.AddEntity(actor);
 
-		registry.emplace<DirtyTransform>(actor);
-
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);
 		spriteComponent.RelatedTexture = actorTexture;

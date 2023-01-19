@@ -56,6 +56,7 @@
     <ClInclude Include="src\include\Components\CameraComponent.h" />
     <ClInclude Include="src\include\Components\CommonTags.h" />
     <ClInclude Include="src\include\Components\Components.h" />
+    <ClInclude Include="src\include\Components\DirtyTransformComponent.h" />
     <ClInclude Include="src\include\Components\NodeComponent.h" />
     <ClInclude Include="src\include\Components\PlaceholdersComponent.h" />
     <ClInclude Include="src\include\Components\MovementComponent.h" />

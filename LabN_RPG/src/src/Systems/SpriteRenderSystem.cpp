@@ -1,6 +1,7 @@
 #include "Systems/SpriteRenderSystem.h"
 #include "MathUtils.h"
 #include <algorithm>
+
 namespace vg
 {
 	void SpriteRenderSystem::Render(entt::registry& registry, sf::RenderWindow& window)

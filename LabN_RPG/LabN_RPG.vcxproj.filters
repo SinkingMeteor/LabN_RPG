@@ -266,5 +266,8 @@
     <ClInclude Include="src\include\Components\WorldPartitionComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\Components\DirtyTransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

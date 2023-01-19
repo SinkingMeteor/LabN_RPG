@@ -10,7 +10,7 @@ namespace vg
 
 		ApplyTransformToChildren(rootEntity, registry, rootTransform);
 
-		registry.clear<DirtyTransform>();
+		registry.clear<DirtyTransformComponent>();
 	}
 
 	void ApplyTransformSystem::ApplyTransformToChildren(entt::entity rootEntity, entt::registry& registry, sf::Transform& parentTransform)
@@ -18,9 +18,26 @@ namespace vg
 		TransformComponent& transformComponent = registry.get<TransformComponent>(rootEntity);
 		NodeComponent& nodeComponent = registry.get<NodeComponent>(rootEntity);
 
-		if (registry.all_of<DirtyTransform>(rootEntity)) 
+		if (registry.all_of<DirtyTransformComponent>(rootEntity)) 
 		{
+			entt::entity worldEntity = m_world->GetSceneRootEntity();
+			WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(worldEntity);
+
+			sf::Vector2f beforeGlobalPosition = transformComponent.GlobalTransform * VGMath::Zero;
+			PartitionCell& beforeCell = partitionGrid.Grid.GetCell(beforeGlobalPosition);
+
+			DirtyTransformComponent& deltaTransform = registry.get<DirtyTransformComponent>(rootEntity);
+			transformComponent.LocalTransform = transformComponent.LocalTransform * deltaTransform.DeltaTransform;
 			transformComponent.GlobalTransform = parentTransform * transformComponent.LocalTransform;
+
+			sf::Vector2f afterGlobalPosition = transformComponent.GlobalTransform * VGMath::Zero;
+			PartitionCell& afterCell = partitionGrid.Grid.GetCell(afterGlobalPosition);
+
+			if (&beforeCell != &afterCell)
+			{
+				beforeCell.RemoveEntity(rootEntity);
+				afterCell.AddEntity(rootEntity);
+			}
 		}
 
 		if (registry.all_of<DrawableComponent>(rootEntity)) 

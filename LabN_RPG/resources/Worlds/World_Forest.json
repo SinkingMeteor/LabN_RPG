@@ -13,6 +13,12 @@
        "isPlayable" : true,
        "spriteFilePath" : "./resources/Sprites/Actors/Hero.png",
        "animationFilePath" : "./resources/Animations/Anim_Hero.json"
+    },
+	{
+       "name" : "Actor2_Hero",
+       "isPlayable" : false,
+       "spriteFilePath" : "./resources/Sprites/Actors/Hero.png",
+       "animationFilePath" : "./resources/Animations/Anim_Hero.json"
     }
   ]
 }
