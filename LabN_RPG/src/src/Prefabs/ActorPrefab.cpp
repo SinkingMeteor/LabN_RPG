@@ -64,7 +64,8 @@ namespace vg
 		transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * startPosition);
 		transformComponent.LocalTransform.scale(sf::Vector2f{ 1.0f, 1.0f });
 
-		RectColliderComponent colliderComponent = registry.emplace<RectColliderComponent>(actor, sf::FloatRect{ -spriteRect.Pivot.x, -spriteRect.Pivot.y, 32.0f, 32.0f });
+		//TODO: Сделать редактирование из утилиты
+		RectColliderComponent colliderComponent = registry.emplace<RectColliderComponent>(actor, sf::FloatRect{ -3.0, -2.0, 8.0f, 6.0f });
 
 		PartitionCell& cell = partitionGrid.Grid.GetCell(startPosition);
 		cell.AddEntity(actor);
