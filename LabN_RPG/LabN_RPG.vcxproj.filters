@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Common\SpacePartitioning">
       <UniqueIdentifier>{fafc5d54-1cb0-40e4-baec-553af24d863d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Systems\Debug">
+      <UniqueIdentifier>{349e20a6-7ed0-41be-ada8-6651b8660690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Debug">
+      <UniqueIdentifier>{99163179-2189-4a3f-ab6d-d48451604c1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\src\Main.cpp">
@@ -140,6 +146,15 @@
     </ClCompile>
     <ClCompile Include="src\src\Common\SpacePartitioning\PartitionCell.cpp">
       <Filter>Source Files\Common\SpacePartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\Debug\SpatialPartitionDebugRenderSystem.cpp">
+      <Filter>Source Files\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\Debug\PivotDebugRenderSystem.cpp">
+      <Filter>Source Files\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\Systems\Debug\ColliderDebugRenderSystem.cpp">
+      <Filter>Source Files\Systems\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +283,18 @@
     </ClInclude>
     <ClInclude Include="src\include\Components\DirtyTransformComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Components\RectColliderComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\Debug\SpatialPartitionDebugRenderSystem.h">
+      <Filter>Header Files\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\Debug\PivotDebugRenderSystem.h">
+      <Filter>Header Files\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\Debug\ColliderDebugRenderSystem.h">
+      <Filter>Header Files\Systems\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

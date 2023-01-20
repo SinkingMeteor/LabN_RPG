@@ -5,7 +5,7 @@
 #include "Database.h"
 namespace vg 
 {
-	class PlayerControllerSystem : public System 
+	class PlayerControllerSystem final : public System 
 	{
 	public:
 		PlayerControllerSystem(World* world) : System(world) {}

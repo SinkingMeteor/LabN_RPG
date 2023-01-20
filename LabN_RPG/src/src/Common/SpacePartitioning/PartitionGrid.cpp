@@ -33,6 +33,30 @@ namespace vg
 		return m_cells[m_gridWidth * y + x];
 	}
 
+	PartitionCell& PartitionGrid::GetCell(std::size_t i)
+	{
+		return m_cells[i];
+	}
+
+	void PartitionGrid::GetAllCellsContainsRect(const sf::FloatRect& rect, std::vector<std::size_t>& cellsIndices)
+	{
+		sf::Vector2f cellSize{ m_cellSize, m_cellSize };
+
+		for (size_t i = 0; i < m_cells.size(); ++i)
+		{
+			int x = i % m_gridWidth;
+			int y = i / m_gridWidth;
+
+			sf::Vector2f cellPosition{ x * m_cellSize, y * m_cellSize };
+			sf::FloatRect cellRect{ cellPosition, cellSize };
+
+			if (rect.intersects(cellRect)) 
+			{
+				cellsIndices.push_back(i);
+			}
+		}
+	}
+
 	bool PartitionGrid::IsValid(int x, int y) const
 	{
 		return x > 0 && x <= m_gridWidth && y > 0 && y <= m_gridHeight;

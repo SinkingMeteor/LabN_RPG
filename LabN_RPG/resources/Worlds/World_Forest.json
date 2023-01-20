@@ -15,10 +15,10 @@
        "animationFilePath" : "./resources/Animations/Anim_Hero.json"
     },
 	{
-       "name" : "Actor2_Hero",
+       "name" : "Actor_Oldman",
        "isPlayable" : false,
-       "spriteFilePath" : "./resources/Sprites/Actors/Hero.png",
-       "animationFilePath" : "./resources/Animations/Anim_Hero.json"
+       "spriteFilePath" : "./resources/Sprites/Actors/Oldman.png",
+       "animationFilePath" : "./resources/Animations/Anim_Oldman.json"
     }
   ]
 }

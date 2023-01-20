@@ -37,6 +37,7 @@ namespace vg
 		TextureProvider* m_textureProvider;
 
 		void ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode);
+		void ProcessColliders(World* world, entt::registry& registry, nlohmann::json& layerNode, entt::entity parent);
 		void CreateTiles(World* world, entt::registry& registry, nlohmann::json& rootNode, nlohmann::json& layerNode, entt::entity parent);
 		void ProcessProperties(nlohmann::json& propertiesNode, LayerProperties& result);
 		void SetSortingLayer(entt::registry& registry, entt::entity entity, entt::id_type layerId);

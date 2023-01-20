@@ -48,8 +48,6 @@ namespace vg
 		template<typename T, typename V>
 		static bool Intersects2D(const sf::Rect<T>& rect1, const sf::Rect<V>& rect2)
 		{
-			static_assert(std::is_arithmetic_v<T> && std::is_arithmetic_v<V>);
-
 			sf::Vector2<T> rect1Min = sf::Vector2<T>{ rect1.left, rect1.top };
 			sf::Vector2<V> rect2Min = sf::Vector2<V>{ rect2.left, rect2.top };
 			sf::Vector2<T> rect1Max = rect1Min + sf::Vector2<T>{ rect1.width, rect1.height };

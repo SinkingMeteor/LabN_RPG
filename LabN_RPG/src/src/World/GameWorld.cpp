@@ -30,7 +30,13 @@ namespace vg
 
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 
+		//Render systems
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
+
+		//Debug systems
+		m_renderSystems.emplace_back(std::make_unique<SpatialPartitionDebugRenderSystem>(this));
+		m_renderSystems.emplace_back(std::make_unique<PivotDebugRenderSystem>());
+		m_renderSystems.emplace_back(std::make_unique<ColliderDebugRenderSystem>());
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)
@@ -51,53 +57,6 @@ namespace vg
 		{
 			systemPointer->Render(m_registry, window);
 		}
-		//====
-		//DEBUG: Отображение пивотов
-		auto pivotView = m_registry.view<TransformComponent>();
-
-		for (entt::entity entity : pivotView)
-		{
-			TransformComponent& transformComponent = m_registry.get<TransformComponent>(entity);
-			sf::CircleShape circle{ 1.0f };
-			circle.setPosition(transformComponent.GlobalTransform * VGMath::Zero);
-			window.draw(circle);
-		}
-
-		//====
-		//DEBUG: Отображение пространств
-		WorldPartitionComponent& partitionComponent = m_registry.get<WorldPartitionComponent>(m_rootEntity);
-		sf::Vector2<std::size_t> gridSize = partitionComponent.Grid.GetGridSize();
-		float cellSize = partitionComponent.Grid.GetCellSize();
-		auto actorView = m_registry.view<CameraTarget>();
-
-		for (size_t i = 0; i < gridSize.x * gridSize.y; ++i)
-		{
-			std::size_t xPos = i % gridSize.x;
-			std::size_t yPos = i / gridSize.x;
-
-			sf::Vector2f rectPosition = sf::Vector2f{ (float)cellSize * (float)xPos, (float)cellSize * (float)yPos };
-			sf::RectangleShape rect{ sf::Vector2f{cellSize, cellSize} };
-			rect.setPosition(rectPosition);
-			rect.setFillColor(sf::Color::Transparent);
-
-			PartitionCell& cell = partitionComponent.Grid.GetCell(rectPosition);
-
-			for (entt::entity actor : actorView) 
-			{
-				if (cell.Contains(actor))
-				{
-					rect.setOutlineColor(sf::Color::Cyan);
-				}
-				else
-				{
-					rect.setOutlineColor(sf::Color::Magenta);
-				}
-			}
-
-			rect.setOutlineThickness(-2.0f);
-			window.draw(rect);
-		}
-		//====
 
 		m_window->SetView(m_window->GetView());
 		window.display();

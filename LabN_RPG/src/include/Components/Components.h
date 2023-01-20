@@ -12,3 +12,4 @@
 #include "Components/NodeComponent.h"
 #include "Components/WorldPartitionComponent.h"
 #include "Components/DirtyTransformComponent.h"
+#include "Components/RectColliderComponent.h"

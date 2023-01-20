@@ -5,7 +5,7 @@
 #include "SFML/Graphics.hpp"
 namespace vg 
 {
-	class CameraFollowingSystem : public System 
+	class CameraFollowingSystem final : public System 
 	{
 	public:
 		CameraFollowingSystem(World* world) : System(world){}

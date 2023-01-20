@@ -143,6 +143,73 @@
          "y":0
         }, 
         {
+         "class":"Colliders",
+         "draworder":"topdown",
+         "id":6,
+         "name":"Colliders",
+         "objects":[
+                {
+                 "class":"",
+                 "height":234,
+                 "id":4,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":43,
+                 "x":-8.5,
+                 "y":-3.5
+                }, 
+                {
+                 "class":"",
+                 "height":44.9166666666667,
+                 "id":6,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":492,
+                 "x":28.6666666666667,
+                 "y":192.416666666667
+                }, 
+                {
+                 "class":"",
+                 "height":204,
+                 "id":8,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":38.3333333333333,
+                 "x":479,
+                 "y":-3
+                }, 
+                {
+                 "class":"",
+                 "height":36.6666666666667,
+                 "id":10,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":457.333333333333,
+                 "x":29.3333333333333,
+                 "y":-5.33333333333333
+                }, 
+                {
+                 "class":"",
+                 "height":7.81818181818181,
+                 "id":16,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":15.4545454545454,
+                 "x":322.181818181818,
+                 "y":113.818181818182
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "class":"SpawnPlaceholders",
          "draworder":"topdown",
          "id":5,
@@ -164,7 +231,7 @@
                  "class":"SpawnPoint",
                  "height":0,
                  "id":2,
-                 "name":"Actor2_Hero",
+                 "name":"Actor_Oldman",
                  "point":true,
                  "rotation":0,
                  "visible":true,
@@ -178,8 +245,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":3,
+ "nextlayerid":7,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "properties":[
         {

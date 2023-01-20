@@ -25,7 +25,7 @@ namespace vg
 		std::size_t mapWidth = rootNode["width"].get<std::size_t>();
 		std::size_t mapHeight = rootNode["height"].get<std::size_t>();
 		float tileSize = rootNode["tilewidth"].get<float>();
-		float cellSize = tileSize * 4.0f;
+		float cellSize = tileSize * 2.0f;
 		std::size_t gridWidth = std::ceil((float)(mapWidth * tileSize) / cellSize);
 		std::size_t gridHeight = std::ceil((float)(mapHeight * tileSize) / cellSize);
 		worldPartitionComponent.Grid = PartitionGrid{ gridWidth, gridHeight, cellSize };
@@ -47,15 +47,19 @@ namespace vg
 			if (layer.is_null()) continue;
 
 			assert(!layer["class"].is_null());
-			std::string layerClass = layer["class"].get<std::string>();
 
-			if (layerClass == "Tilemap")
+			entt::id_type layerClass = CommonUtils::StringToId(layer["class"]);
+
+			switch (layerClass) 
 			{
-				CreateTiles(world, registry, rootNode, layer, parent);
-			}
-			else if (layerClass == "SpawnPlaceholders") 
-			{
-				ProcessSpawnPlaceholders(registry, layer);
+			case Database::LayerClass::Tilemap:
+				CreateTiles(world, registry, rootNode, layer, parent); break;
+			case Database::LayerClass::SpawnPlaceholders:
+				ProcessSpawnPlaceholders(registry, layer); break;
+			case Database::LayerClass::Colliders:
+				ProcessColliders(world, registry, layer, parent); break;
+			default:
+				break;
 			}
 		}
 	}
@@ -64,7 +68,7 @@ namespace vg
 		 entt::entity mapEntity = registry.create();
 		 PlaceholdersComponent& placeholdersComponent = registry.emplace<PlaceholdersComponent>(mapEntity);
 		 nlohmann::json& objectsData = layerNode["objects"];
-		 for (auto& object : objectsData)
+		 for (nlohmann::json& object : objectsData)
 		 {
 			 if (object["class"] == "SpawnPoint")
 			 {
@@ -72,6 +76,47 @@ namespace vg
 				 float y = object["y"].get<float>();
 				 entt::id_type objectName = entt::hashed_string{ object["name"].get<std::string>().c_str() }.value();
 				 placeholdersComponent.SpawnPoints.emplace(std::make_pair(objectName, sf::Vector2f{ x, y }));
+			 }
+		 }
+	 }
+
+	 void MapFactory::ProcessColliders(World* world, entt::registry& registry, nlohmann::json& layerNode, entt::entity parent)
+	 {
+		 nlohmann::json& collidersData = layerNode["objects"];
+		 assert(!collidersData.is_null());
+
+		 WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(world->GetSceneRootEntity());
+
+		 for (nlohmann::json& colliderNode : collidersData)
+		 {
+			 entt::entity colliderEntity = registry.create();
+			 TransformComponent& transformComponent = registry.emplace<TransformComponent>(colliderEntity);
+			 RectColliderComponent& colliderComponent = registry.emplace<RectColliderComponent>(colliderEntity);
+
+			 NodeComponent& nodeComponent = registry.emplace<NodeComponent>(colliderEntity);
+			 nodeComponent.Parent = parent;
+			 registry.get<NodeComponent>(parent).Children.push_back(colliderEntity);
+
+			 float x = colliderNode["x"].get<float>();
+			 float y = colliderNode["y"].get<float>();
+			 float width = colliderNode["width"].get<float>();
+			 float height = colliderNode["height"].get<float>();
+
+			 sf::Vector2f globalPosition{ x, y };
+			 sf::Vector2f size{ width, height };
+
+			 transformComponent.GlobalTransform.translate(globalPosition);
+			 transformComponent.LocalTransform.translate(registry.get<TransformComponent>(parent).GlobalTransform.getInverse() * globalPosition);
+
+			 colliderComponent.Rect = sf::FloatRect{ sf::Vector2f{}, size };
+
+			 sf::FloatRect colliderRect = sf::FloatRect{ globalPosition, size };
+			 std::vector<std::size_t> cellIndices{};
+			 partitionGrid.Grid.GetAllCellsContainsRect(colliderRect, cellIndices);
+
+			 for (size_t i = 0; i < cellIndices.size(); ++i)
+			 {
+				 partitionGrid.Grid.GetCell(cellIndices[i]).AddEntity(colliderEntity);
 			 }
 		 }
 	 }

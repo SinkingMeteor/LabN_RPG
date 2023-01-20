@@ -48,5 +48,12 @@ namespace vg
 			static constexpr entt::id_type SortingLayer = entt::hashed_string{ "sortingLayer" }.value();
 			static constexpr entt::id_type TileMap = entt::hashed_string{ "tileMap" }.value();
 		}
+
+		namespace LayerClass 
+		{
+			static constexpr entt::id_type Tilemap = entt::hashed_string{ "Tilemap" }.value();
+			static constexpr entt::id_type SpawnPlaceholders = entt::hashed_string{ "SpawnPlaceholders" }.value();
+			static constexpr entt::id_type Colliders = entt::hashed_string{ "Colliders" }.value();
+		}
 	}
 }

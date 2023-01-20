@@ -1,0 +1,12 @@
+{
+  "animations": 
+  [
+    {
+      "name": "IDLS",
+      "frame_rate": 5.5,
+      "group": "G_IDLE",
+      "frames": 
+      [0, 1]
+    }
+  ]
+}
