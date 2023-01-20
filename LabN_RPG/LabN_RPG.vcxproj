@@ -35,6 +35,7 @@
     <ClCompile Include="src\src\Systems\AnimationStateSystem.cpp" />
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\CameraFollowingSystem.cpp" />
+    <ClCompile Include="src\src\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\src\Systems\Debug\ColliderDebugRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\Debug\PivotDebugRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\Debug\SpatialPartitionDebugRenderSystem.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="src\include\Systems\AnimationStateSystem.h" />
     <ClInclude Include="src\include\Systems\AnimationSystem.h" />
     <ClInclude Include="src\include\Systems\CameraFollowingSystem.h" />
+    <ClInclude Include="src\include\Systems\CollisionSystem.h" />
     <ClInclude Include="src\include\Systems\Debug\ColliderDebugRenderSystem.h" />
     <ClInclude Include="src\include\Systems\Debug\PivotDebugRenderSystem.h" />
     <ClInclude Include="src\include\Systems\Debug\SpatialPartitionDebugRenderSystem.h" />

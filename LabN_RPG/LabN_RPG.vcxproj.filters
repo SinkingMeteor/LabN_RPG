@@ -156,6 +156,9 @@
     <ClCompile Include="src\src\Systems\Debug\ColliderDebugRenderSystem.cpp">
       <Filter>Source Files\Systems\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\src\Systems\CollisionSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Game.h">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="src\include\Systems\Debug\ColliderDebugRenderSystem.h">
       <Filter>Header Files\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Systems\CollisionSystem.h">
+      <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

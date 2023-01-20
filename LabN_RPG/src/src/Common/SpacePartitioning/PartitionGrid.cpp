@@ -57,8 +57,38 @@ namespace vg
 		}
 	}
 
+	void PartitionGrid::GetAllCellsAround(std::size_t cellIndex, std::vector<std::size_t>& resultCells)
+	{
+		int x = cellIndex % m_gridWidth;
+		int y = cellIndex / m_gridWidth;
+
+		resultCells.push_back(cellIndex);
+
+		for (size_t i = 0; i < m_directions.size(); ++i)
+		{
+			int neighbourX = x + m_directions[i].x;
+			int neighbourY = y + m_directions[i].y;
+			if (IsValid(neighbourX, neighbourY)) 
+			{
+				resultCells.push_back(m_gridWidth * neighbourY + neighbourX);
+			}
+		}
+	}
+
 	bool PartitionGrid::IsValid(int x, int y) const
 	{
-		return x > 0 && x <= m_gridWidth && y > 0 && y <= m_gridHeight;
+		return x >= 0 && x < m_gridWidth && y >= 0 && y < m_gridHeight;
 	}
+
+	const std::vector<sf::Vector2i> PartitionGrid::m_directions = std::vector<sf::Vector2i>
+	{ 
+		{1, 0},
+		{1, 1},
+		{0, 1},
+		{-1, 1},
+		{-1, 0},
+		{-1, -1},
+		{0, -1},
+		{1, -1}
+	};
 }

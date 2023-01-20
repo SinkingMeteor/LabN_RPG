@@ -16,6 +16,8 @@ namespace vg
 		virtual void Tick(sf::Time deltaTime) = 0;
 		virtual void Render() = 0;
 
+		std::vector<sf::RectangleShape> Rectangles{};
+
 	protected:
 		Window* m_window;
 		entt::registry m_registry;

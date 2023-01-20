@@ -26,6 +26,7 @@ namespace vg
 		m_systems.emplace_back(std::make_unique<AnimationStateSystem>(this));
 		m_systems.emplace_back(std::make_unique<AnimationSystem>(this));
 
+		m_systems.emplace_back(std::make_unique<CollisionSystem>(this));
 		m_systems.emplace_back(std::make_unique<ApplyTransformSystem>(this));
 
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
@@ -58,8 +59,15 @@ namespace vg
 			systemPointer->Render(m_registry, window);
 		}
 
+		for (sf::RectangleShape& rectangle : Rectangles)
+		{
+			window.draw(rectangle);
+		}
+
 		m_window->SetView(m_window->GetView());
 		window.display();
+
+		Rectangles.clear();
 	}
 
 	void GameWorld::LoadResources()

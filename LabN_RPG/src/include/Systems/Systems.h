@@ -8,6 +8,7 @@
 #include "Systems/CameraFollowingSystem.h"
 #include "Systems/ISystem.h"
 #include "Systems/ApplyTransformSystem.h"
+#include "Systems/CollisionSystem.h"
 
 #include "Systems/Debug/SpatialPartitionDebugRenderSystem.h"
 #include "Systems/Debug/PivotDebugRenderSystem.h"

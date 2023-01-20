@@ -15,7 +15,7 @@ namespace vg
 		PartitionCell& GetCell(std::size_t x, std::size_t y);
 		PartitionCell& GetCell(std::size_t i);
 		void GetAllCellsContainsRect(const sf::FloatRect& rect, std::vector<std::size_t>& cellsIndices);
-
+		void GetAllCellsAround(std::size_t cellIndex, std::vector<std::size_t>& resultCells);
 		float GetCellSize() const { return m_cellSize; }
 		sf::Vector2<std::size_t> GetGridSize() const { return sf::Vector2<std::size_t>{ m_gridWidth, m_gridHeight }; }
 		const std::vector<PartitionCell>& GetCellArray() const { return m_cells; }
@@ -26,5 +26,7 @@ namespace vg
 		std::size_t m_gridHeight;
 		float m_cellSize;
 		std::vector<PartitionCell> m_cells;
+
+		const static std::vector<sf::Vector2i> m_directions;
 	};
 }
