@@ -19,20 +19,31 @@ namespace vg
 		sf::Vector2f cameraViewportPosition = camera.getCenter() - cameraViewportSize / 2.0f;
 		sf::FloatRect cameraViewportRect{ cameraViewportPosition, cameraViewportSize };
 
-		for (entt::entity entity : view) 
+		WorldPartitionComponent& worldPartitionComponent = registry.get<WorldPartitionComponent>(m_world->GetSceneRootEntity());
+		std::vector<std::size_t> cellsInView{};
+		worldPartitionComponent.Grid.GetAllCellsContainsRect(cameraViewportRect, cellsInView);
+
+		std::cout << cellsInView.size() << '\n';
+
+		for (size_t i = 0; i < cellsInView.size(); ++i)
 		{
-			DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
-
-			const sf::Vector2f leftTopVertexPosition = spriteComponent.VertexArray[0].position;
-			const sf::Vector2f rightBottomVertexPosition = spriteComponent.VertexArray[2].position;
-			const sf::FloatRect tileRect = VGMath::TwoVectorsToRect(leftTopVertexPosition, rightBottomVertexPosition);
-
-			if (!VGMath::Intersects2D(tileRect, cameraViewportRect))
+			PartitionCell& cell = worldPartitionComponent.Grid.GetCell(cellsInView[i]);
+			const std::vector<entt::entity>& cellEntities = cell.GetEntities();
+			
+			for (size_t j = 0; j < cellEntities.size(); ++j)
 			{
-				continue;
-			}
+				entt::entity entity = cellEntities[j];
 
-			registry.emplace<ReadyForRenderThisFrame>(entity);
+				if (!registry.all_of<DrawableComponent>(entity) || registry.all_of<ReadyForRenderThisFrame>(entity)) continue;
+
+				DrawableComponent& spriteComponent = view.get<DrawableComponent>(entity);
+
+				const sf::Vector2f leftTopVertexPosition = spriteComponent.VertexArray[0].position;
+				const sf::Vector2f rightBottomVertexPosition = spriteComponent.VertexArray[2].position;
+				const sf::FloatRect tileRect = VGMath::TwoVectorsToRect(leftTopVertexPosition, rightBottomVertexPosition);
+
+				registry.emplace<ReadyForRenderThisFrame>(entity);
+			}
 		}
 	}
 

@@ -10,7 +10,7 @@ namespace vg
 		m_cells()
 	{
 		std::size_t gridSize = m_gridWidth * m_gridHeight;
-		m_cells.resize(gridSize);
+		m_cells.reserve(gridSize);
 		for (size_t i = 0; i < gridSize; ++i)
 		{
 			m_cells.emplace_back(PartitionCell{});

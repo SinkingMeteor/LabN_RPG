@@ -32,7 +32,7 @@ namespace vg
 		m_systems.emplace_back(std::make_unique<CameraFollowingSystem>(this));
 
 		//Render systems
-		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>());
+		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>(this));
 
 		//Debug systems
 		m_renderSystems.emplace_back(std::make_unique<SpatialPartitionDebugRenderSystem>(this));
@@ -59,15 +59,8 @@ namespace vg
 			systemPointer->Render(m_registry, window);
 		}
 
-		for (sf::RectangleShape& rectangle : Rectangles)
-		{
-			window.draw(rectangle);
-		}
-
 		m_window->SetView(m_window->GetView());
 		window.display();
-
-		Rectangles.clear();
 	}
 
 	void GameWorld::LoadResources()

@@ -1,6 +1,7 @@
 #pragma once
 #include <cassert>
 #include "Systems/ISystem.h"
+#include "World/World.h"
 #include "Components/Components.h"
 #include "entt/entt.hpp"
 namespace vg 
@@ -15,8 +16,11 @@ namespace vg
 		};
 
 	public:
+		SpriteRenderSystem(World* world) : m_world(world) {};
 		virtual void Render(entt::registry& registry, sf::RenderWindow& window) override;
 	private:
+		World* m_world;
+
 		void DrawLayer(std::vector<PivotEntity>& sortedPivots, sf::RenderWindow& window, auto& view);
 		void CullTiles(auto& view, sf::RenderWindow& window, entt::registry& registry);
 		void SortEntitiesByPivot(auto& view, std::vector<PivotEntity>& result);
