@@ -7,32 +7,23 @@ namespace vg
 		assert(world);
 		assert(!data.is_null());
 		assert(registry.all_of<NodeComponent>(parent) || registry.all_of<TransformComponent>(parent));
-
-		auto placeholdersView = registry.view<PlaceholdersComponent>();
-		assert(placeholdersView.size() == 1);
-
-		entt::entity mapEntity = *placeholdersView.begin();
-		PlaceholdersComponent& placeholdersComponent = registry.get<PlaceholdersComponent>(mapEntity);
 		
-		WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(world->GetSceneRootEntity());
+		entt::entity rootWorldEntity = world->GetSceneRootEntity();
+		WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(rootWorldEntity);
+		NodeComponent& rootNodeComponent = registry.get<NodeComponent>(rootWorldEntity);
 
-		entt::id_type actorNameId = entt::hashed_string{ data["name"].get<std::string>().c_str() }.value();
+		entt::id_type actorNameId = entt::hashed_string{ data["uniqueId"].get<std::string>().c_str() }.value();
 		std::string texturePath = data["spriteFilePath"];
 		std::string animationPath = data["animationFilePath"];
+
+		assert(world->ContainsUniqueObject(actorNameId));
 
 		auto heroTexResult = m_textureProvider->load(actorNameId, texturePath);
 		SlicedTexture* actorTexture = (*m_textureProvider)[actorNameId].handle().get();
 		m_animationProvider->load(actorNameId, AnimationLoadingData{ animationPath, actorTexture});
 		AnimationPack& actorAnimation = *(*m_animationProvider)[actorNameId];
 
-		entt::entity actor = registry.create();
-
-		sf::Vector2f startPosition{};
-		auto spawnPointIterator = placeholdersComponent.SpawnPoints.find(actorNameId);
-		if (spawnPointIterator != placeholdersComponent.SpawnPoints.end()) 
-		{
-			startPosition = spawnPointIterator->second;
-		}
+		entt::entity actor = world->GetUniqueObjectsMap().at(actorNameId);
 
 		registry.emplace<MovementComponent>(actor, sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 0.0f, 0.0f }, 100.0f);
 		registry.emplace<OnGroundSortingLayer>(actor);
@@ -56,19 +47,14 @@ namespace vg
 
 		TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
 		registry.get<NodeComponent>(parent).Children.push_back(actor);
-		NodeComponent& nodeComponent = registry.emplace<NodeComponent>(actor);
-		nodeComponent.Parent = parent;
+		NodeComponent& actorNodeComponent = registry.emplace<NodeComponent>(actor);
+		actorNodeComponent.Parent = parent;
 
-		TransformComponent& transformComponent = registry.emplace<TransformComponent>(actor);
-		transformComponent.GlobalTransform.translate(startPosition);
-		transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * startPosition);
-		transformComponent.LocalTransform.scale(sf::Vector2f{ 1.0f, 1.0f });
+		TransformComponent& transformComponent = registry.get<TransformComponent>(actor);
+		transformComponent.LocalTransform = parentTransformComponent.GlobalTransform.getInverse() * transformComponent.GlobalTransform;
 
 		//TODO: Сделать редактирование из утилиты
 		RectColliderComponent colliderComponent = registry.emplace<RectColliderComponent>(actor, sf::FloatRect{ -3.0, -2.0, 8.0f, 6.0f });
-
-		PartitionCell& cell = partitionGrid.Grid.GetCell(startPosition);
-		cell.AddEntity(actor);
 
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);

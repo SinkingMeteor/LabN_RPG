@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="23" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="20">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="23" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="25">
  <editorsettings>
   <export target="DesertMap.json" format="json"/>
  </editorsettings>
@@ -56,6 +56,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="10" name="Colliders" class="Colliders">
+  <object id="21" x="451.818" y="212.182" width="24.9091" height="9.45455"/>
+  <object id="23" x="259.875" y="277.5" width="25.25" height="8.125"/>
+ </objectgroup>
  <objectgroup id="2" name="Placeholders" class="SpawnPlaceholders">
   <object id="3" name="Actor_Hero" class="SpawnPoint" x="368" y="238">
    <point/>

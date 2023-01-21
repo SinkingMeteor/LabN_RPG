@@ -9,7 +9,7 @@
   "actors" : 
   [
     {
-       "name" : "Actor_Hero",
+       "uniqueId" : "Actor_Hero",
        "isPlayable" : true,
        "spriteFilePath" : "./resources/Sprites/Actors/Hero.png",
        "animationFilePath" : "./resources/Animations/Anim_Hero.json"

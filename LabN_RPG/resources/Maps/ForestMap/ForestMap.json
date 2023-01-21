@@ -247,6 +247,29 @@
          "y":0
         }, 
         {
+         "class":"Colliders",
+         "draworder":"topdown",
+         "id":8,
+         "name":"Triggers",
+         "objects":[
+                {
+                 "class":"Trigger",
+                 "height":38.5,
+                 "id":18,
+                 "name":"Trigger_Test1",
+                 "rotation":0,
+                 "visible":true,
+                 "width":36.5,
+                 "x":61,
+                 "y":52
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "class":"SpawnPlaceholders",
          "draworder":"topdown",
          "id":5,
@@ -282,8 +305,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":18,
+ "nextlayerid":9,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "properties":[
         {

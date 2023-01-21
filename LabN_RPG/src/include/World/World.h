@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Window/Window.h"
 #include "entt/entt.hpp"
+#include <unordered_map>
 namespace vg 
 {
 	class World 
@@ -10,6 +11,11 @@ namespace vg
 		World(Window* window);
 		Window* GetWindow() { return m_window; }
 		entt::entity GetSceneRootEntity() const { return m_rootEntity; }
+		
+		const std::unordered_map<entt::id_type, entt::entity>& GetUniqueObjectsMap() const { return m_uniqueObjects; }
+		void AddUniqueObject(entt::id_type id, entt::entity entity);
+		void RemoveUniqueObject(entt::id_type id);
+		bool ContainsUniqueObject(entt::id_type id);
 
 		virtual ~World() {};
 		virtual void Initialize() = 0;
@@ -21,5 +27,6 @@ namespace vg
 		entt::registry m_registry;
 		entt::entity m_rootEntity;
 
+		std::unordered_map<entt::id_type, entt::entity> m_uniqueObjects;
 	};
 }

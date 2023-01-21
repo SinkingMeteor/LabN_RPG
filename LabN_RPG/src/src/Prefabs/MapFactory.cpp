@@ -55,7 +55,7 @@ namespace vg
 			case Database::LayerClass::Tilemap:
 				CreateTiles(world, registry, rootNode, layer, parent); break;
 			case Database::LayerClass::SpawnPlaceholders:
-				ProcessSpawnPlaceholders(registry, layer); break;
+				ProcessSpawnPlaceholders(world, registry, layer); break;
 			case Database::LayerClass::Colliders:
 				ProcessColliders(world, registry, layer, parent); break;
 			default:
@@ -63,19 +63,33 @@ namespace vg
 			}
 		}
 	}
-	 void MapFactory::ProcessSpawnPlaceholders(entt::registry& registry, nlohmann::json& layerNode)
+	 void MapFactory::ProcessSpawnPlaceholders(World* world, entt::registry& registry, nlohmann::json& layerNode)
 	 {
-		 entt::entity mapEntity = registry.create();
-		 PlaceholdersComponent& placeholdersComponent = registry.emplace<PlaceholdersComponent>(mapEntity);
 		 nlohmann::json& objectsData = layerNode["objects"];
+
+		 entt::entity worldRoot = world->GetSceneRootEntity();
+		 TransformComponent& rootTransformComponent = registry.get<TransformComponent>(worldRoot);
+		 WorldPartitionComponent& rootPartitionComponent = registry.get<WorldPartitionComponent>(worldRoot);
+
 		 for (nlohmann::json& object : objectsData)
 		 {
 			 if (object["class"] == "SpawnPoint")
 			 {
+				 assert(!object["name"].is_null() && object["name"].is_string());
+				 
+				 entt::id_type pointId = VGUtils::StringToId(object["name"]);
+				 entt::entity placeholderEntity = registry.create();
+				 world->AddUniqueObject(pointId, placeholderEntity);
 				 float x = object["x"].get<float>();
 				 float y = object["y"].get<float>();
-				 entt::id_type objectName = entt::hashed_string{ object["name"].get<std::string>().c_str() }.value();
-				 placeholdersComponent.SpawnPoints.emplace(std::make_pair(objectName, sf::Vector2f{ x, y }));
+				 sf::Vector2f startPosition{ x, y };
+
+				 TransformComponent& transformComponent = registry.emplace<TransformComponent>(placeholderEntity);
+				 transformComponent.GlobalTransform.translate(startPosition);
+				 transformComponent.LocalTransform.translate(rootTransformComponent.GlobalTransform.getInverse() * startPosition);
+
+				 PartitionCell& cell = rootPartitionComponent.Grid.GetCell(startPosition);
+				 cell.AddEntity(placeholderEntity);
 			 }
 		 }
 	 }

@@ -91,6 +91,40 @@
          "y":0
         }, 
         {
+         "class":"Colliders",
+         "draworder":"topdown",
+         "id":10,
+         "name":"Colliders",
+         "objects":[
+                {
+                 "class":"",
+                 "height":9.45454545454547,
+                 "id":21,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":24.9090909090909,
+                 "x":451.818181818182,
+                 "y":212.181818181818
+                }, 
+                {
+                 "class":"",
+                 "height":8.125,
+                 "id":23,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":25.25,
+                 "x":259.875,
+                 "y":277.5
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "class":"SpawnPlaceholders",
          "draworder":"topdown",
          "id":2,
@@ -114,8 +148,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":20,
+ "nextlayerid":11,
+ "nextobjectid":25,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="18">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="19">
  <editorsettings>
   <export target="ForestMap.json" format="json"/>
  </editorsettings>
@@ -95,6 +95,9 @@
   <object id="8" x="479" y="-3" width="38.3333" height="204"/>
   <object id="10" x="29.3333" y="-5.33333" width="457.333" height="36.6667"/>
   <object id="16" x="322.182" y="113.818" width="15.4545" height="7.81818"/>
+ </objectgroup>
+ <objectgroup id="8" name="Triggers" class="Colliders">
+  <object id="18" name="Trigger_Test1" class="Trigger" x="61" y="52" width="36.5" height="38.5"/>
  </objectgroup>
  <objectgroup id="5" name="Placeholders" class="SpawnPlaceholders">
   <object id="1" name="Actor_Hero" class="SpawnPoint" x="253" y="117">
