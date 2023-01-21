@@ -69,6 +69,7 @@ namespace vg
 
 		 entt::entity worldRoot = world->GetSceneRootEntity();
 		 TransformComponent& rootTransformComponent = registry.get<TransformComponent>(worldRoot);
+		 NodeComponent& rootNodeComponent = registry.get<NodeComponent>(worldRoot);
 		 WorldPartitionComponent& rootPartitionComponent = registry.get<WorldPartitionComponent>(worldRoot);
 
 		 for (nlohmann::json& object : objectsData)
@@ -83,6 +84,9 @@ namespace vg
 				 float x = object["x"].get<float>();
 				 float y = object["y"].get<float>();
 				 sf::Vector2f startPosition{ x, y };
+
+				 NodeComponent& nodeComponent = registry.emplace<NodeComponent>(placeholderEntity);
+				 VGUtils::AttachTo(registry, placeholderEntity, worldRoot);
 
 				 TransformComponent& transformComponent = registry.emplace<TransformComponent>(placeholderEntity);
 				 transformComponent.GlobalTransform.translate(startPosition);

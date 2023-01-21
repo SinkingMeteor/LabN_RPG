@@ -2,15 +2,14 @@
 #include "Common/GameplayUtils.h"
 namespace vg 
 {
-	std::optional<entt::entity> ActorFactory::CreateEntity(World* world, entt::registry& registry, const nlohmann::json& data, entt::entity parent)
+	std::optional<entt::entity> ActorFactory::CreateEntity(World* world, entt::registry& registry, const nlohmann::json& data, entt::entity targetParent)
 	{
 		assert(world);
 		assert(!data.is_null());
-		assert(registry.all_of<NodeComponent>(parent) || registry.all_of<TransformComponent>(parent));
+		assert(registry.all_of<NodeComponent>(targetParent) || registry.all_of<TransformComponent>(targetParent));
 		
 		entt::entity rootWorldEntity = world->GetSceneRootEntity();
 		WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(rootWorldEntity);
-		NodeComponent& rootNodeComponent = registry.get<NodeComponent>(rootWorldEntity);
 
 		entt::id_type actorNameId = entt::hashed_string{ data["uniqueId"].get<std::string>().c_str() }.value();
 		std::string texturePath = data["spriteFilePath"];
@@ -45,10 +44,14 @@ namespace vg
 		TextureRect& spriteRect = actorTexture->RectDatas[0];
 		sf::VertexArray quad( sf::Quads, 4 );
 
-		TransformComponent& parentTransformComponent = registry.get<TransformComponent>(parent);
-		registry.get<NodeComponent>(parent).Children.push_back(actor);
-		NodeComponent& actorNodeComponent = registry.emplace<NodeComponent>(actor);
-		actorNodeComponent.Parent = parent;
+		TransformComponent& parentTransformComponent = registry.get<TransformComponent>(targetParent);
+		NodeComponent& actorNodeComponent = registry.get<NodeComponent>(actor);
+
+		if (targetParent != actorNodeComponent.Parent) 
+		{
+			VGUtils::DetachFromParent(registry, actor);
+			VGUtils::AttachTo(registry, actor, targetParent);
+		}
 
 		TransformComponent& transformComponent = registry.get<TransformComponent>(actor);
 		transformComponent.LocalTransform = parentTransformComponent.GlobalTransform.getInverse() * transformComponent.GlobalTransform;

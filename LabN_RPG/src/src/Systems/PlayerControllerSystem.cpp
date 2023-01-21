@@ -27,6 +27,7 @@ namespace vg
 			velocityDirection.x += 1.0f;
 		}
 
+
 		for (entt::entity entity : view)
 		{
 			PlayerControllerComponent& pcComponent = view.get<PlayerControllerComponent>(entity);

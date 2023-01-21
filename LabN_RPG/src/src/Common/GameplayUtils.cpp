@@ -52,4 +52,41 @@ namespace vg
         return entt::hashed_string{ stringToConvert.c_str() }.value();
     }
 
+    void VGUtils::DetachFromParent(entt::registry& registry, entt::entity entity)
+    {
+        assert(registry.all_of<NodeComponent>(entity));
+        NodeComponent& childNodeComponent = registry.get<NodeComponent>(entity);
+        if (childNodeComponent.Parent == entt::null) return;
+
+        childNodeComponent.Parent = entt::null;
+
+        NodeComponent& parentNodeComponent = registry.get<NodeComponent>(childNodeComponent.Parent);
+
+        using It = std::vector<entt::entity>::iterator;
+        It it = parentNodeComponent.Children.begin();
+
+        for (; it != parentNodeComponent.Children.end(); ++it)
+        {
+            if (*it == entity) break;
+        }
+
+        if (it == parentNodeComponent.Children.end()) return;
+       
+        parentNodeComponent.Children.erase(it);
+
+    }
+
+    void VGUtils::AttachTo(entt::registry& registry, entt::entity childEntity, entt::entity parentEntity)
+    {
+        assert(registry.all_of<NodeComponent>(childEntity) && registry.all_of<NodeComponent>(parentEntity));
+
+        NodeComponent& childNode = registry.get<NodeComponent>(childEntity);
+        NodeComponent& parentNode = registry.get<NodeComponent>(parentEntity);
+
+        assert(childNode.Parent == entt::null);
+
+        childNode.Parent = parentEntity;
+        parentNode.Children.push_back(childEntity);
+    }
+
 }
