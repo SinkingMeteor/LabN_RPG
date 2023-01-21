@@ -36,9 +36,9 @@
     <ClCompile Include="src\src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\src\Systems\CameraFollowingSystem.cpp" />
     <ClCompile Include="src\src\Systems\CollisionSystem.cpp" />
-    <ClCompile Include="src\src\Systems\Debug\ColliderDebugRenderSystem.cpp" />
-    <ClCompile Include="src\src\Systems\Debug\PivotDebugRenderSystem.cpp" />
-    <ClCompile Include="src\src\Systems\Debug\SpatialPartitionDebugRenderSystem.cpp" />
+    <ClCompile Include="src\src\Systems\Gizmo\ColliderDebugRenderSystem.cpp" />
+    <ClCompile Include="src\src\Systems\Gizmo\PivotDebugRenderSystem.cpp" />
+    <ClCompile Include="src\src\Systems\Gizmo\SpatialPartitionDebugRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="src\src\Systems\SpriteRenderSystem.cpp" />
     <ClCompile Include="src\src\Systems\ApplyTransformSystem.cpp" />
@@ -83,9 +83,9 @@
     <ClInclude Include="src\include\Systems\AnimationSystem.h" />
     <ClInclude Include="src\include\Systems\CameraFollowingSystem.h" />
     <ClInclude Include="src\include\Systems\CollisionSystem.h" />
-    <ClInclude Include="src\include\Systems\Debug\ColliderDebugRenderSystem.h" />
-    <ClInclude Include="src\include\Systems\Debug\PivotDebugRenderSystem.h" />
-    <ClInclude Include="src\include\Systems\Debug\SpatialPartitionDebugRenderSystem.h" />
+    <ClInclude Include="src\include\Systems\Gizmo\ColliderDebugRenderSystem.h" />
+    <ClInclude Include="src\include\Systems\Gizmo\PivotDebugRenderSystem.h" />
+    <ClInclude Include="src\include\Systems\Gizmo\SpatialPartitionDebugRenderSystem.h" />
     <ClInclude Include="src\include\Systems\ISystem.h" />
     <ClInclude Include="src\include\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="src\include\Systems\SpriteRenderSystem.h" />

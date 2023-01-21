@@ -10,6 +10,6 @@
 #include "Systems/ApplyTransformSystem.h"
 #include "Systems/CollisionSystem.h"
 
-#include "Systems/Debug/SpatialPartitionDebugRenderSystem.h"
-#include "Systems/Debug/PivotDebugRenderSystem.h"
-#include "Systems/Debug/ColliderDebugRenderSystem.h"
+#include "Systems/Gizmo/SpatialPartitionDebugRenderSystem.h"
+#include "Systems/Gizmo/PivotDebugRenderSystem.h"
+#include "Systems/Gizmo/ColliderDebugRenderSystem.h"

@@ -115,6 +115,11 @@ namespace vg
 			 nodeComponent.Parent = parent;
 			 registry.get<NodeComponent>(parent).Children.push_back(colliderEntity);
 
+			 std::string colliderName{ colliderNode["name"] };
+			 if (colliderName.size() != 0) 
+			 {
+				 world->AddUniqueObject(VGUtils::StringToId(colliderName), colliderEntity);
+			 }
 			 float x = colliderNode["x"].get<float>();
 			 float y = colliderNode["y"].get<float>();
 			 float width = colliderNode["width"].get<float>();
