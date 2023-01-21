@@ -18,4 +18,4 @@ Implemented mechanics at the moment:
 
 -World .json files
 
-![Screenshot_28](https://user-images.githubusercontent.com/83251600/213806495-49c615b7-7bd2-4a65-aca9-f15b5c997458.png)
+![Screenshot_29](https://user-images.githubusercontent.com/83251600/213873609-c955754c-0d65-47d0-b5f0-490db4897a7f.png)
