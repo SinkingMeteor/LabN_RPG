@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="18">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="18">
  <editorsettings>
   <export target="ForestMap.json" format="json"/>
  </editorsettings>
  <properties>
   <property name="tileMap" value="ForestMap"/>
  </properties>
- <tileset firstgid="1" name="ForestMap" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="ForestMap.png" width="128" height="128"/>
+ <tileset firstgid="1" name="ForestMap" tilewidth="32" tileheight="32" tilecount="64" columns="8">
+  <image source="ForestMap.png" width="256" height="256"/>
  </tileset>
  <layer id="1" name="Ground" class="Tilemap" width="16" height="7">
   <properties>
@@ -16,13 +16,13 @@
    <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
-0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,
 0,9,9,9,9,9,9,9,9,9,9,9,9,9,9,0,
-0,9,9,9,9,9,9,9,9,9,9,9,9,9,9,0,
-0,9,9,9,9,9,9,9,9,9,9,9,9,9,9,0,
-0,9,9,9,9,9,9,9,9,9,9,9,9,9,9,0,
-0,9,9,9,9,9,9,9,9,9,9,9,9,9,9,0,
-0,13,13,13,13,13,13,13,13,13,13,13,13,13,13,0
+0,17,17,17,17,17,17,17,17,17,17,17,5,6,7,0,
+0,17,17,17,17,17,17,17,17,17,17,17,13,14,15,0,
+0,17,17,5,6,7,17,17,17,17,17,17,13,14,15,0,
+0,17,17,13,14,15,17,17,17,17,17,17,13,14,15,0,
+0,17,17,21,22,23,17,17,17,17,17,17,21,22,23,0,
+0,25,25,25,25,25,25,25,25,25,25,25,25,25,25,0
 </data>
  </layer>
  <layer id="3" name="Ground2" class="Tilemap" width="16" height="7">
@@ -32,12 +32,28 @@
    <property name="tileMap" value="ForestMap"/>
   </properties>
   <data encoding="csv">
+0,0,0,10,10,0,0,10,0,10,0,10,10,0,10,0,
+0,2,2,1,0,27,0,0,1,0,0,11,0,0,0,0,
+0,2,1,11,0,0,1,0,0,0,0,0,0,0,0,0,
+0,1,0,0,0,0,2,0,0,0,19,20,0,0,0,0,
+0,11,2,0,0,0,0,11,0,0,1,27,0,0,0,0,
+0,1,2,0,0,0,0,0,27,1,1,2,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="Flowers" class="Tilemap" width="16" height="7" offsetx="10" offsety="10">
+  <properties>
+   <property name="individualSorting" type="bool" value="true"/>
+   <property name="sortingLayer" value="Ground"/>
+   <property name="tileMap" value="ForestMap"/>
+  </properties>
+  <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,2,2,1,0,0,0,0,1,0,0,1,0,2,2,0,
-0,2,1,0,0,0,1,0,0,0,0,0,0,0,2,0,
-0,1,0,0,0,1,2,0,0,0,11,12,0,1,1,0,
-0,1,2,1,0,0,0,0,0,0,1,0,0,0,1,0,
-0,1,2,2,0,0,0,0,0,1,1,2,0,1,2,0,
+0,27,0,0,27,0,0,0,0,0,0,1,0,0,0,0,
+0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,2,1,0,0,1,0,0,0,0,0,0,0,0,0,0,
+0,27,0,0,0,0,0,0,0,0,1,27,0,0,0,0,
+0,0,0,0,0,0,0,0,27,1,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
@@ -51,7 +67,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

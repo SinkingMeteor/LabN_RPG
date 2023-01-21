@@ -12,7 +12,7 @@ namespace vg
 		if (m_registry.all_of<MovementComponent>(entity))
 		{
 			MovementComponent& movementComponent = m_registry.get<MovementComponent>(entity);
-			animationId = CommonUtils::GetIDByDirection("IDL", movementComponent.FacingDirection);
+			animationId = VGUtils::GetIDByDirection("IDL", movementComponent.FacingDirection);
 		}
 
 		Animation& newAnimation = animationComponent.CurrentAnimationPack->Animations[animationId];

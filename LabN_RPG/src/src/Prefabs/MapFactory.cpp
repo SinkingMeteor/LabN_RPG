@@ -48,7 +48,7 @@ namespace vg
 
 			assert(!layer["class"].is_null());
 
-			entt::id_type layerClass = CommonUtils::StringToId(layer["class"]);
+			entt::id_type layerClass = VGUtils::StringToId(layer["class"]);
 
 			switch (layerClass) 
 			{
@@ -128,6 +128,15 @@ namespace vg
 		 std::size_t mapWidth = rootNode["width"].get<std::size_t>();
 		 std::size_t tileHeight = rootNode["tileheight"].get<std::size_t>();
 		 std::size_t tileWidth = rootNode["tilewidth"].get<std::size_t>();
+		 int offsetX = 0;
+		 int offsetY = 0;
+
+		 if (!layerNode["offsetx"].is_null() && !layerNode["offsety"].is_null()) 
+		 {
+			 offsetX = layerNode["offsetx"].get<int>();
+			 offsetY = layerNode["offsety"].get<int>();
+		 }
+
 		 std::size_t vertexCount = mapHeight * mapWidth * 4;
 
 		 WorldPartitionComponent& partitionGrid = registry.get<WorldPartitionComponent>(world->GetSceneRootEntity());
@@ -162,7 +171,7 @@ namespace vg
 
 			 //Для соответствия позиций тайлов в редакторе и игре я добавляю пивот. 
 			 //Но только к тайлам, к персонажам и всему чего в редакторе нет, добавлять не нужно.
-			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width, (float)y * spriteRect.Rect.width } + spriteRect.Pivot;
+			 const sf::Vector2f offset = sf::Vector2f{ (float)x * spriteRect.Rect.width + offsetX, (float)y * spriteRect.Rect.height + offsetY } + spriteRect.Pivot;
 			 transformComponent.GlobalTransform.translate(offset);
 			 transformComponent.LocalTransform.translate(parentTransformComponent.GlobalTransform.getInverse() * offset);
 
@@ -183,7 +192,7 @@ namespace vg
 
 		 for (nlohmann::json& property : propertiesNode)
 		 {
-			 entt::id_type propertyId = CommonUtils::StringToId(property["name"]);
+			 entt::id_type propertyId = VGUtils::StringToId(property["name"]);
 
 			 switch (propertyId)
 			 {
@@ -191,10 +200,10 @@ namespace vg
 				 result.IsIndividualTiles = property["value"].get<bool>();
 				 break;
 			 case Database::LayerProperties::SortingLayer:
-				 result.SortingLayerId = CommonUtils::StringToId(property["value"]);
+				 result.SortingLayerId = VGUtils::StringToId(property["value"]);
 				 break;
 			 case Database::LayerProperties::TileMap:
-				 result.TilemapTexture = (*m_textureProvider)[CommonUtils::StringToId(property["value"])];
+				 result.TilemapTexture = (*m_textureProvider)[VGUtils::StringToId(property["value"])];
 				 break;
 			 default:
 				 break;

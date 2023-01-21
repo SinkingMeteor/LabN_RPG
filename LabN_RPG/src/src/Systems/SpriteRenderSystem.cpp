@@ -1,7 +1,8 @@
 #include "Systems/SpriteRenderSystem.h"
 #include "MathUtils.h"
 #include <algorithm>
-
+#include <chrono>
+#include "Common/GameplayUtils.h"
 namespace vg
 {
 	void SpriteRenderSystem::Render(entt::registry& registry, sf::RenderWindow& window)
@@ -22,8 +23,6 @@ namespace vg
 		WorldPartitionComponent& worldPartitionComponent = registry.get<WorldPartitionComponent>(m_world->GetSceneRootEntity());
 		std::vector<std::size_t> cellsInView{};
 		worldPartitionComponent.Grid.GetAllCellsContainsRect(cameraViewportRect, cellsInView);
-
-		std::cout << cellsInView.size() << '\n';
 
 		for (size_t i = 0; i < cellsInView.size(); ++i)
 		{
