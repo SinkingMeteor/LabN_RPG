@@ -9,61 +9,72 @@ namespace vg
 {
 	void CollisionSystem::Tick(entt::registry& registry, sf::Time deltaTime)
 	{
+		registry.clear<Triggered>();
+
 		entt::entity sceneRootEntity = m_world->GetSceneRootEntity();
 		WorldPartitionComponent& partitionComponent = registry.get<WorldPartitionComponent>(sceneRootEntity);
 
 		const std::vector<PartitionCell>& partitionCells = partitionComponent.Grid.GetCellArray();
 
-		for (size_t partitionCellIndex = 0; partitionCellIndex < partitionCells.size(); ++partitionCellIndex)
+		auto collidersView = registry.view<TransformComponent, RectColliderComponent>();
+
+		for (entt::entity colliderEntity : collidersView)
 		{
-			const std::vector<entt::entity>& entitiesInTargetCell = partitionCells[partitionCellIndex].GetEntities();
+			TransformComponent& entityTransform = registry.get<TransformComponent>(colliderEntity);
+			RectColliderComponent& entityCollider = registry.get<RectColliderComponent>(colliderEntity);
 
-			for (size_t entityInCellIndex = 0; entityInCellIndex < entitiesInTargetCell.size(); ++entityInCellIndex)
+			sf::Vector2f entityColliderLocalPosition = sf::Vector2f{ entityCollider.Rect.left, entityCollider.Rect.top };
+			sf::Vector2f entityCurrentPosition{};
+			
+			if (registry.all_of<DirtyTransformComponent>(colliderEntity)) 
 			{
-				entt::entity entityToCheck = entitiesInTargetCell[entityInCellIndex];
+				DirtyTransformComponent& colliderDirtyTransform = registry.get<DirtyTransformComponent>(colliderEntity);
+				entityCurrentPosition = entityTransform.GlobalTransform * colliderDirtyTransform.DeltaTransform * entityColliderLocalPosition;
+			}
+			else
+			{
+				entityCurrentPosition = entityTransform.GlobalTransform * entityColliderLocalPosition;
+			}
 
-				if (!registry.all_of<DirtyTransformComponent, RectColliderComponent>(entityToCheck)) continue;
+			sf::Vector2f entityColliderSize{ entityCollider.Rect.width, entityCollider.Rect.height };
+			sf::FloatRect entityColliderRect{ entityCurrentPosition, entityColliderSize };
 
-				TransformComponent& entityTransform = registry.get<TransformComponent>(entityToCheck);
-				DirtyTransformComponent& entityDirtyTransform = registry.get<DirtyTransformComponent>(entityToCheck);
-				RectColliderComponent& entityCollider = registry.get<RectColliderComponent>(entityToCheck);
+			std::size_t currentCellIndex = partitionComponent.Grid.GetCellIndexByPosition(entityCurrentPosition);
+			std::vector<std::size_t> neighbourCellIndices{};
+			partitionComponent.Grid.GetAllCellsAround(currentCellIndex, neighbourCellIndices);
 
-				sf::Vector2f entityColliderLocalPosition = sf::Vector2f{ entityCollider.Rect.left, entityCollider.Rect.top };
-				sf::Vector2f entityCurrentPosition = entityTransform.GlobalTransform * entityDirtyTransform.DeltaTransform * entityColliderLocalPosition;
-				sf::Vector2f entityColliderSize{ entityCollider.Rect.width, entityCollider.Rect.height };
-				sf::FloatRect entityColliderRect{ entityCurrentPosition, entityColliderSize };
+			bool intersects = false;
 
-				std::vector<std::size_t> neighbourCellIndices{};
-				partitionComponent.Grid.GetAllCellsAround(partitionCellIndex, neighbourCellIndices);
+			for (size_t cellIndex : neighbourCellIndices)
+			{
+				if (intersects) break;
+
+				const std::vector<entt::entity>& entitiesInNeighbourCell = partitionCells[cellIndex].GetEntities();
 				
-				bool intersects = false;
-				for (size_t neighbourCellIndex = 0; neighbourCellIndex < neighbourCellIndices.size(); ++neighbourCellIndex)
+				for (entt::entity entityNeighbour : entitiesInNeighbourCell)
 				{
-					if (intersects) break;
+					if (!registry.all_of<RectColliderComponent>(entityNeighbour) || entityNeighbour == colliderEntity) continue;
 
-					const std::vector<entt::entity>& entitiesInNeighbourCell = partitionCells[neighbourCellIndices[neighbourCellIndex]].GetEntities();
+					RectColliderComponent& neighbourCollider = registry.get<RectColliderComponent>(entityNeighbour);
+					TransformComponent& neighbourTransform = registry.get<TransformComponent>(entityNeighbour);
 
-					for (size_t neighbourEntityIndex = 0; neighbourEntityIndex < entitiesInNeighbourCell.size(); ++neighbourEntityIndex)
+					sf::Vector2f neighbourColliderLocalPosition = sf::Vector2f{ neighbourCollider.Rect.left, neighbourCollider.Rect.top };
+					sf::Vector2f neighbourCurrentPosition = neighbourTransform.GlobalTransform * neighbourColliderLocalPosition;
+					sf::Vector2f neighbourColliderSize{ neighbourCollider.Rect.width, neighbourCollider.Rect.height };
+					sf::FloatRect neighbourColliderRect{ neighbourCurrentPosition, neighbourColliderSize };
+
+					if (!VGMath::Intersects2D(entityColliderRect, neighbourColliderRect)) continue;
+				
+					intersects = true;
+
+					registry.emplace<Triggered>(colliderEntity);
+
+					if (registry.all_of<DirtyTransformComponent>(colliderEntity) && !registry.all_of<Trigger>(entityNeighbour))
 					{
-						entt::entity entityNeighbour = entitiesInNeighbourCell[neighbourEntityIndex];
-
-						if (!registry.all_of<RectColliderComponent>(entityNeighbour) || entityNeighbour == entityToCheck) continue;
-
-						RectColliderComponent& neighbourCollider = registry.get<RectColliderComponent>(entityNeighbour);
-						TransformComponent& neighbourTransform = registry.get<TransformComponent>(entityNeighbour);
-
-						sf::Vector2f neighbourColliderLocalPosition = sf::Vector2f{ neighbourCollider.Rect.left, neighbourCollider.Rect.top };
-						sf::Vector2f neighbourCurrentPosition = neighbourTransform.GlobalTransform * neighbourColliderLocalPosition;
-						sf::Vector2f neighbourColliderSize{ neighbourCollider.Rect.width, neighbourCollider.Rect.height };
-						sf::FloatRect neighbourColliderRect{ neighbourCurrentPosition, neighbourColliderSize };
-
-						if (VGMath::Intersects2D(entityColliderRect, neighbourColliderRect))
-						{
-							intersects = true;
-							registry.remove<DirtyTransformComponent>(entityToCheck);
-							break;
-						}
+						registry.remove<DirtyTransformComponent>(colliderEntity);
 					}
+
+					break;
 				}
 			}
 		}

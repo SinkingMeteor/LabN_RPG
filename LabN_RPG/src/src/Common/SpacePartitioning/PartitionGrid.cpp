@@ -33,6 +33,13 @@ namespace vg
 		return m_cells[m_gridWidth * y + x];
 	}
 
+	std::size_t PartitionGrid::GetCellIndexByPosition(const sf::Vector2f& globalPosition)
+	{
+		int x = globalPosition.x / m_cellSize;
+		int y = globalPosition.y / m_cellSize;
+		return y * m_gridWidth + x;
+	}
+
 	PartitionCell& PartitionGrid::GetCell(std::size_t i)
 	{
 		return m_cells[i];

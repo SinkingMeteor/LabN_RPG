@@ -15,7 +15,20 @@ namespace vg
 
 			sf::RectangleShape rectangle{};
 			rectangle.setFillColor(sf::Color::Transparent);
-			rectangle.setOutlineColor(sf::Color::Green);
+			
+			if (registry.all_of<Trigger>(entity)) 
+			{
+				rectangle.setOutlineColor(sf::Color::Yellow);
+
+				if (registry.all_of<Triggered>(entity)) 
+				{
+					rectangle.setOutlineColor(sf::Color::Red);
+				}
+			}
+			else
+			{
+				rectangle.setOutlineColor(sf::Color::Green);
+			}
 
 			rectangle.setOutlineThickness(-1.0f);
 			rectangle.setPosition(transformComponent.GlobalTransform * sf::Vector2f{ rectComponent.Rect.left, rectComponent.Rect.top });

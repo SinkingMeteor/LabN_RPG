@@ -13,6 +13,7 @@ namespace vg
 		PartitionGrid(std::size_t width, std::size_t height, float cellSize);
 		PartitionCell& GetCell(const sf::Vector2f& globalPosition);
 		PartitionCell& GetCell(std::size_t x, std::size_t y);
+		std::size_t GetCellIndexByPosition(const sf::Vector2f& globalPosition);
 		PartitionCell& GetCell(std::size_t i);
 		void GetAllCellsContainsRect(const sf::FloatRect& rect, std::vector<std::size_t>& cellsIndices);
 		void GetAllCellsAround(std::size_t cellIndex, std::vector<std::size_t>& resultCells);

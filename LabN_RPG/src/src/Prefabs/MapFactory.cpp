@@ -120,6 +120,11 @@ namespace vg
 			 {
 				 world->AddUniqueObject(VGUtils::StringToId(colliderName), colliderEntity);
 			 }
+			 std::string colliderClass{ colliderNode["class"] };
+			 if (colliderClass == "Trigger")
+			 {
+				 registry.emplace<Trigger>(colliderEntity);
+			 }
 			 float x = colliderNode["x"].get<float>();
 			 float y = colliderNode["y"].get<float>();
 			 float width = colliderNode["width"].get<float>();
