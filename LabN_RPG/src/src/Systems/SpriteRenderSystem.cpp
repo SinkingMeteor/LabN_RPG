@@ -76,7 +76,7 @@ namespace vg
 
 			if (states.texture != nullptr && states.texture != texture) 
 			{
-				window.draw(verticesToDraw.data(), verticesToDraw.size(), sf::Quads, states);
+				window.draw(verticesToDraw.data(), verticesToDraw.size(), sf::PrimitiveType::Triangles, states);
 				verticesToDraw.clear();
 			}
 
@@ -88,18 +88,23 @@ namespace vg
 			float width = (float)spriteRect.Rect.width;
 			float height = (float)spriteRect.Rect.height;
 
-			spriteComponent.VertexArray[0].texCoords = sf::Vector2f{ left, top };
-			spriteComponent.VertexArray[1].texCoords = sf::Vector2f{ left + width, top };
-			spriteComponent.VertexArray[2].texCoords = sf::Vector2f{ left + width, top + height };
-			spriteComponent.VertexArray[3].texCoords = sf::Vector2f{ left, top + height };
+			spriteComponent.VertexArray[0].texCoords = sf::Vector2f{ left, top + height };
+			spriteComponent.VertexArray[1].texCoords = sf::Vector2f{ left, top };
+			spriteComponent.VertexArray[2].texCoords = sf::Vector2f{ left + width, top };
+
+			spriteComponent.VertexArray[3].texCoords = spriteComponent.VertexArray[0].texCoords;
+			spriteComponent.VertexArray[4].texCoords = spriteComponent.VertexArray[2].texCoords;
+			spriteComponent.VertexArray[5].texCoords = sf::Vector2f{ left + width, top + height };
 
 			verticesToDraw.push_back(spriteComponent.VertexArray[0]);
 			verticesToDraw.push_back(spriteComponent.VertexArray[1]);
 			verticesToDraw.push_back(spriteComponent.VertexArray[2]);
 			verticesToDraw.push_back(spriteComponent.VertexArray[3]);
+			verticesToDraw.push_back(spriteComponent.VertexArray[4]);
+			verticesToDraw.push_back(spriteComponent.VertexArray[5]);
 		}
 
-		window.draw(verticesToDraw.data(), verticesToDraw.size(), sf::Quads, states);
+		window.draw(verticesToDraw.data(), verticesToDraw.size(), sf::PrimitiveType::Triangles, states);
 	}
 }
 

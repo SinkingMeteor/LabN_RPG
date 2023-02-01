@@ -35,8 +35,8 @@ namespace vg
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>(this));
 
 		//Debug systems
-		//m_renderSystems.emplace_back(std::make_unique<SpatialPartitionDebugRenderSystem>(this));
-		//m_renderSystems.emplace_back(std::make_unique<PivotDebugRenderSystem>());
+		m_renderSystems.emplace_back(std::make_unique<SpatialPartitionDebugRenderSystem>(this));
+		m_renderSystems.emplace_back(std::make_unique<PivotDebugRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<ColliderDebugRenderSystem>());
 	}
 
@@ -65,7 +65,7 @@ namespace vg
 
 	void GameWorld::LoadResources()
 	{
-		std::ifstream input{ static_cast<const char*>("./resources/Worlds/World_Forest.json")};
+		std::ifstream input{"./resources/Worlds/World_Forest.json"};
 		nlohmann::json rootNode;
 		input >> rootNode;
 		input.close();

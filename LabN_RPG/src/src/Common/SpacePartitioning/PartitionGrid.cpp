@@ -57,7 +57,7 @@ namespace vg
 			sf::Vector2f cellPosition{ x * m_cellSize, y * m_cellSize };
 			sf::FloatRect cellRect{ cellPosition, cellSize };
 
-			if (rect.intersects(cellRect)) 
+			if (rect.findIntersection(cellRect)) 
 			{
 				cellsIndices.push_back(i);
 			}

@@ -42,7 +42,7 @@ namespace vg
 		}
 
 		TextureRect& spriteRect = actorTexture->RectDatas[0];
-		sf::VertexArray quad( sf::Quads, 4 );
+		sf::VertexArray quad( sf::PrimitiveType::Triangles, 6);
 
 		TransformComponent& parentTransformComponent = registry.get<TransformComponent>(targetParent);
 		NodeComponent& actorNodeComponent = registry.get<NodeComponent>(actor);
@@ -57,7 +57,7 @@ namespace vg
 		transformComponent.LocalTransform = parentTransformComponent.GlobalTransform.getInverse() * transformComponent.GlobalTransform;
 
 		//TODO: Сделать редактирование из утилиты
-		RectColliderComponent colliderComponent = registry.emplace<RectColliderComponent>(actor, sf::FloatRect{ -3.0, -2.0, 8.0f, 6.0f });
+		RectColliderComponent colliderComponent = registry.emplace<RectColliderComponent>(actor, sf::FloatRect{ {-3.0, -2.0}, {8.0f, 6.0f} });
 
 		DrawableComponent& spriteComponent = registry.emplace<DrawableComponent>(actor);
 		spriteComponent.VertexArray = std::move(quad);

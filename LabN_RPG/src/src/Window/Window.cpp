@@ -4,7 +4,7 @@ namespace vg
 {
 	Window::Window() :
 		m_view(),
-		m_window(sf::VideoMode(640, 360), "Game"),
+		m_window(sf::VideoMode({ 640, 360 }), "Game"),
 		m_keyboard(),
 		m_mouse()
 	{

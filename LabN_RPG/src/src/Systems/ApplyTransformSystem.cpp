@@ -46,10 +46,13 @@ namespace vg
 			TextureRect& spriteRect = spriteComponent.RelatedTexture->RectDatas[spriteComponent.RectIndex];
 			sf::Vector2f spritePosition = transformComponent.GlobalTransform * VGMath::Zero;
 
-			spriteComponent.VertexArray[0].position = spritePosition - spriteRect.Pivot;
-			spriteComponent.VertexArray[1].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
-			spriteComponent.VertexArray[2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };
-			spriteComponent.VertexArray[3].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height };
+			spriteComponent.VertexArray[0].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ 0.0f, (float)spriteRect.Rect.height };
+			spriteComponent.VertexArray[1].position = spritePosition - spriteRect.Pivot;
+			spriteComponent.VertexArray[2].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, 0.0f };
+		
+			spriteComponent.VertexArray[3].position = spriteComponent.VertexArray[0].position;
+			spriteComponent.VertexArray[4].position = spriteComponent.VertexArray[2].position;
+			spriteComponent.VertexArray[5].position = spritePosition - spriteRect.Pivot + sf::Vector2f{ (float)spriteRect.Rect.width, (float)spriteRect.Rect.height };
 		}
 
 		for (entt::entity entity : nodeComponent.Children)

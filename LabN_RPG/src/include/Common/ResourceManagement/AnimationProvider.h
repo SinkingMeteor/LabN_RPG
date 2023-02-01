@@ -13,11 +13,11 @@ namespace vg
 {
 	struct Animation
 	{
-		SlicedTexture* Texture;
-		std::vector<std::size_t> Frames;
-		float FrameRate;
-		entt::id_type AnimationId;
-		entt::id_type AnimationGroupId;
+		SlicedTexture* Texture{};
+		std::vector<std::size_t> Frames{};
+		float FrameRate{};
+		entt::id_type AnimationId{};
+		entt::id_type AnimationGroupId{};
 	};
 
 	struct AnimationPack

@@ -179,7 +179,7 @@ namespace vg
 			 if (num < 0) continue;
 
 			 entt::entity tileEntity = registry.create();
-			 sf::VertexArray vertices{ sf::Quads, 4 };
+			 sf::VertexArray vertices{ sf::PrimitiveType::Triangles, 6 };
 
 			 SetSortingLayer(registry, tileEntity, layerProperties.SortingLayerId);
 
