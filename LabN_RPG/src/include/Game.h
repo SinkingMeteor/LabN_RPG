@@ -1,8 +1,5 @@
 #pragma once
-
-#include "SFML/Graphics.hpp"
-#include "entt/entt.hpp"
-#include <memory>
+#include "vgpch.h"
 #include "World/World.h"
 #include "World/GameWorld.h"
 namespace vg 

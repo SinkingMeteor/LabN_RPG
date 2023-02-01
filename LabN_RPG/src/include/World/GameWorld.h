@@ -1,7 +1,6 @@
 #pragma once
-#include <iostream>
-#include <cassert>
-#include <optional>
+
+#include "vgpch.h"
 
 #include "World/World.h"
 #include "Systems/Systems.h"
@@ -10,8 +9,8 @@
 #include "ResourceManagement/AnimationProvider.h"
 #include "Prefabs/ActorPrefab.h"
 #include "Prefabs/MapFactory.h"
-#include "entt/entt.hpp"
 #include "Database.h"
+
 namespace vg
 {
 	class GameWorld final : public World 

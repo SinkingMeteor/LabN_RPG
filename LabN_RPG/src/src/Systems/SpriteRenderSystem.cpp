@@ -1,7 +1,5 @@
 #include "Systems/SpriteRenderSystem.h"
 #include "MathUtils.h"
-#include <algorithm>
-#include <chrono>
 #include "Common/GameplayUtils.h"
 namespace vg
 {

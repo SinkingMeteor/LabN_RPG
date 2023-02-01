@@ -1,9 +1,6 @@
 #pragma once
-#include <vector>
-#include <memory>
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 #include "SpacePartitioning/PartitionCell.h"
-#include "entt/entt.hpp"
 namespace vg 
 {
 	class PartitionGrid

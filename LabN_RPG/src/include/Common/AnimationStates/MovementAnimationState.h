@@ -1,6 +1,6 @@
 #pragma once
+#include "vgpch.h"
 #include "AnimationStates/IAnimationState.h"
-#include "entt/entt.hpp"
 #include "Components/Components.h"
 #include "GameplayUtils.h"
 #include "Database.h"

@@ -1,8 +1,8 @@
 #pragma once
+#include "vgpch.h"
 #include "Systems/ISystem.h"
 #include "World/World.h"
 #include "Components/Components.h"
-#include "SFML/Graphics.hpp"
 namespace vg 
 {
 	class CameraFollowingSystem final : public System 

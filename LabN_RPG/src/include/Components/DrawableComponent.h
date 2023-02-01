@@ -1,5 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 #include "ResourceManagement/TextureProvider.h"
 namespace vg 
 {

@@ -1,5 +1,4 @@
 #include "SpacePartitioning/PartitionGrid.h"
-#include <cmath>
 namespace vg 
 {
 	PartitionGrid::PartitionGrid() : PartitionGrid(0, 0, 1.0f) {}

@@ -1,9 +1,7 @@
 #pragma once
-#include "SFML/Graphics.hpp"
-#include "entt/entt.hpp"
+#include "vgpch.h"
 #include "ResourceManagement/TextureProvider.h"
-#include <vector>
-#include <unordered_map>
+
 namespace vg 
 {
 	struct PlaceholdersComponent 

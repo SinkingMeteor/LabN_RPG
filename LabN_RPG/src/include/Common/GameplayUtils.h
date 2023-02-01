@@ -1,11 +1,8 @@
 #pragma once 
-#include "entt/entt.hpp"
-#include "entt/core/hashed_string.hpp"
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 #include "MathUtils.h"
 #include "ResourceManagement/TextureProvider.h"
 #include "Components/Components.h"
-#include <string>
 
 namespace vg 
 {
@@ -19,11 +16,11 @@ namespace vg
 		static void AttachTo(entt::registry& registry, entt::entity childEntity, entt::entity parentEntity);
 
 		template<typename... Args>
-		static void Log(const char* logScope, Args&&...args)
+		static void Log(const char* logScope, const char* format, Args&&...args)
 		{
-			std::cout << logScope;
-			((std::cout << " " << std::forward<Args>(args)), ...);
-			std::cout << std::endl;
+			printf(logScope);
+			printf(format, std::forward<Args>(args)...);
+			printf("\n");
 		}
 	};
 }

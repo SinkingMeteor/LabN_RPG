@@ -1,12 +1,5 @@
 #pragma once
-#include <memory>
-#include <string>
-#include <vector>
-#include "SFML/Graphics.hpp"
-#include "entt/resource/fwd.hpp"
-#include <cassert>
-#include <fstream>
-#include "json.hpp"
+#include "vgpch.h"
 namespace vg 
 {
 	struct TextureRect 

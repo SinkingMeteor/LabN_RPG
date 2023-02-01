@@ -1,7 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
-#include <queue>
-#include <iostream>
+#include "vgpch.h"
 
 namespace vg 
 {

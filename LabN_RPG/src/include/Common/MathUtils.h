@@ -1,6 +1,5 @@
 #pragma once
-#include <cmath>
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 
 namespace vg 
 {

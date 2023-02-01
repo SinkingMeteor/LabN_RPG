@@ -1,6 +1,5 @@
 #include "Systems/AnimationSystem.h"
 #include "Components/Components.h"
-#include <cmath>
 namespace vg
 {
 	void AnimationSystem::Tick(entt::registry& registry, sf::Time deltaTime)

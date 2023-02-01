@@ -1,6 +1,4 @@
 #include "SpacePartitioning/PartitionCell.h"
-#include <cassert>
-#include <algorithm>
 namespace vg 
 {
 	using It = std::vector <entt::entity> ::iterator;

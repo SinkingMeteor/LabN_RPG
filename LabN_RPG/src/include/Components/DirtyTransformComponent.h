@@ -1,5 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 namespace vg 
 {
 	struct DirtyTransformComponent 

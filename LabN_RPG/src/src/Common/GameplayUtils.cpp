@@ -1,5 +1,4 @@
 #include "GameplayUtils.h"
-#include <iostream>
 namespace vg 
 {
 	entt::id_type VGUtils::GetIDByDirection(const std::string& textWithNoPrefix, const sf::Vector2f& direction)

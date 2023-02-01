@@ -1,5 +1,6 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
+
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 

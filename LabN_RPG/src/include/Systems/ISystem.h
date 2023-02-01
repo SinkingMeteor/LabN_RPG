@@ -1,6 +1,5 @@
 #pragma once
-#include "entt/entt.hpp"
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 #include "World/World.h"
 namespace vg 
 {

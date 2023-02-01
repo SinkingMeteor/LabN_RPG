@@ -1,5 +1,4 @@
 #include "Systems/ApplyTransformSystem.h"
-#include <cassert>
 #include "MathUtils.h"
 namespace vg
 {

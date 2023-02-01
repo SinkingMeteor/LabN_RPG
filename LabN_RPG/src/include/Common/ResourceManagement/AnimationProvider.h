@@ -1,13 +1,6 @@
 #pragma once
-#include <memory>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include "SFML/Graphics.hpp"
-#include "entt/resource/fwd.hpp"
+#include "vgpch.h"
 #include "TextureProvider.h"
-#include "entt/core/hashed_string.hpp"
-#include "json.hpp"
 
 namespace vg 
 {

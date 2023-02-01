@@ -1,6 +1,3 @@
-#include <iostream>
-#include "Window/Window.h"
-#include "entt/locator/locator.hpp"
 #include "Game.h"
 
 int main() 

@@ -1,9 +1,8 @@
 #pragma once
-#include <cassert>
+#include "vgpch.h"
 #include "Systems/ISystem.h"
 #include "World/World.h"
 #include "Components/Components.h"
-#include "entt/entt.hpp"
 namespace vg 
 {
 	class SpriteRenderSystem final : public IRenderSystem 

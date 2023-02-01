@@ -1,7 +1,6 @@
 #include "World/World.h"
 #include "Components/Components.h"
 #include "MathUtils.h"
-#include <cassert>
 namespace vg 
 {
 	World::World(Window* window) : 

@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
+
+option(LABN_ENABLE_DEBUG_RENDER "Enable gizmo debug geometry" ON)
 
 include_directories(
 ${CMAKE_CURRENT_LIST_DIR}/src/include/
@@ -32,6 +34,12 @@ ${CMAKE_CURRENT_LIST_DIR}/src/src/World/World.cpp
 ${CMAKE_CURRENT_LIST_DIR}/src/src/World/GameWorld.cpp)
 
 add_executable(LabN_RPG ${LABN_SOURCES})
+
+target_precompile_headers(LabN_RPG PUBLIC "src/include/vgpch.h")
+
+if(LABN_ENABLE_DEBUG_RENDER)
+target_compile_definitions(LabN_RPG PUBLIC VG_DEBUG_RENDER)
+endif()
 
 target_compile_features(LabN_RPG PUBLIC cxx_std_20)
 

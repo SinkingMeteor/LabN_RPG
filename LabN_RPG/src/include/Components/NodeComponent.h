@@ -1,7 +1,5 @@
 #pragma once
-#include "entt/entt.hpp"
-#include <optional>
-#include <vector>
+#include "vgpch.h"
 namespace vg 
 {
 	struct NodeComponent 

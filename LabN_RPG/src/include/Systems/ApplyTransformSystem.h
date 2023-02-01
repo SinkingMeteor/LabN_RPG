@@ -1,7 +1,7 @@
 #pragma once
+#include "vgpch.h"
 #include "Components/Components.h"
 #include "Systems/ISystem.h"
-#include "entt/entt.hpp"
 
 namespace vg 
 {

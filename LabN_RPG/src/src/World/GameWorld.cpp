@@ -34,10 +34,12 @@ namespace vg
 		//Render systems
 		m_renderSystems.emplace_back(std::make_unique<SpriteRenderSystem>(this));
 
+#ifdef VG_DEBUG_RENDER
 		//Debug systems
 		m_renderSystems.emplace_back(std::make_unique<SpatialPartitionDebugRenderSystem>(this));
 		m_renderSystems.emplace_back(std::make_unique<PivotDebugRenderSystem>());
 		m_renderSystems.emplace_back(std::make_unique<ColliderDebugRenderSystem>());
+#endif
 	}
 
 	void GameWorld::Tick(sf::Time deltaTime)

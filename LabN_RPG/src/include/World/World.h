@@ -1,8 +1,6 @@
 #pragma once 
-#include "SFML/Graphics.hpp"
+#include "vgpch.h"
 #include "Window/Window.h"
-#include "entt/entt.hpp"
-#include <unordered_map>
 namespace vg 
 {
 	class World 

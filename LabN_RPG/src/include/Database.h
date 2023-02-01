@@ -1,5 +1,5 @@
 #pragma once
-#include "entt/core/hashed_string.hpp"
+#include "vgpch.h"
 
 namespace vg 
 {
