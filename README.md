@@ -1,6 +1,6 @@
 # PixAdventure
 
-Simple ECS game created with SFML and entt.
+Simple ECS demo created with SFML and entt.
 
 Implemented mechanics at the moment:
 
